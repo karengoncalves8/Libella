@@ -1,8 +1,8 @@
-import LoadingPage from "./pages/LoadingPage";
+import WelcomePage from "./pages/Welcome.js";
 
 export default function App() {
   return (
-    <LoadingPage/>
+    <WelcomePage/>
   );
 }
 // exp://192.168.15.3:19000
