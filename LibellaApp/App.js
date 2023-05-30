@@ -1,4 +1,3 @@
-import WelcomePage from "./pages/Welcome.js";
 import Login from "./pages/Login.js";
 
 
