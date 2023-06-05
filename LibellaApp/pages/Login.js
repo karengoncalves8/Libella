@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
 export default function LoginPage() {
-  const [text, onChangeNumber] = React.useState('');
+  const [email, onChangeEmail] = React.useState('');
+  const [senha, onChangeSenha] = React.useState('');
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"white"} style="auto" />
@@ -16,38 +18,46 @@ export default function LoginPage() {
       <Text style={styles.title}> Login</Text>
 
       <View style={styles.inputbox}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={text}
-          placeholder="Email"
-        />
-
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={text}
-          placeholder="Senha"
-        />
-        <Text style={{color:'white', fontSize: 16}}>Esqueceu a senha?</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeEmail}
+            value={email}
+            placeholder="Email"
+          />
+          <Image source={require('../assets/icons/email.png')} />
+        </View>
+      
+      <View style={{alignItems: "flex-end", gap: 10}}>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeSenha}
+            value={senha}
+            placeholder="Senha"
+          />
+          <Image source={require('../assets/icons/email.png')} />
+        </View>
+          <Text style={styles.text}>Esqueceu a senha?</Text>
+      </View>
       </View>
 
-      <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              backgroundColor: ' linear-gradient(red, yellow)',
-              borderRadius: 30,
-              marginTop: 10,
-              padding: 10,
-              width: 273,
-            }}>
-            <Text
-              style={styles.button}>
-              Conectar
+      <LinearGradient 
+      colors={['#764DCC', '#4A2794']}
+      style={styles.button}>
+            <Text style={{
+              textAlign: 'center',
+              color: '#EBF8F5',
+              fontSize: 20,
+              fontFamily: 'PoppinsSemiBold',
+              lineHeight: 30,
+              }}>
+              LOGIN
             </Text>
-          </TouchableOpacity>
+      </LinearGradient>
 
-      <Text>Não possui login? Peça ao seu psicólogo que realize o cadastro</Text>
+
+      <Text style={styles.text}>Não possui login? Peça ao seu psicólogo que realize o cadastro</Text>
     </View>
   );
 }
@@ -58,23 +68,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#53A7D7",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
+    gap: 25,
+    padding: 40
   },
   inputbox: {
-    alignItems: "flex-end",
     justifyContent: "center",
-    gap: 10,
+    gap: 27,
   },
   input: {
+    fontFamily: 'PoppinsRegular',
+    fontSize: 16,
+  },
+  inputView:{
     height: 56,
-    width: 286,
+    width: 310,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderRadius: 30,
     paddingHorizontal: 30,
     backgroundColor: '#F8F8F8',
   },
   title: {
     color: 'white',
-    fontSize: 36
+    fontSize: 36,
+    fontFamily: 'ComfortaaBold',
   },
   img: {
     width:167, 
@@ -82,14 +100,14 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   button:{
-    backgroundColor: 'purple',
-    width:273, 
-    height:49,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    color: '#EBF8F5',
-    fontWeight: '600',
-    fontSize: 20,
-    lineHeight: 30,
+    width:310, 
+    height:55,
+    borderRadius: 30,
+    padding: 10,
+  },
+  text:{
+    color:'white', 
+    fontSize: 16,
+    fontFamily: 'PoppinsRegular'
   },
 });
