@@ -1,4 +1,5 @@
 import Login from "./pages/Login";
+import Inicio from "./pages/Inicio";
 import React from 'react';
 import { useFonts } from 'expo-font';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
@@ -32,7 +33,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <Login/>
+      <Inicio/>
     </SafeAreaView>
   );
 }
