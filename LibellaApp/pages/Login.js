@@ -25,7 +25,7 @@ export default function LoginPage() {
             value={email}
             placeholder="Email"
           />
-          <Image source={require('../assets/icons/email.png')} />
+          <Image style={styles.icon} source={require('../assets/icons/email.png')} />
         </View>
       
       <View style={{alignItems: "flex-end", gap: 10}}>
@@ -36,7 +36,7 @@ export default function LoginPage() {
             value={senha}
             placeholder="Senha"
           />
-          <Image source={require('../assets/icons/email.png')} />
+          <Image style={styles.icon} source={require('../assets/icons/eye.png')} />
         </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
       </View>
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#53A7D7",
     alignItems: "center",
     justifyContent: "center",
-    gap: 25,
-    padding: 40
+    gap: 27,
+    paddingHorizontal: 30,
   },
   inputbox: {
     justifyContent: "center",
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   input: {
     fontFamily: 'PoppinsRegular',
     fontSize: 16,
+    flex: 1,
   },
   inputView:{
     height: 56,
@@ -88,6 +89,12 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 30,
     backgroundColor: '#F8F8F8',
+  },
+  icon:{
+    height: 30,
+    width: 35,
+    resizeMode: 'contain',
+    opacity: 0.5,
   },
   title: {
     color: 'white',
@@ -108,6 +115,6 @@ const styles = StyleSheet.create({
   text:{
     color:'white', 
     fontSize: 16,
-    fontFamily: 'PoppinsRegular'
+    fontFamily: 'PoppinsRegular',
   },
 });
