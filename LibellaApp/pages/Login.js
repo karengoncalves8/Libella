@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-export default function LoginPage() {
+export default function LoginPage({navigation}) {
   const [email, onChangeEmail] = React.useState('');
   const [senha, onChangeSenha] = React.useState('');
   return (
@@ -42,6 +42,7 @@ export default function LoginPage() {
       </View>
       </View>
 
+    <TouchableOpacity onPress={() => navigation.navigate('Inicio')}>
       <LinearGradient 
       colors={['#764DCC', '#4A2794']}
       style={styles.button}>
@@ -55,7 +56,7 @@ export default function LoginPage() {
               LOGIN
             </Text>
       </LinearGradient>
-
+    </TouchableOpacity>
 
       <Text style={styles.text}>Não possui login? Peça ao seu psicólogo que realize o cadastro</Text>
     </View>

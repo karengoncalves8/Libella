@@ -5,9 +5,13 @@ import { useFonts } from 'expo-font';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen'; /* precisa instalar */
 import { useCallback } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 SplashScreen.preventAutoHideAsync();
 
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,7 +37,17 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <Inicio/>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login" component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Inicio" component={Inicio}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
