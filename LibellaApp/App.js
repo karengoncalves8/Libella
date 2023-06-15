@@ -1,5 +1,4 @@
-import Login from "./pages/Login";
-import Inicio from "./pages/Inicio";
+import 'react-native-gesture-handler';
 import React from 'react';
 import { useFonts } from 'expo-font';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
@@ -7,13 +6,13 @@ import * as SplashScreen from 'expo-splash-screen'; /* precisa instalar */
 import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import AuthStack from './components/navigation/AuthStack';
+import AppStack from './components/navigation/AppStack';
 
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
   const [fontsLoaded] = useFonts({
     'ComfortaaBold': require('./assets/fonts/Comfortaa/Comfortaa-Bold.ttf'),
     'ComfortaaLight': require('./assets/fonts/Comfortaa/Comfortaa-Light.ttf'),
@@ -38,20 +37,13 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen
-            name="Login" component={Login}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Inicio" component={Inicio}
-          />
-        </Stack.Navigator>
+        <AppStack/>
       </NavigationContainer>
     </SafeAreaView>
   );
 }
 
+export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

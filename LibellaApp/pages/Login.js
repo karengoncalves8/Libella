@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-export default function LoginPage({navigation}) {
+const LoginPage = ({navigation}) => {
   const [email, onChangeEmail] = React.useState('');
   const [senha, onChangeSenha] = React.useState('');
   return (
@@ -63,6 +63,7 @@ export default function LoginPage({navigation}) {
   );
 }
 
+export default LoginPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
