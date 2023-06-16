@@ -5,20 +5,22 @@ export default function WelcomePage() {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Bem-Vindo ao</Text>
-        <Text style={styles.title}>Libella</Text>
+        <Text style={styles.title}>Organize suas atividades</Text>
       </View>
-      <View style={styles.containerImg}>
+      <View style={styles.containerImgTop}>
+      <Image
+        style={styles.img}
+        source={require('../assets/ChoicePsicologo.png')}
+      />
+    </View>
+      <View style={styles.containerText}>
+        <Text style={styles.text}>ou</Text>
+      </View>
+      <View style={styles.containerImgBottom}>
         <Image
           style={styles.img}
-          source={require('../assets/WelcomeIMG.png')}
+          source={require('../assets/ChoicePaciente.png')}
         />
-      </View>
-      <View style={styles.containerText}>
-        <Text style={styles.text}>Um aplicativo que visa a melhoria de atendimentos terapêuticos</Text>
-      </View>
-      <View style={styles.containerLinkButton}>
-        <Text style={styles.LinkButton}>Continuar &gt;</Text>
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
     </View>
@@ -38,8 +40,9 @@ const styles = StyleSheet.create({
   containerTitle: {
     height: '20%',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    padding: 20,
   },
 
   title: {
@@ -47,25 +50,34 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 41,
     top: 10,
-    textAlign: "center",
+    textAlign: 'center',
     color: "white",
     lineHeight: 40
   },
 
-  containerImg: {
-    height: '50%',
+  containerImgTop: {
+    height: '35%',
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+
+  containerImgBottom: {
+    height: '35%',
+    width: '100%',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
 
   img: {
-    width: 333,
-    height: 333,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 400,
+    height: 350,
   },
 
   containerText: {
-    height: '15%',
+    height: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -75,24 +87,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: '400',
     fontSize: 22,
-    textAlign: 'justify',
-    width: '80%',
-  },
-
-  containerLinkButton: {
-    height: '15%',
+    textAlign: 'center',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: 10,
   },
-
-  LinkButton: {
-    color: "#6D45C2",
-    fontFamily: 'Poppins',
-    fontWeight: '500',
-    fontSize: 22,
-    lineHeight: 30,
-  }
 
 });

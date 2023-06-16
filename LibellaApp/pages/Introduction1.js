@@ -4,20 +4,26 @@ import { StyleSheet, Text, View, Image } from "react-native";
 export default function WelcomePage() {
   return (
     <View style={styles.container}>
+      <View style={styles.containerSkip}>
+        <Text style={styles.LinkButton}>Pular &gt;</Text>
+      </View>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Bem-Vindo ao</Text>
-        <Text style={styles.title}>Libella</Text>
+        <Text style={styles.title}>Organize suas atividades</Text>
       </View>
       <View style={styles.containerImg}>
-        <Image
-          style={styles.img}
-          source={require('../assets/WelcomeIMG.png')}
-        />
+      <Image
+        style={styles.img}
+        source={require('../assets/Introduction-1.png')}
+      />
       </View>
       <View style={styles.containerText}>
-        <Text style={styles.text}>Um aplicativo que visa a melhoria de atendimentos terapêuticos</Text>
+      <Text style={styles.text}>Tenha acesso as atividades atribuidas por seu psicólogo</Text>
       </View>
-      <View style={styles.containerLinkButton}>
+      <View style={styles.containerCarrousel}>
+      <Text style={styles.LinkButton}>&#60; Voltar </Text>
+        <View style={styles.CarrousselCircleActivated}></View>
+        <View style={styles.CarrousselCircle}></View>
+        <View style={styles.CarrousselCircle}></View>
         <Text style={styles.LinkButton}>Continuar &gt;</Text>
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
@@ -35,12 +41,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 
+  containerSkip: {
+    height: '10%',
+    width: '100%',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    right: 20,
+  },
   containerTitle: {
-    height: '20%',
+    height: '15%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-end',
-  },
+  }, 
 
   title: {
     fontStyle: "normal",
@@ -57,42 +70,58 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
+  },  
+  
   img: {
     width: 333,
     height: 333,
   },
 
   containerText: {
-    height: '15%',
+    height: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
+  
   text: {
     color: "#FFFFFF",
     fontWeight: '400',
     fontSize: 22,
-    textAlign: 'justify',
+    textAlign: 'center',
     width: '80%',
   },
 
-  containerLinkButton: {
+  containerCarrousel: {
     height: '15%',
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     marginTop: 10,
+    padding: 40,
+  },
+
+  CarrousselCircle: {
+    backgroundColor: '#FFFFFF',
+    height: 10,
+    width: 10,
+    borderRadius: 100,
+  },
+
+  CarrousselCircleActivated: {
+    backgroundColor: '#6D45C2',
+    height: 10,
+    width: 10,
+    borderRadius: 100,
   },
 
   LinkButton: {
     color: "#6D45C2",
     fontFamily: 'Poppins',
     fontWeight: '500',
-    fontSize: 22,
+    fontSize: 20,
     lineHeight: 30,
-  }
+  },
 
 });
