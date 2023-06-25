@@ -15,7 +15,7 @@ export default InicioPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#53A7D7",
+    backgroundColor: "#F2F2F2",
     alignItems: "center",
     justifyContent: "center",
     gap: 27,
