@@ -11,7 +11,12 @@ export {default as Ajuda} from './home/DrawerPages/Ajuda';
 export {default as Paciente} from './home/Pacientes';
 export {default as Agenda} from './home/Agenda';
 
+
 // Auth Screens
 export {default as Login} from './auth/Login';
-export {default as Step} from './auth/Step';
 export {default as Cadastro} from './auth/Cadastro';
+export {default as Welcome} from './auth/Welcome';
+export {default as Selection} from './auth/SelectionPage';
+export {default as Introduction1} from './auth/Introduction1';
+export {default as Introduction2} from './auth/Introduction2';
+export {default as Introduction3} from './auth/Introduction3';

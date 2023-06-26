@@ -1,7 +1,9 @@
 import React from "react";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import {Paciente, Agenda, Inicio} from '../../pages'
-import DrawerNavigator from "./DrawerNavigator";
+
 
 const Tab = createBottomTabNavigator();
 

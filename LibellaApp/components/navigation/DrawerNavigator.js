@@ -1,9 +1,13 @@
 import React from "react";
+
 import { createDrawerNavigator } from '@react-navigation/drawer'
+
 import CustomDrawer from './CustomDrawer'
-import { Perfil, Config, Inicio, Chat, Notificacoes, Ajuda, Termos} from '../../pages'
+import { Perfil, Config, Chat, Notificacoes, Ajuda, Termos} from '../../pages'
 import BottomTab from "./BottomTab";
+
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
 const Drawer = createDrawerNavigator();
 
 function DrawerNavigator(){
