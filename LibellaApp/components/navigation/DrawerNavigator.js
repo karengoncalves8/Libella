@@ -1,25 +1,14 @@
-import * as React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import CustomDrawer from '../CustomDrawer';
-
-// Páginas
-import Perfil from "../../pages/Perfil";
-import Inicio from "../../pages/Inicio";
-import Chat from "../../pages/Chat";
-import Notificacoes from "../../pages/Notificacoes";
-import Config from "../../pages/Config";
-import Ajuda from "../../pages/Ajuda";
-import Termos from "../../pages/Termos";
-
-// Icones
+import React from "react";
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import CustomDrawer from './CustomDrawer'
+import { Perfil, Config, Inicio, Chat, Notificacoes, Ajuda, Termos} from '../../pages'
+import BottomTab from "./BottomTab";
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 const Drawer = createDrawerNavigator();
 
-const AuthStack = () => {
-  return (
-    <Drawer.Navigator 
+function DrawerNavigator(){
+    return (
+        <Drawer.Navigator 
         drawerContent={props => <CustomDrawer {...props} />}
         screenOptions={{
           drawerActiveBackgroundColor: "#53A7D7",
@@ -36,7 +25,7 @@ const AuthStack = () => {
         }}>
           <Drawer.Screen
             name="Início" 
-            component={Inicio}
+            component={BottomTab}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='home-outline' size={35} color={color} />
@@ -97,8 +86,8 @@ const AuthStack = () => {
               ),
             }}
           />
-    </Drawer.Navigator>
-  );
+        </Drawer.Navigator>
+    )
 }
 
-export default AuthStack;
+export default DrawerNavigator;

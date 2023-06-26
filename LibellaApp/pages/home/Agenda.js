@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-const PerfilPage = () => {
+const AgendaPage = () => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={"white"} style="auto" />
-      <Text>PERFIL</Text>
+      <Text style={styles.text}>AGENDA</Text>
     </View>
   );
 }
 
-export default PerfilPage;
+export default AgendaPage;
 
 const styles = StyleSheet.create({
   container: {
@@ -22,5 +22,7 @@ const styles = StyleSheet.create({
     gap: 27,
     paddingHorizontal: 30,
   },
- 
-});
+    color:'white', 
+    fontSize: 16,
+  },
+);

@@ -6,13 +6,14 @@ import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 const LoginPage = ({navigation}) => {
   const [email, onChangeEmail] = React.useState('');
   const [senha, onChangeSenha] = React.useState('');
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"white"} style="auto" />
 
       <Image
           style={styles.img}
-          source={require('../assets/img/Logo-roxa.png')}
+          source={require('../../assets/img/Logo-roxa.png')}
       />
 
       <Text style={styles.title}> Login</Text>
@@ -25,7 +26,7 @@ const LoginPage = ({navigation}) => {
             value={email}
             placeholder="Email"
           />
-          <Image style={styles.icon} source={require('../assets/icons/email.png')} />
+          <Image style={styles.icon} source={require('../../assets/icons/email.png')} />
         </View>
       
       <View style={{alignItems: "flex-end", gap: 10}}>
@@ -36,13 +37,13 @@ const LoginPage = ({navigation}) => {
             value={senha}
             placeholder="Senha"
           />
-          <Image style={styles.icon} source={require('../assets/icons/eye.png')} />
+          <Image style={styles.icon} source={require('../../assets/icons/eye.png')} />
         </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
       </View>
       </View>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Inicio')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
       <LinearGradient 
       colors={['#764DCC', '#4A2794']}
       style={styles.button}>
@@ -50,7 +51,6 @@ const LoginPage = ({navigation}) => {
               textAlign: 'center',
               color: '#EBF8F5',
               fontSize: 20,
-              fontFamily: 'PoppinsSemiBold',
               lineHeight: 30,
               }}>
               LOGIN
@@ -58,7 +58,12 @@ const LoginPage = ({navigation}) => {
       </LinearGradient>
     </TouchableOpacity>
 
-      <Text style={styles.text}>Não possui login? Peça ao seu psicólogo que realize o cadastro</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={styles.text}>Não tem uma conta? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}> 
+          <Text style={{color:'#4A2794', fontSize: 16,}}>Cadastre-se!</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -78,7 +83,6 @@ const styles = StyleSheet.create({
     gap: 27,
   },
   input: {
-    fontFamily: 'PoppinsRegular',
     fontSize: 16,
     flex: 1,
   },
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontSize: 36,
-    fontFamily: 'ComfortaaBold',
   },
   img: {
     width:167, 
@@ -117,6 +120,6 @@ const styles = StyleSheet.create({
   text:{
     color:'white', 
     fontSize: 16,
-    fontFamily: 'PoppinsRegular',
   },
-});
+}
+);

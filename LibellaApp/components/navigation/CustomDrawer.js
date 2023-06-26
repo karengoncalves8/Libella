@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
 
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 const CustomDrawer = (props) => {
@@ -22,7 +21,7 @@ const CustomDrawer = (props) => {
                         height:45,
                         resizeMode: 'contain',
                     }} 
-                        source={require('../assets/img/Logo-azul-libella.png')
+                        source={require('../../assets/img/Logo-azul-libella.png')
                     }/>
                     <Text style={{fontSize: 24, color: '#53A7D7'}}>Libella</Text>
                 </View>
