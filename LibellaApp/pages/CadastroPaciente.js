@@ -8,117 +8,117 @@ export default function WelcomePage() {
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/User.png')}
+          source={require('../assets/Icons/IconUser.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Nome Completo"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/iconCall.png')}
+          source={require('../assets/Icons/call.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Telefone"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/Personalcard.png')}
+          source={require('../assets/Icons/card.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="CPF"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/Personalcard.png')}
-        />
-
-        <TextInput
-          style={styles.Input}
-          placeholder="CRP"
-          placeholderTextColor="#ffffff"
-        />
-
-        <Image
-          style={styles.icons}
-          source={require('../assets/Icons/Personalcard.png')}
+          source={require('../assets/Icons/card.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="RG"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/Esc.png')}
+          source={require('../assets/Icons/iconEsc.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Escolaridade"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/iconOc.png')}
+          source={require('../assets/Icons/iconOcup.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Ocupação"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
+        />
+
+      <Image
+          style={styles.icons}
+          source={require('../assets/Icons/iconSintomas.png')}
+        />
+
+        <TextInput
+          style={styles.Input}
+          placeholder="Sintomas"
+          placeholderTextColor="#313131"
         />
 
         <Image
           style={styles.icons}
-          source={require('../assets/Icons/iconLocation.png')}
+          source={require('../assets/Icons/loc.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Endereço"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
       <Image
           style={styles.icons}
-          source={require('../assets/Icons/IconEmail.png')}
+          source={require('../assets/Icons/Icons.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Email"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
       <Image
           style={styles.icons}
-          source={require('../assets/Icons/IconSenha.png')}
+          source={require('../assets/Icons/senha.png')}
         />
       
       <Image
           style={styles.icon}
-          source={require('\../assets/Icons/iconEye.png')}
+          source={require('\../assets/Icons/olho.png')}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Senha"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <TouchableOpacity
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 24,
-    backgroundColor: '#53A7D7',
+    backgroundColor: 'white',
     color: 'red',
   },
 
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
     marginBottom: 0,
-    gap: 10,
     borderRadius: 30,
     fontWeight: 'bold',
     fontFamily: 'Poppins',
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     borderRadius: 0,
     width: '90%',
-    borderBottomColor: '#ffffff',
+    borderBottomColor: '#313131',
     borderBottomWidth: 1, 
   },
 });
