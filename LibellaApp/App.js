@@ -7,8 +7,6 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './components/navigation/AuthNavigator';
 
-
-
 export default function App() {
   return (
       <NavigationContainer>

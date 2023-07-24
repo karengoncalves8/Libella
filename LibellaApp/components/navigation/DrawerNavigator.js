@@ -3,7 +3,7 @@ import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import CustomDrawer from './CustomDrawer'
-import { Perfil, Config, Chat, Notificacoes, Ajuda, Termos} from '../../pages'
+import { Perfil, Config, Chat, Ajuda, Termos, Inicio} from '../../pages'
 import BottomTab from "./BottomTab";
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -51,15 +51,6 @@ function DrawerNavigator(){
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='chatbubble-outline' size={35} color={color} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name="Notificações" 
-            component={Notificacoes}
-            options={{
-              drawerIcon: ({color}) => (
-                <Ionicons name='notifications-outline' size={35} color={color} />
               ),
             }}
           />

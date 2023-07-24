@@ -11,7 +11,7 @@ const SelectionPage = ({navigation}) => {
       <TouchableOpacity onPress={() => navigation.navigate('Introduction1')}>
         <Image
           style={styles.img}
-          source={require('../../assets/img/ChoicePsicologo.png')}
+          source={require('../../assets/img/Auth/ChoicePsicologo.png')}
         />
       </TouchableOpacity>
     </View>
@@ -21,7 +21,7 @@ const SelectionPage = ({navigation}) => {
       <View style={styles.containerImgBottom}>
         <Image
           style={styles.img}
-          source={require('../../assets/img/ChoicePaciente.png')}
+          source={require('../../assets/img/Auth/ChoicePaciente.png')}
         />
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />

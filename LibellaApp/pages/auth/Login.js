@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
+
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const LoginPage = ({navigation}) => {
   const [email, onChangeEmail] = React.useState('');
@@ -13,7 +16,7 @@ const LoginPage = ({navigation}) => {
 
       <Image
           style={styles.img}
-          source={require('../../assets/img/Logo-roxa.png')}
+          source={require('../../assets/img/Logos/Logo-roxa.png')}
       />
 
       <Text style={styles.title}> Login</Text>
@@ -26,7 +29,12 @@ const LoginPage = ({navigation}) => {
             value={email}
             placeholder="Email"
           />
-          <Image style={styles.icon} source={require('../../assets/icons/email.png')} />
+          <Ionicons
+          name="ios-mail-outline"
+          size={35}
+          color={"black"}
+          style={styles.icon}
+        />
         </View>
       
       <View style={{alignItems: "flex-end", gap: 10}}>
@@ -37,7 +45,12 @@ const LoginPage = ({navigation}) => {
             value={senha}
             placeholder="Senha"
           />
-          <Image style={styles.icon} source={require('../../assets/icons/eye.png')} />
+          <Ionicons
+          name="eye-outline"
+          size={35}
+          color={"black"}
+          style={styles.icon}
+        />
         </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
       </View>
@@ -97,10 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   icon:{
-    height: 30,
-    width: 35,
-    resizeMode: 'contain',
-    opacity: 0.5,
+    opacity: 0.4,
   },
   title: {
     color: 'white',

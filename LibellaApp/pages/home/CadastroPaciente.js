@@ -13,109 +13,141 @@ import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 
+
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-const CadastroPage = ({ navigation }) => {
+const CadastroPacientePage = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
         <Ionicons
           name="person-outline"
           size={23}
-          color={"white"}
+          color={"black"}
           style={styles.icons}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Nome Completo"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <FeatherIcon
           name="phone"
           size={23}
-          color={"white"}
+          color={"black"}
           style={styles.icons}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Telefone"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
-        <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
+        <AntIcon name="idcard" size={25} color={"black"} style={styles.icons} />
 
         <TextInput
           style={styles.Input}
           placeholder="CPF"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
-        <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
-
-        <TextInput
-          style={styles.Input}
-          placeholder="CRP"
-          placeholderTextColor="#ffffff"
-        />
-
-        <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
+        <AntIcon name="idcard" size={25} color={"black"} style={styles.icons} />
 
         <TextInput
           style={styles.Input}
           placeholder="RG"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
+        />
+
+        <SimpleLineIcon
+          name="graduation"
+          size={25}
+          color={"black"}
+          style={styles.icons}
+        />
+
+        <TextInput
+          style={styles.Input}
+          placeholder="Escolaridade"
+          placeholderTextColor="#313131"
+        />
+
+        <SimpleLineIcon
+          name="briefcase"
+          size={25}
+          color={"black"}
+          style={styles.icons}
+        />
+
+        <TextInput
+          style={styles.Input}
+          placeholder="Ocupação"
+          placeholderTextColor="#313131"
+        />
+
+        <Ionicons
+          name="clipboard-outline"
+          size={25}
+          color={"black"}
+          style={styles.icons}
+        />
+
+        <TextInput
+          style={styles.Input}
+          placeholder="Sintomas"
+          placeholderTextColor="#313131"
         />
 
         <Ionicons
           name="location-outline"
           size={25}
-          color={"white"}
+          color={"black"}
           style={styles.icons}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Endereço"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Ionicons
           name="ios-mail-outline"
           size={25}
-          color={"white"}
+          color={"black"}
           style={styles.icons}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Email"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <SimpleLineIcon
           name="lock"
           size={25}
-          color={"white"}
+          color={"black"}
           style={styles.icons}
         />
 
         <TextInput
           style={styles.Input}
           placeholder="Senha"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#313131"
         />
 
         <Ionicons
           name="eye-outline"
           size={25}
-          color={"white"}
+          color={"black"}
           style={styles.icon}
         />
 
-<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+<TouchableOpacity>
       <LinearGradient 
       colors={['#764DCC', '#4A2794']}
       style={styles.button}>
@@ -125,7 +157,7 @@ const CadastroPage = ({ navigation }) => {
               fontSize: 20,
               lineHeight: 30,
               }}>
-              LOGIN
+              CADASTRAR
             </Text>
       </LinearGradient>
     </TouchableOpacity>
@@ -134,16 +166,16 @@ const CadastroPage = ({ navigation }) => {
   );
 };
 
-export default CadastroPage;
+export default CadastroPacientePage;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: 24,
-    backgroundColor: "#53A7D7",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 24,
+    backgroundColor: '#F2F2F2',
   },
 
   icons: {
@@ -162,18 +194,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 10,
     fontWeight: "bold",
+    marginBottom: 0,
   },
 
   Input: {
     fontSize: 22,
-    color: "white",
+    //fontFamily: 'Poppins',
+    color: "#6D45C2",
     padding: 10,
     marginBottom: 30,
     marginLeft: 30,
-    textAlign: "left",
+    textAlign: 'left',
     borderRadius: 0,
-    width: "90%",
-    borderBottomColor: "#ffffff",
-    borderBottomWidth: 1,
+    width: '90%',
+    borderBottomColor: '#313131',
+    borderBottomWidth: 1, 
   },
 });

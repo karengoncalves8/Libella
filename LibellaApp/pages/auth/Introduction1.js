@@ -1,31 +1,55 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
+import EntypoIcon from "react-native-vector-icons/Entypo";
+
 const Introduction1Page = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.containerSkip}>
-        <Text style={styles.LinkButton}>Pular &gt;</Text>
-      </View>
+      <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('Login')}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }}>
+          <Text style={styles.LinkButton}>Pular</Text>
+          <EntypoIcon
+            name="chevron-right"
+            size={22}
+            color={"#6D45C2"}
+            style={{ marginBottom: 1.5 }}
+          />
+        </View>
+      </TouchableOpacity>
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Organize suas atividades</Text>
       </View>
       <View style={styles.containerImg}>
       <Image
         style={styles.img}
-        source={require('../../assets/img/Introduction-1.png')}
+        source={require('../../assets/img/Auth/Introduction-1.png')}
       />
       </View>
       <View style={styles.containerText}>
       <Text style={styles.text}>Tenha acesso as atividades atribuidas por seu psicólogo</Text>
       </View>
       <View style={styles.containerCarrousel}>
-      <Text style={styles.LinkButton}>&#60; Voltar </Text>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
+        <EntypoIcon
+            name="chevron-left"
+            size={22}
+            color={"#6D45C2"}
+            style={{ marginBottom: 1.5 }}
+          />
+          <Text style={styles.LinkButton}> Voltar </Text>
+        </TouchableOpacity>
         <View style={styles.CarrousselCircleActivated}></View>
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircle}></View>
-        <TouchableOpacity onPress={() => navigation.navigate('Introduction2')}>
-          <Text style={styles.LinkButton}>Continuar &gt;</Text>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction2')}>
+          <Text style={styles.LinkButton}>Continuar</Text>
+          <EntypoIcon
+            name="chevron-right"
+            size={22}
+            color={"#6D45C2"}
+
+          />
         </TouchableOpacity>
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
@@ -126,5 +150,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 30,
   },
-
 });
