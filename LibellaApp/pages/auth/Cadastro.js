@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import { AuthContext } from "../../components/navigation/AuthContext";
+
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -16,6 +18,8 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
 const CadastroPage = ({ navigation }) => {
+  const { Logged } = React.useContext(AuthContext);
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -115,7 +119,7 @@ const CadastroPage = ({ navigation }) => {
           style={styles.icon}
         />
 
-<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+<TouchableOpacity onPress={() => Logged()}>
       <LinearGradient 
       colors={['#764DCC', '#4A2794']}
       style={styles.button}>

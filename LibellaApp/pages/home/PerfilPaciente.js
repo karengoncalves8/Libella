@@ -19,7 +19,7 @@ const PerfilPacientePage = ({navigation}) => {
                 <View style={styles.containerButtons}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={() => navigation.navigate('Atividades')}>
                         <Text style={{ color: 'white', fontSize: 15 }}>Atividades</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

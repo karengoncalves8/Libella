@@ -4,8 +4,10 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
+import { AuthContext } from "./AuthContext";
 
 const CustomDrawer = (props) => {
+    const { NotLogged } = React.useContext(AuthContext);
     return (
         <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
             <DrawerContentScrollView {...props}
@@ -35,7 +37,7 @@ const CustomDrawer = (props) => {
                     paddingHorizontal:20,
                     paddingVertical: 30,
                 }}>
-                    <TouchableOpacity onPress={() => {}} style={{flexDirection: 'row', gap: 10, alignItems: 'center',}}>
+                    <TouchableOpacity onPress={() => NotLogged()} style={{flexDirection: 'row', gap: 10, alignItems: 'center',}}>
                         <FeatherIcon name='log-out' size={30} color={'#EC4646'} />
                         <Text style={{fontSize: 20, color: '#EC4646'}}>Sair</Text>
                     </TouchableOpacity>
@@ -44,4 +46,4 @@ const CustomDrawer = (props) => {
     )
 }
 
-export default CustomDrawer
+export default CustomDrawer;

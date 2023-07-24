@@ -4,9 +4,12 @@ import {StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
+import { AuthContext } from "../../components/navigation/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+
 const LoginPage = ({navigation}) => {
+  const { Logged } = React.useContext(AuthContext);
   const [email, onChangeEmail] = React.useState('');
   const [senha, onChangeSenha] = React.useState('');
 
@@ -56,7 +59,7 @@ const LoginPage = ({navigation}) => {
       </View>
       </View>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => Logged()}>
       <LinearGradient 
       colors={['#764DCC', '#4A2794']}
       style={styles.button}>

@@ -5,13 +5,29 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
-import AuthNavigator from './components/navigation/AuthNavigator';
+import { AuthContext } from './components/navigation/AuthContext';
+import RootStackScreen from './components/navigation/RootStack';
 
 export default function App() {
+  const [userToken, setUserToken] = React.useState(null)
+
+  const authContext = React.useMemo(() => {
+    return {
+      Logged: () => {
+        setUserToken("abc");
+      },
+      NotLogged: () => {
+        setUserToken(null);
+      },
+    };
+  }, []);
+
   return (
-      <NavigationContainer>
-        <AuthNavigator/>
-      </NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+    <NavigationContainer>
+      <RootStackScreen userToken={userToken} />
+    </NavigationContainer>
+  </AuthContext.Provider>
   );
 }
 

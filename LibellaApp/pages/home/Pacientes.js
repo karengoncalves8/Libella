@@ -13,7 +13,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../components/navigation/TabContainer";
 
-const PacientePage = ({ navigation }) => {
+const PacientesPage = ({ navigation }) => {
   return (
     <TabContainer>
       <View style={styles.container}>
@@ -87,7 +87,7 @@ const PacientePage = ({ navigation }) => {
   );
 };
 
-export default PacientePage;
+export default PacientesPage;
 
 const styles = StyleSheet.create({
   container: {

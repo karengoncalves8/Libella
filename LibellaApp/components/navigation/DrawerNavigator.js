@@ -25,7 +25,7 @@ function DrawerNavigator(){
           headerStyle:{
             backgroundColor: '#53A7D7'
           },
-          headerTintColor: 'white'
+          headerTintColor: 'white',
         }}>
           <Drawer.Screen
             name="Início" 

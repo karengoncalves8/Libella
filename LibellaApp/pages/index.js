@@ -7,11 +7,14 @@ export {default as Termos} from './home/DrawerPages/Termos';
 export {default as Ajuda} from './home/DrawerPages/Ajuda';
 
 // Screens
-export {default as Paciente} from './home/Pacientes';
+export {default as Pacientes} from './home/Pacientes';
 export {default as Agenda} from './home/Agenda';
 export {default as PerfilPaciente} from './home/PerfilPaciente';
 export {default as CadastroPaciente} from './home/CadastroPaciente';
 export {default as Notificacoes} from './home/Notificacoes';
+export {default as Atividades} from './home/Atividades';
+export {default as AtribuirAtividade} from './home/AtribuirAtividade';
+
 
 // Auth Screens
 export {default as Login} from './auth/Login';

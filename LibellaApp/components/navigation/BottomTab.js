@@ -10,7 +10,7 @@ import {
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Paciente, Agenda, Inicio, Notificacoes } from "../../pages";
+import { Pacientes, Agenda, Inicio, Notificacoes } from "../../pages";
 
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -90,7 +90,7 @@ const BottomTab = () => {
       {/* ícone da tela de pacientes */}
       <Tab.Screen
         name={"Pacientes"}
-        component={Paciente}
+        component={Pacientes}
         options={{
           tabBarIcon: ({ focused }) => (
             <IonIcon
