@@ -9,16 +9,25 @@ import {
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AntIcon from "react-native-vector-icons/AntDesign";
 
 const AtividadesPage = ({navigation}) => {
   return (
       <View style={styles.container}>
+        <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+            <AntIcon name="arrowleft" size={23} color={'#6D45C2'}/>
+        </TouchableOpacity>
+        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#6D45C2'}}>Atividades Atribuídas</Text>
+        </View>
+
+
         <TouchableOpacity style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
           <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4}/>
           <Text style={styles.texto}>Recentes</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
           <View style={{flexDirection: 'column', gap: 8}}>
             <Text style={styles.titulo}>Roda da Vida</Text>
             <Text style={styles.texto}>Vence amanhã ás 23:59</Text>

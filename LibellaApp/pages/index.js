@@ -14,6 +14,7 @@ export {default as CadastroPaciente} from './home/CadastroPaciente';
 export {default as Notificacoes} from './home/Notificacoes';
 export {default as Atividades} from './home/Atividades';
 export {default as AtribuirAtividade} from './home/AtribuirAtividade';
+export {default as AtividadeEsp} from './home/AtividadeEsp';
 
 
 // Auth Screens

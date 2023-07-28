@@ -11,6 +11,7 @@ import {
   Atividades,
   CadastroPaciente,
   AtribuirAtividade,
+  AtividadeEsp
 } from "../../pages";
 
 import DrawerNavigator from "./DrawerNavigator";
@@ -42,6 +43,10 @@ const AppNavigator = () => {
         <AppStack.Screen 
           name="AtribuirAtividade" 
           component={AtribuirAtividade} 
+        /> 
+        <AppStack.Screen 
+          name="AtividadeEsp" 
+          component={AtividadeEsp} 
         />
       </AppStack.Navigator>
     </TabContextProvider>
