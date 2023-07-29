@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableOpacity,
   TextInput,
   ScrollView,
@@ -19,6 +20,13 @@ const CadastroPage = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <Image
+          style={styles.img}
+          source={require('../../assets/img/Logos/Logo-roxa.png')}
+        />
+
+        <Text style={styles.title}>Cadastrar</Text>
+
         <Ionicons
           name="person-outline"
           size={23}
@@ -115,20 +123,21 @@ const CadastroPage = ({ navigation }) => {
           style={styles.icon}
         />
 
-<TouchableOpacity onPress={() => navigation.navigate('Home')}>
-      <LinearGradient 
-      colors={['#764DCC', '#4A2794']}
-      style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <LinearGradient
+            colors={['#764DCC', '#4A2794']}
+            style={styles.button}>
             <Text style={{
+              fontFamily: 'Comfortaa_700Bold',
               textAlign: 'center',
               color: '#EBF8F5',
-              fontSize: 20,
+              fontSize: 22,
               lineHeight: 30,
-              }}>
-              LOGIN
+            }}>
+              CADASTRAR
             </Text>
-      </LinearGradient>
-    </TouchableOpacity>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -152,22 +161,33 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    top:-65,
+    top: -65,
     left: 150,
   },
 
   button: {
-    width:310, 
-    height:55,
+    width: 310,
+    height: 55,
     borderRadius: 30,
     padding: 10,
     fontWeight: "bold",
   },
 
+  img: {
+    top: 20,
+    width: 167,
+    height: 167,
+    resizeMode: 'contain',
+  },
+
+
   Input: {
-    fontSize: 22,
+    fontFamily: 'Poppins_300Light',
+    fontSize: 20,
     color: "white",
-    padding: 10,
+    paddingTop: 15,
+    paddingLeft: 10,
+    paddingBottom: 5,
     marginBottom: 30,
     marginLeft: 30,
     textAlign: "left",
@@ -175,5 +195,12 @@ const styles = StyleSheet.create({
     width: "90%",
     borderBottomColor: "#ffffff",
     borderBottomWidth: 1,
+  },
+
+  title: {
+    marginTop: 20,
+    fontFamily: 'Comfortaa_700Bold',
+    color: 'white',
+    fontSize: 36,
   },
 });

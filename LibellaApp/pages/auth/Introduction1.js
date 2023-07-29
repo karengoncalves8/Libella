@@ -8,13 +8,7 @@ const Introduction1Page = ({navigation}) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('Login')}>
         <View style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }}>
-          <Text style={styles.LinkButton}>Pular</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={22}
-            color={"#6D45C2"}
-            style={{ marginBottom: 1.5 }}
-          />
+          <Text style={styles.LinkButton}>Pular &#62;</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.containerTitle}>
@@ -31,25 +25,13 @@ const Introduction1Page = ({navigation}) => {
       </View>
       <View style={styles.containerCarrousel}>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
-        <EntypoIcon
-            name="chevron-left"
-            size={22}
-            color={"#6D45C2"}
-            style={{ marginBottom: 1.5 }}
-          />
-          <Text style={styles.LinkButton}> Voltar </Text>
+          <Text style={styles.LinkButton}>&#60; Voltar</Text>
         </TouchableOpacity>
         <View style={styles.CarrousselCircleActivated}></View>
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircle}></View>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction2')}>
-          <Text style={styles.LinkButton}>Continuar</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={22}
-            color={"#6D45C2"}
-
-          />
+          <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
@@ -60,6 +42,8 @@ const Introduction1Page = ({navigation}) => {
 export default Introduction1Page;
 
 const styles = StyleSheet.create({
+  
+  // Container
   container: {
     flex: 1,
     height: "100%",
@@ -83,41 +67,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   }, 
 
-  title: {
-    fontStyle: "normal",
-    fontWeight: 400,
-    fontSize: 41,
-    top: 10,
-    textAlign: "center",
-    color: "white",
-    lineHeight: 40
-  },
-
   containerImg: {
     height: '50%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },  
-  
-  img: {
-    width: 333,
-    height: 333,
-  },
 
   containerText: {
     height: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  
-  text: {
-    color: "#FFFFFF",
-    fontWeight: '400',
-    fontSize: 22,
-    textAlign: 'center',
-    width: '80%',
   },
 
   containerCarrousel: {
@@ -130,6 +91,9 @@ const styles = StyleSheet.create({
     padding: 40,
   },
 
+  
+
+  // Elementos
   CarrousselCircle: {
     backgroundColor: '#FFFFFF',
     height: 10,
@@ -144,10 +108,39 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
 
+
+
+
+  //Imagens
+  img: {
+    width: 333,
+    height: 333,
+  },
+
+  // Textos
+  title: {
+    fontFamily: 'Comfortaa_500Medium',
+    fontSize: 35,
+    top: 10,
+    textAlign: "center",
+    color: "white",
+    lineHeight: 40
+  },
+
+  text: {
+    fontFamily: 'Comfortaa_500Medium',
+    color: "#FFFFFF",
+    fontWeight: '400',
+    fontSize: 19,
+    textAlign: 'center',
+    width: '80%',
+  },
+
   LinkButton: {
     color: "#6D45C2",
     fontWeight: '500',
     fontSize: 20,
     lineHeight: 30,
+    fontFamily: 'Poppins_500Medium',
   },
 });

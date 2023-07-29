@@ -29,58 +29,11 @@ const PacientePage = ({ navigation }) => {
                 style={styles.userImg}
                 source={require("../../assets/img/Pessoas/Andreia.jpg")}
               />
-              <Text style={styles.text}>Paciente 1</Text>
+              <Text style={styles.text}>Andreia Ramos</Text>{/*Esse texto pode mudar de acordo com o Banco de dados*/}
             </View>
             <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
           </TouchableOpacity>
-          <View style={styles.pacienteContainer}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 25 }}
-            >
-              <Image
-                style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
-              />
-              <Text style={styles.text}>Paciente 2</Text>
-            </View>
-            <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-          </View>
-          <View style={styles.pacienteContainer}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 25 }}
-            >
-              <Image
-                style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
-              />
-              <Text style={styles.text}>Paciente 3</Text>
-            </View>
-            <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-          </View>
-          <View style={styles.pacienteContainer}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 25 }}
-            >
-              <Image
-                style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
-              />
-              <Text style={styles.text}>Paciente 4</Text>
-            </View>
-            <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-          </View>
-          <View style={styles.pacienteContainer}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 25 }}
-            >
-              <Image
-                style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
-              />
-              <Text style={styles.text}>Paciente 5</Text>
-            </View>
-            <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-          </View>
+          {/*Pra adicionar mais pacientes basta copiar toda a touchableOpacity*/}
         </View>
       </View>
     </TabContainer>
@@ -90,6 +43,8 @@ const PacientePage = ({ navigation }) => {
 export default PacientePage;
 
 const styles = StyleSheet.create({
+
+  // Container
   container: {
     flex: 1,
     alignItems: "center",
@@ -102,16 +57,15 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: "100%",
     height: "90%",
-    top: 40,
+    top: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     gap: 30,
   },
 
   pacienteContainer: {
-    flex: 2,
     width: "100%",
-    height: "100%",
+    height: 80,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -121,6 +75,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+
+
+
+  // Imagens
   userImg: {
     width: 52,
     height: 52,
@@ -132,7 +90,13 @@ const styles = StyleSheet.create({
     height: 16,
   },
 
+
+
+
+  // Textos
   text: {
-    fontSize: 14,
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 17,
+    marginTop: 5,
   },
 });

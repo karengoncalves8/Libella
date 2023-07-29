@@ -10,6 +10,7 @@ export {default as Ajuda} from './home/DrawerPages/Ajuda';
 export {default as Paciente} from './home/Pacientes';
 export {default as Agenda} from './home/Agenda';
 export {default as PerfilPaciente} from './home/PerfilPaciente';
+export {default as FichaPaciente} from './home/FichaPacienteScreen';
 export {default as CadastroPaciente} from './home/CadastroPaciente';
 export {default as Notificacoes} from './home/Notificacoes';
 

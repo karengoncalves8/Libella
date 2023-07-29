@@ -14,7 +14,8 @@ import {
   PerfilPaciente,
   Paciente,
   Agenda,
-  Notificacoes
+  Notificacoes,
+  FichaPaciente
 } from "../../pages";
 
 import CustomDrawer from "./CustomDrawer";
@@ -42,6 +43,7 @@ const AuthNavigator = () => {
         />
         <Stack.Screen name="Drawer" component={CustomDrawer} />
         <Stack.Screen name="PerfilPaciente" component={PerfilPaciente} />
+        <Stack.Screen name="FichaPaciente" component={FichaPaciente} />
         <Stack.Screen name="Paciente" component={Paciente} />
         <Stack.Screen name="Agenda" component={Agenda} />
         <Stack.Screen name="Notificacoes" component={Notificacoes} />

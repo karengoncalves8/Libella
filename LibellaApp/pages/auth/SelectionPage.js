@@ -32,6 +32,8 @@ const SelectionPage = ({navigation}) => {
 export default SelectionPage;
 
 const styles = StyleSheet.create({
+  
+  // Container
   container: {
     flex: 1,
     height: "100%",
@@ -49,16 +51,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  title: {
-    fontStyle: "normal",
-    fontWeight: 400,
-    fontSize: 41,
-    top: 10,
-    textAlign: 'center',
-    color: "white",
-    lineHeight: 40
-  },
-
   containerImgTop: {
     height: '35%',
     width: '100%',
@@ -73,13 +65,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  img: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 400,
-    height: 350,
-  },
-
   containerText: {
     height: '10%',
     width: '100%',
@@ -87,10 +72,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+
+
+
+  // Imagens
+  img: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 400,
+    height: 350,
+  },
+
+
+
+
+  // Textos
+  title: {
+    fontFamily: 'Comfortaa_500Medium',
+    fontSize: 35,
+    top: 10,
+    textAlign: 'center',
+    color: "white",
+    lineHeight: 40
+  },
+
   text: {
+    fontFamily: 'Comfortaa_500Medium',
     color: "#FFFFFF",
     fontWeight: '400',
-    fontSize: 22,
+    fontSize: 18,
     textAlign: 'center',
     width: '100%',
   },

@@ -24,13 +24,7 @@ const WelcomePage = ({ navigation }) => {
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }}
           onPress={() => navigation.navigate("Selection")}>
-          <Text style={styles.LinkButton}>Continuar </Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={22}
-            color={"#6D45C2"}
-            style={{ marginBottom: 1.5 }}
-          />
+          <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
@@ -41,6 +35,8 @@ const WelcomePage = ({ navigation }) => {
 export default WelcomePage;
 
 const styles = StyleSheet.create({
+  
+  // Container
   container: {
     flex: 1,
     height: "100%",
@@ -57,16 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 
-  title: {
-    fontStyle: "normal",
-    fontWeight: 400,
-    fontSize: 41,
-    top: 10,
-    textAlign: "center",
-    color: "white",
-    lineHeight: 40,
-  },
-
   containerImg: {
     height: "50%",
     width: "100%",
@@ -74,24 +60,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  img: {
-    width: 333,
-    height: 333,
-  },
-
   containerText: {
     height: "15%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  text: {
-    color: "#FFFFFF",
-    fontWeight: "400",
-    fontSize: 22,
-    textAlign: "justify",
-    width: "80%",
   },
 
   containerLinkButton: {
@@ -102,9 +75,39 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
+
+
+
+  // Imagens
+  img: {
+    width: 333,
+    height: 333,
+  },
+
+
+
+  // Textos
+  title: {
+    fontFamily: 'Comfortaa_500Medium',
+    fontSize: 35,
+    top: 10,
+    textAlign: "center",
+    color: "white",
+    lineHeight: 40,
+  },
+
+  text: {
+    fontFamily: 'Comfortaa_500Medium',
+    color: "#FFFFFF",
+    fontWeight: "400",
+    fontSize: 20,
+    textAlign: "justify",
+    width: "80%",
+  },
+
   LinkButton: {
+    fontFamily: 'Poppins_500Medium',
     color: "#6D45C2",
-    fontWeight: "500",
     fontSize: 22,
     lineHeight: 30,
     textAlignVertical: "top",
