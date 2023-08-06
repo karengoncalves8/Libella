@@ -15,6 +15,10 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../components/navigation/TabContainer";
 
+import 'moment/locale/pt-br';
+
+moment.locale('pt-br');
+
 const InicioPage = (navigation) => {
   let startDate = moment();
 

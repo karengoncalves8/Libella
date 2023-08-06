@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,33 +10,96 @@ import {
 import { LinearGradient } from "expo-linear-gradient"; /* instalar */
 import TabContainer from "../../components/navigation/TabContainer";
 
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from "react-native-calendars";
+
+import { format,  } from "date-fns";
 
 const meetings = [
   {
     id: 1,
-    name: 'Leslie Alexander',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-11T13:00',
-    endDatetime: '2022-05-11T14:30',
+    name: "Leslie Alexander",
+    date: "2023-08-05",
+    time: "13:00",
+  },
+  {
+    id: 3,
+    name: "Antoni",
+    date: "2023-08-05",
+    time: "13:00",
   },
   {
     id: 2,
-    name: 'Alo',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-11T13:00',
-    endDatetime: '2022-05-11T14:30',
+    name: "Alo",
+    date: "2023-08-25",
+    time: "13:00",
   },
-]
+];
 
+LocaleConfig.locales["pt-br"] = {
+  monthNames: [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ],
+  monthNamesShort: [
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out",
+    "Nov",
+    "Dez",
+  ],
+  dayNames: [
+    "Domingo",
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sabádo",
+  ],
+  dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+  today: "Hoje",
+};
 
-
-
+LocaleConfig.defaultLocale = "pt-br";
 
 const AgendaPage = () => {
-  const [selected, setSelected] = useState('');
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+
+
+  const [selected, setSelected] = useState(currentDate);
+
+  let currentMetting = [];
+  for (let i = 0; i < meetings.length; i++) {
+    if (meetings[i].date === selected) {
+      currentMetting.push(meetings[i]);
+    }
+  }
+
+  let markedDay = {};
+
+  meetings.map((item) => {
+    markedDay[item.date] = {
+      marked: true,
+      selectedColor: "#53A7D7",
+    };
+  });
 
   return (
     <TabContainer>
@@ -44,38 +107,43 @@ const AgendaPage = () => {
         <Calendar
           // Customize the appearance of the calendar
           style={{
-            width: '100%'
+            width: "100%",
           }}
           // Callback that gets called when the user selects a day
-          onDayPress={day => {
+          onDayPress={(day) => {
             setSelected(day.dateString);
           }}
           // Mark specific dates as marked
-          markedDates={{
-            '2012-03-01': { selected: true, marked: true, selectedColor: 'blue' },
-            '2012-03-02': { marked: true },
-            '2012-03-03': { selected: true, marked: true, selectedColor: 'blue' }
-          }}
+          markedDates={markedDay}
         />
 
-        <View style={{ paddingHorizontal: 30, flex: 1, alignItems: 'center' }}>
-          <View style={{ width: '100%' }}>
-            <View style={{gap: 30}}>
-            <Text>{selected}</Text>
-              {meetings.map((mettings, i) => {
-                return (
-                  <View key={i}>
-                    <Text >{mettings.startDatetime}</Text>
-                    <View style={styles.card}>
-                    <Text>  {mettings.name}</Text>
+        <View style={{ paddingHorizontal: 30, flex: 1, alignItems: "center" }}>
+          <View style={{ width: "100%" }}>
+            <View style={{ gap: 15 }}>
+            <Text style={styles.textDate}>{selected}</Text>
+              {currentMetting.length > 0 ? (
+                currentMetting.map((mettings, i) => {
+                  return (
+                    <View key={i} style={{ gap: 10 }}>
+                      <View style={styles.card}>
+                        <View style={{ flexDirection: "row", gap: 6 }}>
+                          <Image
+                            source={require("../../assets/icons/VectorAzul.png")}
+                          />
+                          <Text style={styles.text}>
+                            {mettings.name}
+                          </Text>
+                        </View>
+                        <Text style={styles.text}> {mettings.time}</Text>
+                      </View>
                     </View>
-                  </View>
-                )
-              })}
-              
+                  );
+                })
+              ) : (
+                <Text style={{textAlign: 'center'}}>Não há sessões agendadas.</Text>
+              )}
             </View>
           </View>
-
         </View>
       </View>
     </TabContainer>
@@ -92,8 +160,8 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "flex-start",
     backgroundColor: "white",
     padding: 25,
@@ -101,5 +169,13 @@ const styles = StyleSheet.create({
     gap: 30,
     shadowColor: "gray",
     elevation: 5,
+  },
+  text: {
+    fontSize: 14,
+  },
+  textDate: {
+    marginLeft: 5,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
