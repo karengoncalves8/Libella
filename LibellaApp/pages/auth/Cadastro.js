@@ -1,13 +1,14 @@
-import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   TextInput,
   ScrollView,
 } from "react-native";
+
+import { AuthContext } from "../../components/navigation/AuthContext";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
@@ -17,16 +18,11 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
 const CadastroPage = ({ navigation }) => {
+  const { Logged } = React.useContext(AuthContext);
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/Logos/Logo-roxa.png')}
-        />
-
-        <Text style={styles.title}>Cadastrar</Text>
-
         <Ionicons
           name="person-outline"
           size={23}
@@ -123,21 +119,20 @@ const CadastroPage = ({ navigation }) => {
           style={styles.icon}
         />
 
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <LinearGradient
-            colors={['#764DCC', '#4A2794']}
-            style={styles.button}>
+<TouchableOpacity onPress={() => Logged()}>
+      <LinearGradient 
+      colors={['#764DCC', '#4A2794']}
+      style={styles.button}>
             <Text style={{
-              fontFamily: 'Comfortaa_700Bold',
               textAlign: 'center',
               color: '#EBF8F5',
-              fontSize: 22,
+              fontSize: 20,
               lineHeight: 30,
-            }}>
-              CADASTRAR
+              }}>
+              LOGIN
             </Text>
-          </LinearGradient>
-        </TouchableOpacity>
+      </LinearGradient>
+    </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -161,33 +156,22 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    top: -65,
+    top:-65,
     left: 150,
   },
 
   button: {
-    width: 310,
-    height: 55,
+    width:310, 
+    height:55,
     borderRadius: 30,
     padding: 10,
     fontWeight: "bold",
   },
 
-  img: {
-    top: 20,
-    width: 167,
-    height: 167,
-    resizeMode: 'contain',
-  },
-
-
   Input: {
-    fontFamily: 'Poppins_300Light',
-    fontSize: 20,
+    fontSize: 22,
     color: "white",
-    paddingTop: 15,
-    paddingLeft: 10,
-    paddingBottom: 5,
+    padding: 10,
     marginBottom: 30,
     marginLeft: 30,
     textAlign: "left",
@@ -195,12 +179,5 @@ const styles = StyleSheet.create({
     width: "90%",
     borderBottomColor: "#ffffff",
     borderBottomWidth: 1,
-  },
-
-  title: {
-    marginTop: 20,
-    fontFamily: 'Comfortaa_700Bold',
-    color: 'white',
-    fontSize: 36,
   },
 });

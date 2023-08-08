@@ -7,13 +7,27 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
-import AuthNavigator from './components/navigation/AuthNavigator';
+import { AuthContext } from './components/navigation/AuthContext';
+import RootStackScreen from './components/navigation/RootStack';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfortaa';
 
 export default function App() {
+  const [userToken, setUserToken] = React.useState(null)
+
+  const authContext = React.useMemo(() => {
+    return {
+      Logged: () => {
+        setUserToken("abc");
+      },
+      NotLogged: () => {
+        setUserToken(null);
+      },
+    };
+  }, []);
+
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_500Medium,
@@ -23,14 +37,17 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading/>;
+    return <AppLoading />;
   }
 
 
   return (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <RootStackScreen userToken={userToken} />
+      </NavigationContainer>
+    </AuthContext.Provider>
+
   );
 }
 

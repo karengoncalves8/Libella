@@ -10,45 +10,30 @@ import {
   Introduction1,
   Introduction2,
   Introduction3,
-  Inicio,
-  PerfilPaciente,
-  Paciente,
-  Agenda,
-  Notificacoes,
-  FichaPaciente
 } from "../../pages";
 
 import CustomDrawer from "./CustomDrawer";
 import DrawerNavigator from "./DrawerNavigator";
-import { TabContextProvider } from "./TabContext";
 
-const Stack = createNativeStackNavigator();
+
+const AuthStack = createNativeStackNavigator();
 
 const AuthNavigator = () => {
   return (
-    <TabContextProvider>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Selection" component={Selection} />
-        <Stack.Screen name="Introduction1" component={Introduction1} />
-        <Stack.Screen name="Introduction2" component={Introduction2} />
-        <Stack.Screen name="Introduction3" component={Introduction3} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Cadastro" component={Cadastro} />
-        <Stack.Screen name="Inicio" component={Inicio} />
-        <Stack.Screen
+      <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+        <AuthStack.Screen name="Welcome" component={Welcome} />
+        <AuthStack.Screen name="Selection" component={Selection} />
+        <AuthStack.Screen name="Introduction1" component={Introduction1} />
+        <AuthStack.Screen name="Introduction2" component={Introduction2} />
+        <AuthStack.Screen name="Introduction3" component={Introduction3} />
+        <AuthStack.Screen name="Login" component={Login} />
+        <AuthStack.Screen name="Cadastro" component={Cadastro} />
+        <AuthStack.Screen
           name="Home"
           component={DrawerNavigator}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Drawer" component={CustomDrawer} />
-        <Stack.Screen name="PerfilPaciente" component={PerfilPaciente} />
-        <Stack.Screen name="FichaPaciente" component={FichaPaciente} />
-        <Stack.Screen name="Paciente" component={Paciente} />
-        <Stack.Screen name="Agenda" component={Agenda} />
-        <Stack.Screen name="Notificacoes" component={Notificacoes} />
-      </Stack.Navigator>
-    </TabContextProvider>
+      </AuthStack.Navigator>
   );
 };
 

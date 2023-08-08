@@ -15,6 +15,10 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../components/navigation/TabContainer";
 
+import 'moment/locale/pt-br';
+
+moment.locale('pt-br');
+
 const InicioPage = (navigation) => {
   let startDate = moment();
 
@@ -23,11 +27,12 @@ const InicioPage = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, Andressa!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andressa!</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.subTitulo}>AGENDA &#62;</Text>
+            <Text style={styles.subTitulo}>AGENDA</Text>
+            <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
           <View style={styles.card}>
             <CalendarStrip
@@ -67,7 +72,8 @@ const InicioPage = (navigation) => {
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.subTitulo}>PACIENTES &#62;</Text>
+            <Text style={styles.subTitulo}>PACIENTES</Text>
+            <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
           <View style={styles.card}>
             <View style={styles.paciente}>
@@ -112,7 +118,6 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     justifyContent: "space-around",
   },
-
   card: {
     flexDirection: "column",
     justifyContent: "center",
@@ -124,13 +129,10 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     elevation: 5,
   },
-
   subTitulo: {
-    fontFamily: 'Poppins_500Medium',
     fontSize: 14,
     color: "#6D45C2",
   },
-
   paciente: {
     flexDirection: "row",
     width: 280,

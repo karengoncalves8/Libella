@@ -11,8 +11,12 @@ import {
 import AntIcon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
-const TabButton = ({toggleOpened, opened, navigation}) => {
+import { useNavigation } from '@react-navigation/native';
+import { CadastroPaciente } from "../../pages";
 
+
+const TabButton = ({toggleOpened, opened}) => {
+  const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
@@ -36,7 +40,7 @@ const TabButton = ({toggleOpened, opened, navigation}) => {
       <View style={styles.box}>
         {/*cadastrar pacientes*/}
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('Paciente')}>
+          onPress={() => navigation.navigate('CadastroPaciente')}>
           <Animated.View
             style={[
               styles.item,
@@ -64,7 +68,7 @@ const TabButton = ({toggleOpened, opened, navigation}) => {
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*atribuir atividade*/}
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('AtribuirAtividade')}>
           <Animated.View
             style={[
               styles.item,

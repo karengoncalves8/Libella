@@ -7,12 +7,15 @@ export {default as Termos} from './home/DrawerPages/Termos';
 export {default as Ajuda} from './home/DrawerPages/Ajuda';
 
 // Screens
-export {default as Paciente} from './home/Pacientes';
+export {default as Pacientes} from './home/Pacientes';
 export {default as Agenda} from './home/Agenda';
 export {default as PerfilPaciente} from './home/PerfilPaciente';
-export {default as FichaPaciente} from './home/FichaPacienteScreen';
 export {default as CadastroPaciente} from './home/CadastroPaciente';
 export {default as Notificacoes} from './home/Notificacoes';
+export {default as Atividades} from './home/Atividades';
+export {default as AtribuirAtividade} from './home/AtribuirAtividade';
+export {default as AtividadeEsp} from './home/AtividadeEsp';
+
 
 // Auth Screens
 export {default as Login} from './auth/Login';

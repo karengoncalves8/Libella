@@ -21,13 +21,11 @@ function DrawerNavigator(){
           drawerLabelStyle: {
             fontSize: 20,
             marginLeft: -15,
-            marginBottom: -5,
-            fontFamily: 'Poppins_500Medium',
           },
           headerStyle:{
             backgroundColor: '#53A7D7'
           },
-          headerTintColor: 'white'
+          headerTintColor: 'white',
         }}>
           <Drawer.Screen
             name="Início" 
