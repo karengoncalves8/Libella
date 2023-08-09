@@ -10,10 +10,11 @@ import {
 } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
+import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import TabContainer from "../../components/navigation/TabContainer";
 
-const PacientesPage = ({ navigation }) => {
+const PacientePage = ({ navigation }) => {
   return (
     <TabContainer>
       <View style={styles.container}>
@@ -23,26 +24,31 @@ const PacientesPage = ({ navigation }) => {
             style={styles.pacienteContainer}
           >
             <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 25 }}
-            >
+              style={styles.containerContent}>
               <Image
                 style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
+                source={require('../../assets/img/Pessoas/Andreia.jpg')}
               />
-              <Text style={styles.text}>Paciente 1</Text>
+              <View style={styles.containerText}>
+                <Text style={styles.text}>Andreia Ramos</Text>{/*Esse texto pode mudar de acordo com o Banco de dados*/}
+              </View>
+              <FeatherIcons name='user-minus' size={20} color={'red'} />
             </View>
-            <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
           </TouchableOpacity>
+          {/*Pra adicionar mais pacientes basta copiar toda a touchableOpacity*/}
         </View>
       </View>
     </TabContainer>
   );
 };
 
-export default PacientesPage;
+export default PacientePage;
 
 const styles = StyleSheet.create({
+
+  // Container
   container: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
     paddingHorizontal: 20,
@@ -53,7 +59,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: "100%",
     height: "90%",
-    top: 40,
+    top: 20,
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 30,
@@ -69,8 +75,27 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingVertical: 15,
     paddingHorizontal: 20,
+    top: 40,
   },
 
+  containerContent: {
+    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'space-between',
+    paddingRight: 10,
+  },
+
+  containerText: {
+    width: '65%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+
+
+
+
+  // Imagens
   userImg: {
     width: 52,
     height: 52,
@@ -82,9 +107,17 @@ const styles = StyleSheet.create({
     height: 16,
   },
 
+  icon: {
+    minWidth: 20,
+    minHeight: 20,
+  },
+
+
+
+  // Textos
   text: {
-    fontSize: 15,
     fontFamily: 'Poppins_500Medium',
+    fontSize: 17,
     marginTop: 5,
   },
 });

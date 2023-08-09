@@ -11,7 +11,10 @@ import {
   Atividades,
   CadastroPaciente,
   AtribuirAtividade,
-  AtividadeEsp
+  AtividadeEsp,
+  AlterarDados,
+  RemoverPaciente,
+  TermosCondicoes
 } from "../../pages";
 
 import DrawerNavigator from "./DrawerNavigator";
@@ -28,25 +31,35 @@ const AppNavigator = () => {
           component={DrawerNavigator}
           options={{ headerShown: false }}
         />
-        <AppStack.Screen 
-          name="CadastroPaciente" 
-          component={CadastroPaciente} 
+        <AppStack.Screen
+          name="CadastroPaciente"
+          component={CadastroPaciente}
         />
-        <AppStack.Screen 
-          name="PerfilPaciente" 
-          component={PerfilPaciente} 
+        <AppStack.Screen
+          name="PerfilPaciente"
+          component={PerfilPaciente}
         />
-        <AppStack.Screen 
-          name="Atividades" 
-          component={Atividades} 
+        <AppStack.Screen
+          name="Atividades"
+          component={Atividades}
         />
-        <AppStack.Screen 
-          name="AtribuirAtividade" 
-          component={AtribuirAtividade} 
-        /> 
-        <AppStack.Screen 
-          name="AtividadeEsp" 
-          component={AtividadeEsp} 
+        <AppStack.Screen
+          name="AtribuirAtividade"
+          component={AtribuirAtividade}
+        />
+        <AppStack.Screen
+          name="AtividadeEsp"
+          component={AtividadeEsp}
+        />
+
+        <AppStack.Screen
+          name="AlterarDados"
+          component={AlterarDados}
+        />
+
+        <AppStack.Screen
+          name="RemoverPaciente"
+          component={RemoverPaciente}
         />
       </AppStack.Navigator>
     </TabContextProvider>
