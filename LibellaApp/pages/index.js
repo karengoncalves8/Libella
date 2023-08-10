@@ -17,6 +17,8 @@ export {default as AtribuirAtividade} from './home/AtribuirAtividade';
 export {default as AtividadeEsp} from './home/AtividadeEsp';
 export {default as RemoverPaciente} from './home/RemoverPaciente';
 export {default as AlterarDados} from './home/AlterarDados';
+export {default as Progresso} from './home/Progresso';
+
 
 
 // Auth Screens

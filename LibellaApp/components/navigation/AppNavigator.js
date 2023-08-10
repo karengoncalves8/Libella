@@ -14,7 +14,8 @@ import {
   AtividadeEsp,
   AlterarDados,
   RemoverPaciente,
-  TermosCondicoes
+  TermosCondicoes,
+  Progresso
 } from "../../pages";
 
 import DrawerNavigator from "./DrawerNavigator";
@@ -60,6 +61,11 @@ const AppNavigator = () => {
         <AppStack.Screen
           name="RemoverPaciente"
           component={RemoverPaciente}
+        />
+
+        <AppStack.Screen
+          name="Progresso"
+          component={Progresso}
         />
       </AppStack.Navigator>
     </TabContextProvider>

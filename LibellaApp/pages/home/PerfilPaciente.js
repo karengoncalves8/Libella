@@ -24,7 +24,7 @@ const PerfilPacientePage = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={() => navigation.navigate('Progresso')}>
                         <Text style={{ color: 'white', fontSize: 15 }}>Ficha</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -119,3 +119,6 @@ const styles = StyleSheet.create({
     },
   },
 );
+
+
+
