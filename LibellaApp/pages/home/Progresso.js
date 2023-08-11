@@ -9,7 +9,7 @@ const ProgressoPage =({ navigation }) =>  {
     <View style={styles.container}>
       <View style={{
         width: '120%',
-        height: '8%',
+        height: '9%',
         backgroundColor: '#53A7D7',
         justifyContent:'center',
       }}><Text style={{
