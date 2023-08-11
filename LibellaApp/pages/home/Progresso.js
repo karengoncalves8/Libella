@@ -33,7 +33,7 @@ const ProgressoPage = ({ navigation }) => {
         />
         <Text style={{
           fontWeight: 500,
-          left: 30,
+          left: 31,
           fontSize: 17,
           color: "#313131",
           fontFamily: 'Poppins_500Medium',
