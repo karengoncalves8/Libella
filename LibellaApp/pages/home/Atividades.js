@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from 'react';
 
 import {
   StyleSheet,
@@ -11,7 +11,10 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AntIcon from "react-native-vector-icons/AntDesign";
 
+
+
 const AtividadesPage = ({navigation}) => {
+  
   return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
@@ -26,6 +29,9 @@ const AtividadesPage = ({navigation}) => {
           <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4}/>
           <Text style={styles.texto}>Recentes</Text>
         </TouchableOpacity>
+
+        
+
 
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
           <View style={{flexDirection: 'column', gap: 8}}>
