@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, Dimensions, } from "react-native";
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
 
 import Feather from "react-native-vector-icons/Feather";
 
@@ -14,7 +22,7 @@ const ProgressoPage = ({ navigation }) => {
         justifyContent: 'center',
       }}><Text style={{
         fontWeight: 700,
-        left: 50,
+        left: 51,
         fontSize: 24,
         color: "white",
         fontFamily: 'Poppins_300Light',
@@ -39,8 +47,50 @@ const ProgressoPage = ({ navigation }) => {
           fontFamily: 'Poppins_500Medium',
         }}>Andreia Ramos</Text>
       </View>
-      <View style={styles.containerGraph}>
-
+      <View style={styles.containerChart}>
+        <LineChart
+          data={{
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+              {
+                data: [
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100
+                ]
+              }
+            ]
+          }}
+          width={350} // from react-native
+          height={220}
+          yAxisLabel="$"
+          yAxisSuffix="k"
+          yAxisInterval={1} // optional, defaults to 1
+          chartConfig={{
+            backgroundColor: "green",
+            backgroundGradientFrom: "black",
+            backgroundGradientTo: "blue",
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16
+            },
+            propsForDots: {
+              r: "6",
+              strokeWidth: "2",
+              stroke: "pink"
+            }
+          }}
+          //bezier curva
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("Home")}
@@ -73,7 +123,8 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 30,
   },
-  containerGraph: {
+  containerChart: {
+    flex: 1,
     backgroundColor: "#F2F2F2",
     alignItems: "center",
     justifyContent: "flex-start",
