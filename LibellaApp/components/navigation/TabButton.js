@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,18 +6,26 @@ import {
   Image,
   TouchableWithoutFeedback,
   Animated,
+  Modal
 } from "react-native";
+
+import Dropdown from 'react-native-input-select';
 
 import AntIcon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 import { useNavigation } from '@react-navigation/native';
 import { CadastroPaciente } from "../../pages";
 
 
-const TabButton = ({toggleOpened, opened}) => {
+const TabButton = ({ toggleOpened, opened }) => {
   const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [paciente, setPaciente] = React.useState();
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -37,6 +45,64 @@ const TabButton = ({toggleOpened, opened}) => {
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}
+        >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', gap: 80}}>
+              <TouchableWithoutFeedback
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <AntIcon name="close" size={25} color={"black"} />
+              </TouchableWithoutFeedback>
+              <Text>Agendar Sessão</Text>
+            </View>
+            <Dropdown
+              label="Paciente"
+              placeholder="Selecione o paciente"
+              options={[
+                { label: 'Paciente1', value: 'P1' },
+                { label: 'Paciente2', value: 'P2' },
+              ]}
+              selectedValue={paciente}
+              onValueChange={(value) => setPaciente(value)}
+              primaryColor={'#53A7D7'}
+              dropdownStyle={{
+                borderWidth: 0, // To remove border, set borderWidth to 0
+              }}
+              placeholderStyle={{
+                color: '#313131',
+                fontSize: 15,
+                opacity: 0.3
+              }}
+              labelStyle={{ color: 'teal', fontSize: 15, fontWeight: '500' }}
+              checkboxComponentStyles={{
+                checkboxSize: 20,
+                checkboxStyle: {
+                  backgroundColor: '#53A7D7',
+                  borderRadius: 30, // To get a circle - add the checkboxSize and the padding size
+                  padding: 10,
+                  borderColor: '#313131',
+                  borderWidth: 0.5,
+                },
+                checkboxLabelStyle: { color: 'black', fontSize: 20 },
+              }}
+              dropdownIcon={
+                <MaterialIcon name="arrow-drop-down" size={35} color={"black"} style={{opacity:0.3}} />
+              }
+              dropdownIconStyle={{ top: 13, right: 20 }}
+            />
+
+          </View>
+        </View>
+      </Modal>
       <View style={styles.box}>
         {/*cadastrar pacientes*/}
         <TouchableWithoutFeedback
@@ -63,7 +129,7 @@ const TabButton = ({toggleOpened, opened}) => {
               },
             ]}
           >
-           <AntIcon name="adduser" size={25} color={"white"}/>
+            <AntIcon name="adduser" size={25} color={"white"} />
 
           </Animated.View>
         </TouchableWithoutFeedback>
@@ -85,11 +151,11 @@ const TabButton = ({toggleOpened, opened}) => {
               },
             ]}
           >
-            <AntIcon name="addfile" size={25} color={"white"}/>
+            <AntIcon name="addfile" size={25} color={"white"} />
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*agendar sessão*/}
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
           <Animated.View
             style={[
               styles.item,
@@ -112,7 +178,7 @@ const TabButton = ({toggleOpened, opened}) => {
               },
             ]}
           >
-            <FontAwesomeIcon name="calendar-plus-o" size={25} color={"white"}/>
+            <FontAwesomeIcon name="calendar-plus-o" size={25} color={"white"} />
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*botão add, animação*/}
@@ -181,6 +247,29 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 25,
+    width: 350,
+    alignItems: 'center',
+    gap: 25,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
 export default TabButton;
