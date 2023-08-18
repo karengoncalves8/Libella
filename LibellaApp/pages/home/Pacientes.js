@@ -1,5 +1,5 @@
-import * as React from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import TabContainer from "../../components/navigation/TabContainer";
 
 const PacientesPage = ({ navigation }) => {
+
   return (
     <TabContainer>
       <View style={styles.container}>

@@ -6,7 +6,10 @@ import {
   Image,
   TouchableWithoutFeedback,
   Animated,
-  Modal
+  Modal,
+  TextInput,
+  Pressable,
+  Platform
 } from "react-native";
 
 import Dropdown from 'react-native-input-select';
@@ -18,6 +21,7 @@ import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
 import { CadastroPaciente } from "../../pages";
 
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TabButton = ({ toggleOpened, opened }) => {
   const navigation = useNavigation();
@@ -26,6 +30,43 @@ const TabButton = ({ toggleOpened, opened }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [paciente, setPaciente] = React.useState();
+
+  //Date Picker
+  const [date, setDate] = useState(new Date())
+  const [time, setTime] = useState();
+  const [showPicker, setShowPicker] = useState(false)
+
+  const toggleDatepicker = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const onChange = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+
+      if (Platform.OS === "android") {
+        toggleDatepicker();
+        setDateEvento(formatDate(currentDate));
+      }
+    }
+    else {
+      toggleDatepicker();
+    }
+  };
+
+  const formatDate = (rawDate) => {
+    let date = new Date(rawDate);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return `${day}/${month}/${year}`;
+  };
+
+  // Text Input
+  const [dataEvento, setDateEvento] = useState()
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -53,16 +94,16 @@ const TabButton = ({ toggleOpened, opened }) => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}
-        >
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', gap: 80}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 80 }}>
               <TouchableWithoutFeedback
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}>
                 <AntIcon name="close" size={25} color={"black"} />
               </TouchableWithoutFeedback>
-              <Text>Agendar Sessão</Text>
+              <Text style={{ fontFamily: 'Poppins_300Light' }}>Agendar Sessão</Text>
             </View>
             <Dropdown
               label="Paciente"
@@ -75,30 +116,84 @@ const TabButton = ({ toggleOpened, opened }) => {
               onValueChange={(value) => setPaciente(value)}
               primaryColor={'#53A7D7'}
               dropdownStyle={{
-                borderWidth: 0, // To remove border, set borderWidth to 0
+                borderWidth: 0.5,
               }}
               placeholderStyle={{
                 color: '#313131',
                 fontSize: 15,
                 opacity: 0.3
               }}
-              labelStyle={{ color: 'teal', fontSize: 15, fontWeight: '500' }}
+              labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Poppins_300Light', paddingTop: 10 }}
               checkboxComponentStyles={{
-                checkboxSize: 20,
+                checkboxSize: 5,
                 checkboxStyle: {
                   backgroundColor: '#53A7D7',
-                  borderRadius: 30, // To get a circle - add the checkboxSize and the padding size
+                  borderRadius: 10,
                   padding: 10,
                   borderColor: '#313131',
                   borderWidth: 0.5,
                 },
-                checkboxLabelStyle: { color: 'black', fontSize: 20 },
+                checkboxLabelStyle: { color: 'black', fontSize: 20, fontFamily: 'Poppins_300Light' },
               }}
               dropdownIcon={
-                <MaterialIcon name="arrow-drop-down" size={35} color={"black"} style={{opacity:0.3}} />
+                <MaterialIcon name="arrow-drop-down" size={35} color={"black"} style={{ opacity: 0.3 }} />
               }
               dropdownIconStyle={{ top: 13, right: 20 }}
             />
+
+            <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
+
+              <View>
+                <Text> Data </Text>
+                {!showPicker && (
+                  <Pressable
+                    onPress={toggleDatepicker}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="18/08/2008"
+                      value={dataEvento}
+                      onChange={setDateEvento}
+                      editable={false}
+                    />
+                  </Pressable>
+                )}
+                {showPicker && (
+                  <DateTimePicker
+                    mode="date"
+                    display="spinner"
+                    value={date}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+
+
+              <View>
+                <Text> Horário </Text>
+                {!showPicker && (
+                  <Pressable
+                    onPress={toggleDatepicker}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="18:00"
+                      value={time}
+                      onChange={setTime}
+                      editable={false}
+                    />
+                  </Pressable>
+                )}
+
+                {showPicker && (
+                  <DateTimePicker
+                    mode="time"
+                    display="spinner"
+                    value={date}
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            </View>
+
 
           </View>
         </View>
@@ -271,5 +366,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  input: {
+    borderWidth: 0.5,
+    borderRadius: 5,
+    padding: 7,
+    backgroundColor: '#ECECEC',
+  }
 });
 export default TabButton;
