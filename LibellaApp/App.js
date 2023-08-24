@@ -9,10 +9,14 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
+import AtividadePac from './pages/home/AtividadePac';
+import InicioPac from './pages/home/DrawerPages/InicioPac';
+import AlterarDadosPac from './pages/home/AlterarDadosPac';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfortaa';
+import { Ajuda, Config, Notificacoes, Termos } from './pages';
 
 export default function App() {
   const [userToken, setUserToken] = React.useState(null)
@@ -42,14 +46,16 @@ export default function App() {
 
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <RootStackScreen userToken={userToken} />
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <AlterarDadosPac/>
 
   );
 }
+
+/* <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <RootStackScreen userToken={userToken} />
+      </NavigationContainer>
+    </AuthContext.Provider> */
 
 const styles = StyleSheet.create({
   container: {
