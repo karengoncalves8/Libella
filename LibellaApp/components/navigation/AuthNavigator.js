@@ -10,6 +10,8 @@ import {
   Introduction1,
   Introduction2,
   Introduction3,
+  ConfigPac,
+  AlterarDadosPac,
 } from "../../pages";
 
 import CustomDrawer from "./CustomDrawer";
@@ -28,6 +30,7 @@ const AuthNavigator = () => {
         <AuthStack.Screen name="Introduction3" component={Introduction3} />
         <AuthStack.Screen name="Login" component={Login} />
         <AuthStack.Screen name="Cadastro" component={Cadastro} />
+
         <AuthStack.Screen
           name="Home"
           component={DrawerNavigator}

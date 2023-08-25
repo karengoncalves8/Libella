@@ -27,3 +27,17 @@ export {default as Selection} from './auth/SelectionPage';
 export {default as Introduction1} from './auth/Introduction1';
 export {default as Introduction2} from './auth/Introduction2';
 export {default as Introduction3} from './auth/Introduction3';
+
+
+// Paciente Drawer Screens
+export {default as ConfigPac} from './home/DrawerPages/ConfigPac';
+export {default as InicioPac} from './home/DrawerPages/InicioPac';
+
+// Paciente Screens
+export {default as AgendaPac} from './home/AgendaPac';
+export {default as AlterarDadosPac} from './home/AlterarDadosPac';
+export {default as AtividadePac} from './home/AtividadePac';
+export {default as AtividadesPac} from './home/AtividadesPac';
+export {default as NotificacoesPac} from './home/NotificacoesPac';
+export {default as PerfilPac} from './home/PerfilPac';
+export {default as PerfilPsPac} from './home/PerfilPsPac';

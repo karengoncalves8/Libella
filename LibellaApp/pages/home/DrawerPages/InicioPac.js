@@ -72,6 +72,7 @@ const InicioPage = (navigation) => {
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
+            
             <Text style={styles.subTitulo}>ATIVIDADES</Text>
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
@@ -81,6 +82,7 @@ const InicioPage = (navigation) => {
             <View style={styles.paciente}>
               <View
                 style={{ flexDirection: "column", gap: 10 }}>
+
                 <Text style={styles.titulo}>Roda da Vida</Text>
                 <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
               </View>

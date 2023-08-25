@@ -19,10 +19,13 @@ const SelectionPage = ({navigation}) => {
         <Text style={styles.text}>ou</Text>
       </View>
       <View style={styles.containerImgBottom}>
+      <TouchableOpacity onPress={() => navigation.navigate('Introduction1')}>
         <Image
           style={styles.img}
           source={require('../../assets/img/Auth/ChoicePaciente.png')}
         />
+      </TouchableOpacity>
+
       </View>
       <StatusBar backgroundColor={"white"} style="auto" />
     </View>

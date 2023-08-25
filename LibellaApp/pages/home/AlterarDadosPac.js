@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 
     containerProfile: { //Container de cima do perfil: FOTO + NOME
         width: '90%',
-        height: '15%',
+        height: '10%',
         flexDirection: 'row',
         gap: 30,
     },

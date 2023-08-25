@@ -9,9 +9,9 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
-import AtividadePac from './pages/home/AtividadePac';
-import InicioPac from './pages/home/DrawerPages/InicioPac';
 import AlterarDadosPac from './pages/home/AlterarDadosPac';
+import ConfigPac from './pages/home/DrawerPages/ConfigPac';
+import InicioPac from './pages/home/DrawerPages/InicioPac';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
@@ -46,7 +46,13 @@ export default function App() {
 
 
   return (
-    <AlterarDadosPac/>
+    <ConfigPac/>
+    /*<AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <RootStackScreen userToken={userToken} />
+      </NavigationContainer>
+    </AuthContext.Provider>
+   */
 
   );
 }
