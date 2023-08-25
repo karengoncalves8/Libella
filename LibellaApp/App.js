@@ -46,7 +46,11 @@ export default function App() {
 
 
   return (
-    <AlterarDadosPac/>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <RootStackScreen userToken={userToken} />
+      </NavigationContainer>
+    </AuthContext.Provider>
 
   );
 }

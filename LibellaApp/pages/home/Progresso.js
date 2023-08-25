@@ -10,6 +10,8 @@ import {
   StackedBarChart
 } from "react-native-chart-kit";
 
+
+
 import Feather from "react-native-vector-icons/Feather";
 
 const ProgressoPage = ({ navigation }) => {
@@ -93,7 +95,7 @@ const ProgressoPage = ({ navigation }) => {
         />
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("Inicio")}
         style={styles.pacienteContainer}>
         <Feather name='home' size={25} color={'#53A7D7'} />
       </TouchableOpacity>
