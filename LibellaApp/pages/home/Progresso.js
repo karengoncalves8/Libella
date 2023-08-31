@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, Dimensions, } from "react-native";
 import {
   LineChart,
@@ -13,7 +12,43 @@ import {
 
 
 import Feather from "react-native-vector-icons/Feather";
-
+const data = [
+  {
+    name: "Seoul",
+    population: 21500000,
+    color: "rgba(131, 167, 234, 1)",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15
+  },
+  {
+    name: "Toronto",
+    population: 2800000,
+    color: "#F00",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15
+  },
+  {
+    name: "Beijing",
+    population: 527612,
+    color: "red",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15
+  },
+  {
+    name: "New York",
+    population: 8538000,
+    color: "#ffffff",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15
+  },
+  {
+    name: "Moscow",
+    population: 11920000,
+    color: "rgb(0, 0, 255)",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15
+  }
+];
 const ProgressoPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -49,50 +84,56 @@ const ProgressoPage = ({ navigation }) => {
           fontFamily: 'Poppins_500Medium',
         }}>Andreia Ramos</Text>
       </View>
-      <View style={styles.containerChart}>
-        <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
+      <View style={styles.containerMainChart}>
+        <View style={{ backgroundColor: "white", width: '100%' }}>
+          <Text>Gráfico de humor</Text>
+          <LineChart
+            data={{
+              labels: ["January", "February", "March", "April", "May", "June"],
+              datasets: [
+                {
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100
+                  ]
+                }
+              ]
+            }}
+            width={350} // from react-native
+            height={220}
+            yAxisLabel="$"
+            yAxisSuffix="k"
+            yAxisInterval={1} // optional, defaults to 1
+            chartConfig={{
+              backgroundColor: "green",
+              backgroundGradientFrom: "black",
+              backgroundGradientTo: "blue",
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "pink"
               }
-            ]
-          }}
-          width={350} // from react-native
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundColor: "green",
-            backgroundGradientFrom: "black",
-            backgroundGradientTo: "blue",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
+            }}
+            //bezier curva
+            style={{
+              marginVertical: 8,
               borderRadius: 16
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "pink"
-            }
-          }}
-          //bezier curva
-          style={{
-            marginVertical: 8,
-            borderRadius: 16
-          }}
-        />
+            }}
+          />
+        </View>
+        <View style={{ backgroundColor: "white", width: '100%' }}>
+          <Text>Atividades realizadas</Text>
+        </View>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("Inicio")}
@@ -125,16 +166,15 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 30,
   },
-  containerChart: {
+  containerMainChart: {
     flex: 1,
-    backgroundColor: "#F2F2F2",
+    gap:30,
+    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "flex-start",
     height: "60%",
     width: "100%",
-    paddingHorizontal: 30,
     borderWidth: 0.5
-
   },
   inputbox: {
     justifyContent: "center",
