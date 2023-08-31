@@ -11,7 +11,7 @@ const Perfil = () => {
                 <View style={styles.containerUser}>
                     <Image
                         style={styles.userImg}
-                        source={require('../../../assets/img/Pessoas/Andressa.jpg')}
+                        source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
                     />
                 </View>
                 <View style={styles.containerName}>

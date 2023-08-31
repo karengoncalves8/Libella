@@ -24,7 +24,7 @@ const Chat = () => {
                 <View style={styles.containerUserImg}>
                     <Image
                         style={styles.userImg}
-                        source={require('../../../assets/img/Pessoas/Andreia.jpg')}
+                        source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
                     />
                 </View>
                 <View style={styles.containerTexts}>

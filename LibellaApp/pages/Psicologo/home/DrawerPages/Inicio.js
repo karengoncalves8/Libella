@@ -13,7 +13,7 @@ import moment from "moment";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../../components/navigation/TabContainer";
+import TabContainer from "../../../../components/navigation/TabContainer";
 
 import 'moment/locale/pt-br';
 
@@ -82,7 +82,7 @@ const InicioPage = (navigation) => {
               >
                 <Image
                   style={styles.imgIcon}
-                  source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                  source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
                 />
                 <Text>Andreia Ramos</Text>
               </View>

@@ -4,19 +4,30 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
   Welcome,
-  Selection, 
-  Introduction1, 
+  Selection,
+  Introduction1,
 } from "../../pages";
 
 const SelectStack = createNativeStackNavigator();
 
-const SelectNavigator = () => {
+const SelectNavigator = ({ choice }) => {
   return (
-      <SelectNavigator.Navigator screenOptions={{ headerShown: false }}>
-        <SelectNavigator.Screen name="Welcome" component={Welcome} />
-        <SelectNavigator.Screen name="Selection" component={Selection} />
-      </SelectNavigator.Navigator>
+    <SelectStack.Navigator screenOptions={{ headerShown: false }}>
+      <SelectStack.Screen name="Welcome" component={Welcome} />
+      <SelectStack.Screen name="Selection" component={Selection} />
+      {choice = 'Pisocologo' ? (
+        <RootStack.Screen
+          name="PsicologoNav"
+          component={PsicologoNavigator}
+        />
+      ) : choice = 'Paciente'(
+        <RootStack.Screen
+          name="PacienteNav"
+          component={PacienteNavigator}
+        />
+      )}
+    </SelectStack.Navigator>
   );
 };
 
-export default AuthNavigator;
+export default SelectNavigator;

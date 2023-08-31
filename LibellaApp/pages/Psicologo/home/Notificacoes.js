@@ -13,7 +13,7 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import TabContainer from "../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/TabContainer";
 
 const NotificacoesPage = () => {
   return (
