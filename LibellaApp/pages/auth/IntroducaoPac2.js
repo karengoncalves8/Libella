@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-const Introduction1Page = ({navigation}) => {
+const Introduction2Page = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('Login')}>
@@ -12,25 +12,25 @@ const Introduction1Page = ({navigation}) => {
         </View>
       </TouchableOpacity>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Organize suas atividades</Text>
+        <Text style={styles.title}>Agenda</Text>
       </View>
       <View style={styles.containerImg}>
       <Image
         style={styles.img}
-        source={require('../../assets/img/Auth/Introduction-1.png')}
+        source={require('../../assets/img/Auth/Introduction-2.png')}
       />
       </View>
       <View style={styles.containerText}>
-      <Text style={styles.text}>Atribua atividades aos seus pacientes</Text>
+      <Text style={styles.text}>Receba notificações avisando de sua próxima consulta</Text>
       </View>
       <View style={styles.containerCarrousel}>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
           <Text style={styles.LinkButton}>&#60; Voltar</Text>
         </TouchableOpacity>
+        <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircleActivated}></View>
         <View style={styles.CarrousselCircle}></View>
-        <View style={styles.CarrousselCircle}></View>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction2')}>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction3')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
@@ -39,7 +39,7 @@ const Introduction1Page = ({navigation}) => {
   );
 }
 
-export default Introduction1Page;
+export default Introduction2Page; 
 
 const styles = StyleSheet.create({
   
@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     right: 20,
   },
+
   containerTitle: {
-    height: '15%',
+    height: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },  
 
   containerText: {
-    height: '10%',
+    height: '15%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
     padding: 40,
   },
 
-  
+
+
 
   // Elementos
   CarrousselCircle: {
@@ -111,36 +113,39 @@ const styles = StyleSheet.create({
 
 
 
-  //Imagens
+  // Imagens
   img: {
     width: 333,
     height: 333,
   },
 
+
+
+
   // Textos
   title: {
     fontFamily: 'Comfortaa_500Medium',
     fontSize: 35,
-    top: 10,
+    bottom: 20,
     textAlign: "center",
     color: "white",
-    lineHeight: 40
+    lineHeight: 40,
   },
-
+  
   text: {
     fontFamily: 'Comfortaa_500Medium',
     color: "#FFFFFF",
     fontWeight: '400',
-    fontSize: 19,
+    fontSize: 18,
     textAlign: 'center',
     width: '80%',
   },
 
   LinkButton: {
+    fontFamily: 'Poppins_500Medium',
     color: "#6D45C2",
-    fontWeight: '500',
     fontSize: 20,
     lineHeight: 30,
-    fontFamily: 'Poppins_500Medium',
   },
+
 });

@@ -21,7 +21,7 @@ const Introduction1Page = ({navigation}) => {
       />
       </View>
       <View style={styles.containerText}>
-      <Text style={styles.text}>Atribua atividades aos seus pacientes</Text>
+      <Text style={styles.text}>Tenha acesso as atividades atribuídas por seu psicólogo</Text>
       </View>
       <View style={styles.containerCarrousel}>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>

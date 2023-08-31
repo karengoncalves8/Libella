@@ -12,7 +12,7 @@ const Introduction3Page = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Progresso Pessoal</Text>
+        <Text style={styles.title}>Progresso dos Pacientes</Text>
       </View>
       <View style={styles.containerImg}>
         <Image
@@ -21,7 +21,7 @@ const Introduction3Page = ({ navigation }) => {
         />
       </View>
       <View style={styles.containerText}>
-        <Text style={styles.text}>Veja seu progresso ao longo do tempo</Text>
+        <Text style={styles.text}>Verifique o avanço de seus pacientes de forma interativa</Text>
       </View>
       <View style={styles.containerCarrousel}>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
