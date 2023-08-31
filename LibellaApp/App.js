@@ -9,11 +9,12 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
-import AtividadePac from './pages/home/AtividadePac';
+import AtividadesPac from './pages/home/AtividadesPac';
 import InicioPac from './pages/home/DrawerPages/InicioPac';
 import AlterarDadosPac from './pages/home/AlterarDadosPac';
 import AjudaPac from './pages/home/DrawerPages/AjudaPac';
 import RegistroPac from './pages/home/DrawerPages/RegistroPac';
+import AtividadePac from './pages/home/AtividadePac';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
@@ -48,7 +49,7 @@ export default function App() {
 
 
   return (
-    <RegistroPac/>
+    <AtividadePac/>
 
   );
 }

@@ -14,7 +14,7 @@ export {default as CadastroPaciente} from './home/CadastroPaciente';
 export {default as Notificacoes} from './home/Notificacoes';
 export {default as Atividades} from './home/Atividades';
 export {default as AtribuirAtividade} from './home/AtribuirAtividade';
-export {default as AtividadeEsp} from './home/AtividadeEsp';
+export {default as AtividadePac} from './home/AtividadePac';
 export {default as RemoverPaciente} from './home/RemoverPaciente';
 export {default as AlterarDados} from './home/AlterarDados';
 

@@ -11,7 +11,6 @@ import {
   Atividades,
   CadastroPaciente,
   AtribuirAtividade,
-  AtividadeEsp,
   AlterarDados,
   RemoverPaciente,
   TermosCondicoes
@@ -19,6 +18,7 @@ import {
 
 import DrawerNavigator from "./DrawerNavigator";
 import { TabContextProvider } from "./TabContext";
+import AtividadePac from "../../pages/home/AtividadePac";
 
 const AppStack = createNativeStackNavigator();
 
@@ -48,8 +48,8 @@ const AppNavigator = () => {
           component={AtribuirAtividade}
         />
         <AppStack.Screen
-          name="AtividadeEsp"
-          component={AtividadeEsp}
+          name="AtividadePac"
+          component={AtividadePac}
         />
 
         <AppStack.Screen
