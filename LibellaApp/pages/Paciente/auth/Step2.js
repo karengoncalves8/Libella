@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-const Introduction3Page = ({ navigation }) => {
+const Step2Screen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('Login')}>
@@ -12,25 +12,25 @@ const Introduction3Page = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Progresso Pessoal</Text>
+        <Text style={styles.title}>Agenda</Text>
       </View>
       <View style={styles.containerImg}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/Auth/Introduction-3.png')}
-        />
+      <Image
+        style={styles.img}
+        source={require('../../assets/img/Auth/Introduction-2.png')}
+      />
       </View>
       <View style={styles.containerText}>
-        <Text style={styles.text}>Veja seu progresso ao longo do tempo</Text>
+      <Text style={styles.text}>Receba notificações avisando de sua próxima consulta</Text>
       </View>
       <View style={styles.containerCarrousel}>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
           <Text style={styles.LinkButton}>&#60; Voltar</Text>
         </TouchableOpacity>
         <View style={styles.CarrousselCircle}></View>
-        <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircleActivated}></View>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end" }} onPress={() => navigation.navigate('Login')}>
+        <View style={styles.CarrousselCircle}></View>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction3')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
@@ -39,9 +39,11 @@ const Introduction3Page = ({ navigation }) => {
   );
 }
 
-export default Introduction3Page;
+export default Step2Screen; 
 
 const styles = StyleSheet.create({
+  
+  // Container
   container: {
     flex: 1,
     height: "100%",
@@ -64,15 +66,14 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-end',
-
-  },
+  }, 
 
   containerImg: {
     height: '50%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  },  
 
   containerText: {
     height: '15%',
@@ -91,6 +92,10 @@ const styles = StyleSheet.create({
     padding: 40,
   },
 
+
+
+
+  // Elementos
   CarrousselCircle: {
     backgroundColor: '#FFFFFF',
     height: 10,
@@ -116,16 +121,17 @@ const styles = StyleSheet.create({
 
 
 
+
   // Textos
   title: {
     fontFamily: 'Comfortaa_500Medium',
     fontSize: 35,
-    top: 10,
+    bottom: 20,
     textAlign: "center",
     color: "white",
-    lineHeight: 40
+    lineHeight: 40,
   },
-
+  
   text: {
     fontFamily: 'Comfortaa_500Medium',
     color: "#FFFFFF",
@@ -138,7 +144,6 @@ const styles = StyleSheet.create({
   LinkButton: {
     fontFamily: 'Poppins_500Medium',
     color: "#6D45C2",
-    fontWeight: '500',
     fontSize: 20,
     lineHeight: 30,
   },

@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const SelectionPage = ({navigation}) => {
+const SelectionScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
@@ -29,7 +29,7 @@ const SelectionPage = ({navigation}) => {
   );
 }
 
-export default SelectionPage;
+export default SelectionScreen;
 
 const styles = StyleSheet.create({
   

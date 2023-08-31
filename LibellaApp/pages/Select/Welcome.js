@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
-const WelcomePage = ({ navigation }) => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
@@ -32,7 +32,7 @@ const WelcomePage = ({ navigation }) => {
   );
 };
 
-export default WelcomePage;
+export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   

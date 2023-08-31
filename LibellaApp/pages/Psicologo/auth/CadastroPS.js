@@ -18,7 +18,7 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-const CadastroPage = ({ navigation }) => {
+const CadastroScreen = ({ navigation }) => {
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -222,7 +222,7 @@ const CadastroPage = ({ navigation }) => {
   );
 };
 
-export default CadastroPage;
+export default CadastroScreen;
 
 const styles = StyleSheet.create({
   container: {

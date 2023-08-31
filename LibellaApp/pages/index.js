@@ -19,11 +19,19 @@ export {default as RemoverPaciente} from './home/RemoverPaciente';
 export {default as AlterarDados} from './home/AlterarDados';
 
 
-// Auth Screens
-export {default as Login} from './auth/Login';
-export {default as Cadastro} from './auth/Cadastro';
-export {default as Welcome} from './auth/Welcome';
-export {default as Selection} from './auth/SelectionPage';
-export {default as Introduction1} from './auth/Introduction1';
-export {default as Introduction2} from './auth/Introduction2';
-export {default as Introduction3} from './auth/Introduction3';
+// Auth Piscologo Screens
+export {default as LoginPS} from './Psicologo/auth/LoginPS';
+export {default as Cadastro} from './Psicologo/auth/CadastroPS';
+export {default as Step1} from './Psicologo/auth/Step1';
+export {default as Step2} from './Psicologo/auth/Step2';
+export {default as Step3} from './Psicologo/auth/Step3';
+
+// Auth Paciente Screens
+export {default as LoginPC} from './Paciente/auth/LoginPC';
+export {default as Step1} from './Paciente/auth/Step1';
+export {default as Step2} from './Paciente/auth/Step2';
+export {default as Step3} from './Paciente/auth/Step3';
+
+// Select Screens
+export {default as Welcome} from './select/SelectionPage';
+export {default as Selection} from './select/Welcome';

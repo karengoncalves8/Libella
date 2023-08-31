@@ -12,7 +12,7 @@ import {
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
-import TabContainer from "../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/TabContainer";
 
 const PacientePage = ({ navigation }) => {
   return (
