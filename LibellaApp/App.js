@@ -7,8 +7,8 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthContext } from './components/navigation/AuthContext';
-import RootStackScreen from './components/navigation/RootStack';
+import { AuthContext } from './components/navigation/Stack/AuthContext';
+import RootStackScreen from './components/navigation/Stack/RootStack';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';

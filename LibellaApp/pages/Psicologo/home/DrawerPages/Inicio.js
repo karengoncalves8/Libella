@@ -13,7 +13,7 @@ import moment from "moment";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../../../components/navigation/TabContainer";
+import TabContainer from "../../../../components/navigation/BottomTab/TabContainer";
 
 import 'moment/locale/pt-br';
 

@@ -8,10 +8,10 @@ import {
   Step1PS,
   Step2PS,
   Step3PS,
-} from "../../pages";
+} from "../../../pages";
 
-import CustomDrawer from "./CustomDrawer";
-import DrawerNavigator from "./DrawerNavigator";
+import CustomDrawer from "../Drawer/CustomDrawer";
+import DrawerNavigator from "../DrawerNavigator";
 
 
 const AuthStack = createNativeStackNavigator();

@@ -3,62 +3,67 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
+  Inicio,
   PerfilPaciente,
+  Pacientes,
+  Agenda,
+  Notificacoes,
   Atividades,
   CadastroPaciente,
   AtribuirAtividade,
   AtividadeEsp,
   AlterarDados,
   RemoverPaciente,
-} from "../../pages";
+  TermosCondicoes
+} from "../../../pages";
 
-import DrawerNavigator from "./DrawerNavigator";
-import { TabContextProvider } from "./TabContext";
+import DrawerNavigator from "../Drawer/DrawerNavigator";
+import { TabContextProvider } from "../BottomTab/TabContext";
 
-const PsicoStack = createNativeStackNavigator();
+const AppStack = createNativeStackNavigator();
 
-const PsicologoNavigator = () => {
+const AppNavigator = () => {
   return (
     <TabContextProvider>
-      <PsicoStack.Navigator screenOptions={{ headerShown: false }}>
-        <PsicoStack.Screen
+      <AppStack.Navigator screenOptions={{ headerShown: false }}>
+        <AppStack.Screen
           name="Home"
           component={DrawerNavigator}
           options={{ headerShown: false }}
         />
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="CadastroPaciente"
           component={CadastroPaciente}
         />
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="PerfilPaciente"
           component={PerfilPaciente}
         />
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="Atividades"
           component={Atividades}
         />
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="AtribuirAtividade"
           component={AtribuirAtividade}
         />
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="AtividadeEsp"
           component={AtividadeEsp}
         />
 
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="AlterarDados"
           component={AlterarDados}
         />
 
-        <PsicoStack.Screen
+        <AppStack.Screen
           name="RemoverPaciente"
           component={RemoverPaciente}
         />
-      </PsicoStack.Navigator>
+      </AppStack.Navigator>
     </TabContextProvider>
   );
 };
 
-export default PsicologoNavigator;
+export default AppNavigator;

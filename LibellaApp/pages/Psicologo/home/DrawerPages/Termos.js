@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
 
-import FeatherIcon from 'react-native-vector-icons/Feather'
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 const PerfilPacientePage = ({ navigation }) => {
     return (

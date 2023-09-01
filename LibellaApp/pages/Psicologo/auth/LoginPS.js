@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityInd
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-import { AuthContext } from "../../../components/navigation/AuthContext";
+import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 

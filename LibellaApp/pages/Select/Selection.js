@@ -23,7 +23,7 @@ const SelectionScreen = ({ navigation }) => {
       </View>
       <View style={styles.containerImgBottom}>
         <TouchableOpacity onPress={() =>
-            navigation.navigate('Step1PC')}>
+            navigation.navigate('AuthPC')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePaciente.png')}

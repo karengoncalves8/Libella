@@ -6,7 +6,7 @@ import {
   Image,
 } from "react-native";
 
-import TabContainer from "../../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/BottomTab/TabContainer";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 

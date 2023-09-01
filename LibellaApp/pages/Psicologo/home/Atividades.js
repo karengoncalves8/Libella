@@ -11,8 +11,6 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AntIcon from "react-native-vector-icons/AntDesign";
 
-
-
 const AtividadesPage = ({navigation}) => {
   
   return (

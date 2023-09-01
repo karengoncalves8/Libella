@@ -19,7 +19,6 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 import { useNavigation } from '@react-navigation/native';
-import { CadastroPaciente } from "../../pages";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 

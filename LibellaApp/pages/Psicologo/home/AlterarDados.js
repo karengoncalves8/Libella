@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import AntIcon from "react-native-vector-icons/AntDesign"

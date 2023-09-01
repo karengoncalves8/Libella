@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar } from "expo-status-bar";
+
 import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";

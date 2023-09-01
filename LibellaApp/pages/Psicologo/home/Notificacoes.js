@@ -8,12 +8,10 @@ import {
   TextInput,
 } from "react-native";
 
-import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import TabContainer from "../../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/BottomTab/TabContainer";
 
 const NotificacoesPage = () => {
   return (

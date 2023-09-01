@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   Welcome,
   Selection,
-} from "../../pages";
+} from "../../../pages";
 
 
 import AuthPS from "./AuthPS";

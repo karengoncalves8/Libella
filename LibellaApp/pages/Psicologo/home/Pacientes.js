@@ -11,7 +11,7 @@ import {
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/BottomTab/TabContainer";
 
 const PacientesPage = ({ navigation }) => {
 

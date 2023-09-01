@@ -1,3 +1,18 @@
+// Select Screens
+export {default as Welcome} from './Select/Welcome';
+export {default as Selection} from './Select/Selection';
+
+/////////////////////////////////////////////////////////////////////////////
+
+// PSICOLOGO
+
+// Auth Screens
+export {default as LoginPS} from './Psicologo/auth/LoginPS';
+export {default as CadastroPS} from './Psicologo/auth/CadastroPS';
+export {default as Step1PS} from './Psicologo/auth/Step1';
+export {default as Step2PS} from './Psicologo/auth/Step2';
+export {default as Step3PS} from './Psicologo/auth/Step3';
+
 // Drawer Screens
 export {default as Chat} from './Psicologo/home/DrawerPages/Chat';
 export {default as Inicio} from './Psicologo/home/DrawerPages/Inicio';
@@ -18,20 +33,14 @@ export {default as AtividadeEsp} from './Psicologo/home/AtividadeEsp';
 export {default as RemoverPaciente} from './Psicologo/home/RemoverPaciente';
 export {default as AlterarDados} from './Psicologo/home/AlterarDados';
 
+//////////////////////////////////////////////////////////////////////
 
-// Auth Piscologo Screens
-export {default as LoginPS} from './Psicologo/auth/LoginPS';
-export {default as CadastroPS} from './Psicologo/auth/CadastroPS';
-export {default as Step1PS} from './Psicologo/auth/Step1';
-export {default as Step2PS} from './Psicologo/auth/Step2';
-export {default as Step3PS} from './Psicologo/auth/Step3';
+// PACIENTE
 
 // Auth Paciente Screens
 export {default as LoginPC} from './Paciente/auth/LoginPC';
 export {default as Step1PC} from './Paciente/auth/Step1';
 export {default as Step2PC} from './Paciente/auth/Step2';
 export {default as Step3PC} from './Paciente/auth/Step3';
+export {default as Step4PC} from './Paciente/auth/Step4';
 
-// Select Screens
-export {default as Welcome} from './Select/Welcome';
-export {default as Selection} from './Select/Selection';

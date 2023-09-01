@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
+
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 const AjudaPage = () => {

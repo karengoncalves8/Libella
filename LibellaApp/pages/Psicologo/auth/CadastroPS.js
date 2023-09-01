@@ -9,7 +9,7 @@ import {
   ActivityIndicator
 } from "react-native";
 
-import { AuthContext } from "../../../components/navigation/AuthContext";
+import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
