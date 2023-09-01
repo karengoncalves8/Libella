@@ -17,7 +17,7 @@ const Step2Screen = ({navigation}) => {
       <View style={styles.containerImg}>
       <Image
         style={styles.img}
-        source={require('../../assets/img/Auth/Introduction-2.png')}
+        source={require('../../../assets/img/Auth/Introduction-2.png')}
       />
       </View>
       <View style={styles.containerText}>

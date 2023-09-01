@@ -17,7 +17,7 @@ const Step3Screen = ({ navigation }) => {
       <View style={styles.containerImg}>
         <Image
           style={styles.img}
-          source={require('../../assets/img/Auth/Introduction-3.png')}
+          source={require('../../../assets/img/Auth/Introduction-3.png')}
         />
       </View>
       <View style={styles.containerText}>

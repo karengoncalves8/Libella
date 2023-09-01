@@ -5,27 +5,28 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   Welcome,
   Selection,
-  Introduction1,
 } from "../../pages";
+
+
+import AuthPS from "./AuthPS";
+import AuthPC from "./AuthPC";
 
 const SelectStack = createNativeStackNavigator();
 
-const SelectNavigator = ({ choice }) => {
+const SelectNavigator = ({  }) => {
   return (
     <SelectStack.Navigator screenOptions={{ headerShown: false }}>
       <SelectStack.Screen name="Welcome" component={Welcome} />
       <SelectStack.Screen name="Selection" component={Selection} />
-      {choice = 'Pisocologo' ? (
-        <RootStack.Screen
-          name="PsicologoNav"
-          component={PsicologoNavigator}
+      
+        <SelectStack.Screen
+          name="AuthPS"
+          component={AuthPS}
         />
-      ) : choice = 'Paciente'(
-        <RootStack.Screen
-          name="PacienteNav"
-          component={PacienteNavigator}
+        <SelectStack.Screen
+          name="AuthPC"
+          component={AuthPC}
         />
-      )}
     </SelectStack.Navigator>
   );
 };

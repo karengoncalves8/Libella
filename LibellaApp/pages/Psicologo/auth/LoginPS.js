@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityInd
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-import { AuthContext } from "../../components/navigation/AuthContext";
+import { AuthContext } from "../../../components/navigation/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
@@ -74,7 +74,7 @@ const LoginPage = ({ navigation }) => {
 
       <Image
         style={styles.img}
-        source={require('../../assets/img/Logos/Logo-roxa.png')}
+        source={require('../../../assets/img/Logos/Logo-roxa.png')}
       />
 
       <Text style={styles.title}> Login</Text>
@@ -131,7 +131,7 @@ const LoginPage = ({ navigation }) => {
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text}>Não tem uma conta? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+        <TouchableOpacity onPress={() => navigation.navigate('CadastroPS')}>
           <Text style={{ color: '#4A2794', fontSize: 16, }}>Cadastre-se!</Text>
         </TouchableOpacity>
       </View>

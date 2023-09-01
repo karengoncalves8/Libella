@@ -74,7 +74,7 @@ const LoginPCScreen = ({ navigation }) => {
 
       <Image
         style={styles.img}
-        source={require('../../assets/img/Logos/Logo-roxa.png')}
+        source={require('../../../assets/img/Logos/Logo-roxa.png')}
       />
 
       <Text style={styles.title}> Login</Text>

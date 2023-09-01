@@ -83,7 +83,7 @@ const AgendaPage = () => {
                       <View style={styles.card}>
                         <View style={{ flexDirection: "row", gap: 6 }}>
                           <Image
-                            source={require("../../assets/icons/VectorAzul.png")}
+                            source={require("../../../assets/icons/VectorAzul.png")}
                           />
                           <Text style={styles.text}>
                             {mettings.name}

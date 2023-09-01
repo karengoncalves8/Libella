@@ -28,7 +28,7 @@ const PacientesPage = ({ navigation }) => {
             >
               <Image
                 style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
+                source={require("../../../assets/img/Pessoas/Andreia.jpg")}
               />
               <Text style={styles.text}>Paciente 1</Text>
             </View>

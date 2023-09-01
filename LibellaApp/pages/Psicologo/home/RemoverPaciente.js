@@ -27,7 +27,7 @@ const PacientePage = ({ navigation }) => {
               style={styles.containerContent}>
               <Image
                 style={styles.userImg}
-                source={require('../../assets/img/Pessoas/Andreia.jpg')}
+                source={require('../../../assets/img/Pessoas/Andreia.jpg')}
               />
               <View style={styles.containerText}>
                 <Text style={styles.text}>Andreia Ramos</Text>{/*Esse texto pode mudar de acordo com o Banco de dados*/}

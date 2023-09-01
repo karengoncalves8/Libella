@@ -61,7 +61,7 @@ const InicioPage = (navigation) => {
             >
               <View style={{ flexDirection: "row", gap: 6 }}>
                 <Image
-                  source={require("../../../assets/icons/VectorAzul.png")}
+                  source={require("../../../../assets/icons/VectorAzul.png")}
                 />
                 <Text>Rui Barbosa</Text>
               </View>
@@ -94,7 +94,7 @@ const InicioPage = (navigation) => {
               >
                 <Image
                   style={styles.imgIcon}
-                  source={require("../../../assets/img//Pessoas/Rui.jpg")}
+                  source={require("../../../../assets/img/Pessoas/Rui.jpg")}
                 />
                 <Text>Rui Barbosa</Text>
               </View>

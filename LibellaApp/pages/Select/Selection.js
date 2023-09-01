@@ -11,9 +11,7 @@ const SelectionScreen = ({ navigation }) => {
       </View>
       <View style={styles.containerImgTop}>
         <TouchableOpacity onPress={() =>
-            navigation.navigate('Step1PS', {
-              paramKey: choice,
-            })}>
+            navigation.navigate('AuthPS')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePsicologo.png')}
@@ -25,9 +23,7 @@ const SelectionScreen = ({ navigation }) => {
       </View>
       <View style={styles.containerImgBottom}>
         <TouchableOpacity onPress={() =>
-            navigation.navigate('Step1PC', {
-              paramKey: choice,
-            })}>
+            navigation.navigate('Step1PC')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePaciente.png')}

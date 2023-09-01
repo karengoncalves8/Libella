@@ -6,7 +6,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 const Step1Screen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('LoginPS')}>
         <View style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }}>
           <Text style={styles.LinkButton}>Pular &#62;</Text>
         </View>
@@ -17,7 +17,7 @@ const Step1Screen = ({navigation}) => {
       <View style={styles.containerImg}>
       <Image
         style={styles.img}
-        source={require('../../assets/img/Auth/Introduction-1.png')}
+        source={require('../../../assets/img/Auth/Introduction-1.png')}
       />
       </View>
       <View style={styles.containerText}>
@@ -30,7 +30,7 @@ const Step1Screen = ({navigation}) => {
         <View style={styles.CarrousselCircleActivated}></View>
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircle}></View>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Introduction2')}>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Step2PS')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
