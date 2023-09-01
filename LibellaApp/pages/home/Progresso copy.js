@@ -11,10 +11,11 @@ import {
 import CircularProgress from 'react-native-circular-progress-indicator'
 import Feather from "react-native-vector-icons/Feather";
 
+export default function App(){
+  
 
 const ProgressoPage = ({ navigation }) => {
   const [value, setValue] = useState(0);
-
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -102,7 +103,7 @@ const ProgressoPage = ({ navigation }) => {
 
               <CircularProgress>
                 radius={90}
-                value={85}
+                value={80}
                 textColor='gray'
                 valueStuff={'%'}
                 inActiveStrokeColor={'black'}
@@ -124,8 +125,7 @@ const ProgressoPage = ({ navigation }) => {
     </ScrollView>
   );
 }
-
-export default ProgressoPage;
+}
 
 const styles = StyleSheet.create({
   container: {
