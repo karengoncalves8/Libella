@@ -25,7 +25,7 @@ const CustomDrawer = (props) => {
                         height:45,
                         resizeMode: 'contain',
                     }}
-                        source={require('../../assets/img/Logos/Logo-azul-libella.png')
+                        source={require('../../../assets/img/Logos/Logo-azul-libella.png')
                     }/>
                     <Text style={{fontSize: 24, color: '#53A7D7'}}>Libella</Text>
                 </View>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 
-export default function WelcomePage() {
+const RegistroEmocoesScreen = ({ navigation }) => {
     return (
             <View style={styles.container}>
                 <View style={styles.exibitionContainer}>
@@ -10,7 +10,7 @@ export default function WelcomePage() {
                     <View style={styles.iconContainer}>
                         <Image
                             style={styles.userImg}
-                            source={require('../assets/Icons/IconFeliz.png')} /*Esse icon vai mudar de acordo com o Banco de dados*/
+                            source={require('../../../assets/icons/IconFeliz.png')} /*Esse icon vai mudar de acordo com o Banco de dados*/
                         />
                     </View>
                     <View style={styles.containerText}>
@@ -25,6 +25,8 @@ export default function WelcomePage() {
             </View>
     );
 }
+
+export default RegistroEmocoesScreen;
 
 const styles = StyleSheet.create({
 

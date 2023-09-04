@@ -24,12 +24,12 @@ const PerfilPacientePage = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={() => navigation.navigate('FichaPaciente')}>
                         <Text style={{ color: 'white', fontSize: 15 }}>Ficha</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={() => navigation.navigate('Chat')}>
                         <FeatherIcons name='message-circle' size={20} color={'white'} />
                     </TouchableOpacity>
                 </View>

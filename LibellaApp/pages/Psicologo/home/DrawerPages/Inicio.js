@@ -76,7 +76,7 @@ const InicioPage = (navigation) => {
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
           <View style={styles.card}>
-            <View style={styles.paciente}>
+            <TouchableOpacity onPress={() => navigation.navigate('FichaPaciente')} style={styles.paciente}>
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
               >
@@ -87,7 +87,7 @@ const InicioPage = (navigation) => {
                 <Text>Andreia Ramos</Text>
               </View>
               <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-            </View>
+            </TouchableOpacity>
             <View style={styles.paciente}>
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 15 }}

@@ -32,6 +32,8 @@ export {default as AtribuirAtividade} from './Psicologo/home/AtribuirAtividade';
 export {default as AtividadeEsp} from './Psicologo/home/AtividadeEsp';
 export {default as RemoverPaciente} from './Psicologo/home/RemoverPaciente';
 export {default as AlterarDados} from './Psicologo/home/AlterarDados';
+export {default as FichaPaciente} from './Psicologo/home/FichaPaciente';
+export {default as RegistroEmocoes} from './Psicologo/home/RegistroEmocoes';
 
 //////////////////////////////////////////////////////////////////////
 

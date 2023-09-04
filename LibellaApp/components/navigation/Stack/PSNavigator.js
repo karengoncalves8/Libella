@@ -10,14 +10,17 @@ import {
   AtividadeEsp,
   AlterarDados,
   RemoverPaciente,
+  FichaPaciente,
+  RegistroEmocoes,
+  Chat
 } from "../../../pages";
 
-import DrawerNavigator from "../DrawerNavigator";
-import { TabContextProvider } from "../TabContext";
+import DrawerNavigator from "../Drawer/DrawerNavigator";
+import { TabContextProvider } from "../BottomTab/TabContext";
 
 const PsicoStack = createNativeStackNavigator();
 
-const PsicologoNavigator = () => {
+const PSNavigator = () => {
   return (
     <TabContextProvider>
       <PsicoStack.Navigator screenOptions={{ headerShown: false }}>
@@ -56,9 +59,24 @@ const PsicologoNavigator = () => {
           name="RemoverPaciente"
           component={RemoverPaciente}
         />
+
+        <PsicoStack.Screen
+          name="FichaPaciente"
+          component={FichaPaciente}
+        />
+
+        <PsicoStack.Screen
+          name="RegistroEmocoes"
+          component={RegistroEmocoes}
+        />
+
+        <PsicoStack.Screen
+          name="Chat"
+          component={Chat}
+        />
       </PsicoStack.Navigator>
     </TabContextProvider>
   );
 };
 
-export default PsicologoNavigator;
+export default PSNavigator;

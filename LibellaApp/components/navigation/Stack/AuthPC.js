@@ -10,7 +10,7 @@ import {
   Step4PC
 } from "../../../pages";
 
-import DrawerNavigator from "../DrawerNavigator";
+import DrawerNavigator from "../Drawer/DrawerNavigator";
 
 
 const AuthStack = createNativeStackNavigator();

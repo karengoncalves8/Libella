@@ -10,9 +10,7 @@ import {
   Step3PS,
 } from "../../../pages";
 
-import CustomDrawer from "../Drawer/CustomDrawer";
-import DrawerNavigator from "../DrawerNavigator";
-
+import PSNavigator from "./PSNavigator";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -25,8 +23,8 @@ const AuthPS = () => {
         <AuthStack.Screen name="LoginPS" component={LoginPS} />
         <AuthStack.Screen name="CadastroPS" component={CadastroPS} />
         <AuthStack.Screen
-          name="Home"
-          component={DrawerNavigator}
+          name="PSNavigator"
+          component={PSNavigator}
           options={{ headerShown: false }}
         />
       </AuthStack.Navigator>
