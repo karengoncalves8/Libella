@@ -13,6 +13,7 @@ import Feather from "react-native-vector-icons/Feather";
 
 
 const ProgressoPage = ({ navigation }) => {
+
   const [value, setValue] = useState(0);
 
   return (
@@ -51,36 +52,34 @@ const ProgressoPage = ({ navigation }) => {
           }}>Andreia Ramos</Text>
         </View>
         <View style={styles.containerMainChart}>
-          <View style={{ backgroundColor: "white", width: '100%' }}>
-            <Text>Gráfico de humor</Text>
+          <View style={{ backgroundColor: "white", width: '100%', alignItems:'center' }}>
+            <Text style={{fontSize:17, fontWeight:700, color:'#6D45C2',fontFamily: 'Poppins_300Light', padding:8, alignSelf:'flex-start',
+            marginLeft:10
+          }}>Gráfico de humor</Text>
             <LineChart
               data={{
                 labels: ["January", "February", "March", "April", "May", "June"],
                 datasets: [
                   {
                     data: [
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100
+                      2,4,3,1,5
                     ]
                   }
                 ]
               }}
-              width={Dimensions.get('window').width - 60} // from react-native
+              width={Dimensions.get('window').width - 65} // from react-native
               height={220}
-              yAxisLabel="$"
-              yAxisSuffix="k"
-              yAxisInterval={1} // optional, defaults to 1
+              yAxisLabel={(data = 1) => 'alo'}
+              yAxisSuffix=""
+              
+              yAxisInterval={2} // optional, defaults to 1
               chartConfig={{
-                backgroundColor: "green",
-                backgroundGradientFrom: "black",
-                backgroundGradientTo: "blue",
+                backgroundColor: "white",
+                backgroundGradientFrom: "white",
+                backgroundGradientTo: "white",
                 decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                color: (opacity = 1) => `black`,
+                labelColor: (opacity = 1) => `black`,
                 style: {
                   borderRadius: 16
                 },
@@ -97,26 +96,30 @@ const ProgressoPage = ({ navigation }) => {
               }}
             />
           </View>
-          <View style={{ backgroundColor: "white", width: '100%' }}>
-            <Text>Atividades realizadas</Text>
+          <View style={{ backgroundColor: "white", width: '100%', alignItems: 'center' }}>
+            <Text style={{fontSize:17, fontWeight:700, color:'#6D45C2',fontFamily: 'Poppins_300Light', padding:8, alignSelf:'flex-start',
+            marginLeft:10 }}>Atividades realizadas</Text>
+            
+            <CircularProgress
+              radius={90}
+              value={90}
+              textColor='#222'
+              valueSuffix={'%'}
+              activeStrokeColor='#53A7D7'
+              inActiveStrokeColor={'white'}
+              inActiveStrokeOpacity={0.2}
+              duration={3000}
+              onAnimationComplete={() => setValue(50)}
+            />
 
-              <CircularProgress>
-                radius={90}
-                value={85}
-                textColor='gray'
-                valueStuff={'%'}
-                inActiveStrokeColor={'black'}
-                inActiveStrokeOpacity={0.2}
-                
-              </CircularProgress>
             <TouchableOpacity
               onPress={() => navigation.navigate("Inicio")}
               style={styles.pacienteContainer}>
               <Feather name='home' size={25} color={'#53A7D7'} />
             </TouchableOpacity>
-            <View style={{ backgroundColor: "black", width: '100%', height: 300 }}>
+            {/*<View style={{ backgroundColor: "black", width: '100%', height: 600, marginBottom: 30 }}>
               <Text>Atividades realizadas</Text>
-            </View>
+            </View>*/}
           </View>
         </View>
 
@@ -149,12 +152,10 @@ const styles = StyleSheet.create({
   containerMainChart: {
     flex: 1,
     gap: 30,
-    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "flex-start",
     height: "60%",
     width: "100%",
-    borderWidth: 0.5
   },
   inputbox: {
     justifyContent: "center",
