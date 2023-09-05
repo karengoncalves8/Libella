@@ -15,8 +15,8 @@ import {
   Chat
 } from "../../../pages";
 
-import DrawerNavigator from "../Drawer/DrawerNavigator";
-import { TabContextProvider } from "../BottomTab/TabContext";
+import DrawerNavigator from "../Psicologo/Drawer/DrawerNavigator";
+import { TabContextProvider } from "../Psicologo/BottomTab/TabContext";
 
 const PsicoStack = createNativeStackNavigator();
 

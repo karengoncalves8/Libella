@@ -12,11 +12,8 @@ import {
 
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
-import TabContainer from "../../../components/navigation/BottomTab/TabContainer";
-
-const PacientePage = ({ navigation }) => {
+const RemoverPacienteScreen = ({ navigation }) => {
   return (
-    <TabContainer>
       <View style={styles.container}>
         <View style={styles.mainContainer}>
           <TouchableOpacity
@@ -38,11 +35,10 @@ const PacientePage = ({ navigation }) => {
           {/*Pra adicionar mais pacientes basta copiar toda a touchableOpacity*/}
         </View>
       </View>
-    </TabContainer>
   );
 };
 
-export default PacientePage;
+export default RemoverPacienteScreen;
 
 const styles = StyleSheet.create({
 

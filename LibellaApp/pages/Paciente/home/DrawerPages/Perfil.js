@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
+
 import {StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Hr } from "react-native";
 
 const PerfilScreen = ({navigation}) => {

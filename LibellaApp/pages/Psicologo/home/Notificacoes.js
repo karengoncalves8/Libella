@@ -11,7 +11,7 @@ import {
 import AntIcon from "react-native-vector-icons/AntDesign";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import TabContainer from "../../../components/navigation/BottomTab/TabContainer";
+import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
 
 const NotificacoesPage = () => {
   return (

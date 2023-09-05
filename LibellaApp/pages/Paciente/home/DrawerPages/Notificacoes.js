@@ -4,16 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  TextInput,
 } from "react-native";
 
-import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import TabContainer from "../../components/navigation/TabContainer";
 
 const NotificacoesScreen = () => {
   return (
@@ -29,33 +24,27 @@ const NotificacoesScreen = () => {
               color={"black"}
             />
             <Text style={styles.texto}>
-              Sessão com
-              <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> ás
-              14:30
+              Consulta às
+              <Text style={{ color: "#6D45C2" }}> 14:30 </Text> 
             </Text>
           </View>
 
           <View style={styles.card}>
-            <MaterialCommunityIcon
-              name="calendar-clock-outline"
-              size={35}
-              color={"black"}
-            />
-            <Text style={styles.texto}>
-              Sessão com
-              <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> ás
-              14:30
-            </Text>
-          </View>
-          <View style={styles.card}>
             <AntIcon name="checkcircleo" size={35} color={"black"} />
             <Text style={styles.texto}>
-              Sessão com
-              <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> ás
-              14:30
+              Nova atividade:
+              <Text style={{ color: "#6D45C2" }}> "Auto Recompensa"</Text>
+            </Text>
+          </View>
+
+          <View style={styles.card}>
+          <AntIcon name="emoji-happy" size={35} color={"black"} />
+            <Text style={styles.texto}>
+              <Text style={{ color: "" }}>Como está se sentindo? </Text>
             </Text>
           </View>
         </View>
+        
 
         <View style={{ gap: 15, width: "100%" }}>
           <Text style={{ opacity: 0.4, marginLeft: 15 }}>12/03</Text>
@@ -67,16 +56,15 @@ const NotificacoesScreen = () => {
               color={"black"}
             />
             <Text style={styles.texto}>
-              Sessão com
-              <Text style={{ color: "#6D45C2" }}> Aline Dias</Text> ás 14:30
+              Consulta às
+              <Text style={{ color: "#6D45C2" }}> 14:30 </Text> 
             </Text>
           </View>
 
           <View style={styles.card}>
-          <AntIcon name="checkcircleo" size={35} color={"black"} />
+          <AntIcon name="emoji-happy" size={35} color={"black"} />
             <Text style={styles.texto}>
-              <Text style={{ color: "#6D45C2" }}>Rui Barbosa </Text>
-              entregou a atividade “Relatório diário”
+              <Text style={{ color: "" }}>Como está se sentindo? </Text>
             </Text>
           </View>
         </View>

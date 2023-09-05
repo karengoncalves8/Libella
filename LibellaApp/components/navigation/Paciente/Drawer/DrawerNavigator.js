@@ -2,10 +2,10 @@ import React from "react";
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { Perfil, Config, Chat, Ajuda, Termos, InicioPC} from '../../../../pages'
+import { PerfilPC, ConfigPC, ChatPC, AjudaPC, TermosPC, InicioPC, NotificacoesPC} from '../../../../pages'
 
 import CustomDrawer from './CustomDrawer'
-import BottomTab from "../../BottomTab/BottomTab";
+import BottomTab from "../BottomTab/BottomTab";
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -39,7 +39,7 @@ function DrawerNavigator(){
           />
           <Drawer.Screen
             name="Perfil" 
-            component={Perfil}
+            component={PerfilPC}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='person-outline' size={35} color={color} />
@@ -48,7 +48,7 @@ function DrawerNavigator(){
           />
           <Drawer.Screen
             name="Chat" 
-            component={Chat}
+            component={ChatPC}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='chatbubble-outline' size={35} color={color} />
@@ -56,8 +56,17 @@ function DrawerNavigator(){
             }}
           />
           <Drawer.Screen
+            name="Notificações" 
+            component={NotificacoesPC}
+            options={{
+              drawerIcon: ({color}) => (
+                <Ionicons name='person-outline' size={35} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
             name="Configurações" 
-            component={Config}
+            component={ConfigPC}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='settings-outline' size={35} color={color} />
@@ -66,7 +75,7 @@ function DrawerNavigator(){
           />
           <Drawer.Screen
             name="Ajuda" 
-            component={Ajuda}
+            component={AjudaPC}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='md-help-circle-outline' size={35} color={color} />
@@ -75,7 +84,7 @@ function DrawerNavigator(){
           />
           <Drawer.Screen
             name="Termos e Condições" 
-            component={Termos}
+            component={TermosPC}
             options={{
               drawerIcon: ({color}) => (
                 <Ionicons name='document-text-outline' size={35} color={color} />

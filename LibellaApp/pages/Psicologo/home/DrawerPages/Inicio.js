@@ -13,7 +13,7 @@ import moment from "moment";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../../../components/navigation/BottomTab/TabContainer";
+import TabContainer from "../../../../components/navigation/Psicologo/BottomTab/TabContainer";
 
 import 'moment/locale/pt-br';
 
@@ -30,7 +30,7 @@ const InicioPage = (navigation) => {
         <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andressa!</Text>
 
         <View style={{ gap: 8 }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", alignItems: "center"}}>
             <Text style={styles.subTitulo}>AGENDA</Text>
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>

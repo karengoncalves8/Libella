@@ -6,7 +6,7 @@ import {
   Image,
 } from "react-native";
 
-import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
+import TabContainer from "../../components/navigation/TabContainer";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
@@ -35,7 +35,7 @@ const meetings = [
 
 
 
-const AgendaPage = () => {
+const AgendaScreen = () => {
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   const [selected, setSelected] = useState(currentDate);
@@ -83,7 +83,7 @@ const AgendaPage = () => {
                       <View style={styles.card}>
                         <View style={{ flexDirection: "row", gap: 6 }}>
                           <Image
-                            source={require("../../../assets/icons/VectorAzul.png")}
+                            source={require("../../assets/icons/VectorAzul.png")}
                           />
                           <Text style={styles.text}>
                             {mettings.name}
@@ -105,7 +105,7 @@ const AgendaPage = () => {
   );
 };
 
-export default AgendaPage;
+export default AgendaScreen;
 
 const styles = StyleSheet.create({
   container: {

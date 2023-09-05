@@ -17,8 +17,8 @@ import {
   TermosCondicoes
 } from "../../../pages";
 
-import DrawerNavigator from "../Drawer/DrawerNavigator";
-import { TabContextProvider } from "../BottomTab/TabContext";
+import DrawerNavigator from "../Paciente/Drawer/DrawerNavigator"
+import { TabContextProvider } from "../Paciente/BottomTab/TabContext";
 
 const PacStack = createNativeStackNavigator();
 

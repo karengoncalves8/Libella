@@ -10,7 +10,7 @@ import {
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Pacientes, Agenda, Inicio, Notificacoes } from "../../../pages";
+import { ProgressoPC, AgendaPC, AtividadesPC, RegistroEmocoesPC, InicioPC } from "../../../../pages";
 
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -39,8 +39,8 @@ const BottomTab = () => {
     >
       {/* ícone inicio */}
       <Tab.Screen
-        name={"Inicio"}
-        component={Inicio}
+        name={"Progresso"}
+        component={ProgressoPC}
         options={{
           tabBarIcon: ({ focused }) => (
             <IonIcon
@@ -58,7 +58,7 @@ const BottomTab = () => {
       {/* ícone da agenda */}
       <Tab.Screen
         name={"Agenda"}
-        component={Agenda}
+        component={AgendaPC}
         options={{
           tabBarIcon: ({ focused }) => (
             <AntIcon
@@ -89,8 +89,8 @@ const BottomTab = () => {
 
       {/* ícone da tela de pacientes */}
       <Tab.Screen
-        name={"Pacientes"}
-        component={Pacientes}
+        name={"Atividades"}
+        component={AtividadesPC}
         options={{
           tabBarIcon: ({ focused }) => (
             <IonIcon
@@ -107,8 +107,8 @@ const BottomTab = () => {
 
       {/* ícone da tela de pacientes */}
       <Tab.Screen
-        name={"Notificações"}
-        component={Notificacoes}
+        name={"RegistroEmocoes"}
+        component={RegistroEmocoesPC}
         options={{
           tabBarIcon: ({ focused }) => (
             <IonIcon

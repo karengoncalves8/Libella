@@ -47,4 +47,10 @@ export {default as Step3PC} from './Paciente/auth/Step3';
 export {default as Step4PC} from './Paciente/auth/Step4';
 
 // Drawer Screens
-export {default as InicioPC} from './Paciente/home/Drawer/Inicio';
+export {default as InicioPC} from './Paciente/home/DrawerPages/Inicio';
+export {default as PerfilPC} from './Paciente/home/DrawerPages/Perfil';
+export {default as ChatPC} from './Paciente/home/DrawerPages/Chat';
+export {default as NotificacoesPC} from './Paciente/home/DrawerPages/Notificacoes';
+export {default as ConfigPC} from './Paciente/home/DrawerPages/Config';
+export {default as TermosPC} from './Paciente/home/DrawerPages/Termos';
+export {default as AjudaPC} from './Paciente/home/DrawerPages/Ajuda';
