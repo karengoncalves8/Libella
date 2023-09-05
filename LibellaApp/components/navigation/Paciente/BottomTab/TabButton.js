@@ -31,26 +31,47 @@ const TabButton = ({ toggleOpened, opened }) => {
   const [paciente, setPaciente] = React.useState();
 
   //Date Picker
-  const [date, setDate] = useState(new Date())
-  const [time, setTime] = useState();
-  const [showPicker, setShowPicker] = useState(false)
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [showTimePicker, setShowTimePicker] = useState(false)
 
-  const toggleDatepicker = () => {
-    setShowPicker(!showPicker);
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
   };
 
-  const onChange = ({ type }, selectedDate) => {
+  const toggleTimePicker = () => {
+    setShowTimePicker(!showTimePicker);
+  };
+
+
+  const onChangeDate = ({ type }, selectedDate) => {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
 
       if (Platform.OS === "android") {
-        toggleDatepicker();
+        toggleDatePicker();
         setDateEvento(formatDate(currentDate));
       }
     }
     else {
-      toggleDatepicker();
+      toggleDatePicker();
+    }
+  };
+
+  const onChangeTime = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setTime(currentDate);
+
+      if (Platform.OS === "android") {
+        toggleTimePicker();
+        setTimeEvento(formatTime(currentDate));
+      }
+    }
+    else {
+      toggleTimePicker();
     }
   };
 
@@ -64,8 +85,18 @@ const TabButton = ({ toggleOpened, opened }) => {
     return `${day}/${month}/${year}`;
   };
 
+  const formatTime = (rawDate) => {
+    let time = new Date(rawDate);
+
+    let hours = time.getHours();
+    let min = time.getMinutes();
+
+    return `${hours}:${min}`;
+  };
+
   // Text Input
   const [dataEvento, setDateEvento] = useState()
+  const [timeEvento, setTimeEvento] = useState()
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -116,6 +147,8 @@ const TabButton = ({ toggleOpened, opened }) => {
               primaryColor={'#53A7D7'}
               dropdownStyle={{
                 borderWidth: 0.5,
+                borderRadius: 80,
+                backgroundColor: 'white'
               }}
               placeholderStyle={{
                 color: '#313131',
@@ -140,13 +173,13 @@ const TabButton = ({ toggleOpened, opened }) => {
               dropdownIconStyle={{ top: 13, right: 20 }}
             />
 
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
+            <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%', marginTop: -20}}>
 
-              <View>
-                <Text> Data </Text>
-                {!showPicker && (
+              <View style={{gap: 5}}>
+                <Text style={styles.inputText}> Data </Text>
+                {!showDatePicker && (
                   <Pressable
-                    onPress={toggleDatepicker}>
+                    onPress={toggleDatePicker}>
                     <TextInput
                       style={styles.input}
                       placeholder="18/08/2008"
@@ -156,38 +189,36 @@ const TabButton = ({ toggleOpened, opened }) => {
                     />
                   </Pressable>
                 )}
-                {showPicker && (
+                {showDatePicker && (
                   <DateTimePicker
                     mode="date"
                     display="spinner"
                     value={date}
-                    onChange={onChange}
+                    onChange={onChangeDate}
                   />
                 )}
               </View>
-
-
-              <View>
-                <Text> Horário </Text>
-                {!showPicker && (
+              
+              <View style={{gap: 5}}>
+                <Text style={styles.inputText}> Horário </Text>
+                {!showTimePicker && (
                   <Pressable
-                    onPress={toggleDatepicker}>
+                    onPress={toggleTimePicker}>
                     <TextInput
                       style={styles.input}
                       placeholder="18:00"
-                      value={time}
-                      onChange={setTime}
+                      value={timeEvento}
+                      onChange={setTimeEvento}
                       editable={false}
                     />
                   </Pressable>
                 )}
-
-                {showPicker && (
+                {showTimePicker && (
                   <DateTimePicker
                     mode="time"
                     display="spinner"
-                    value={date}
-                    onChange={onChange}
+                    value={time}
+                    onChange={onChangeTime}
                   />
                 )}
               </View>
@@ -367,9 +398,17 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 0.5,
-    borderRadius: 5,
-    padding: 7,
-    backgroundColor: '#ECECEC',
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    backgroundColor: 'white',
+    color: 'black', 
+    textAlign: 'center'
+  },
+  inputText: {
+    color: 'black', 
+    fontSize: 15, 
+    fontFamily: 'Poppins_300Light', 
   }
 });
 export default TabButton;

@@ -2,10 +2,10 @@ import React from "react";
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { Perfil, Config, Chat, Ajuda, Termos, Inicio} from '../../../pages'
+import { Perfil, Config, Chat, Ajuda, Termos, Inicio} from '../../../../pages'
 
 import CustomDrawer from './CustomDrawer'
-import BottomTab from "../BottomTab/BottomTab";
+import BottomTab from "../../BottomTab/BottomTab";
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 

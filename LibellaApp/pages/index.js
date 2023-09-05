@@ -46,3 +46,5 @@ export {default as Step2PC} from './Paciente/auth/Step2';
 export {default as Step3PC} from './Paciente/auth/Step3';
 export {default as Step4PC} from './Paciente/auth/Step4';
 
+// Drawer Screens
+export {default as InicioPC} from './Paciente/home/Drawer/Inicio';

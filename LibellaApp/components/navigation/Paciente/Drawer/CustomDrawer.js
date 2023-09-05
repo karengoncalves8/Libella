@@ -5,7 +5,7 @@ import { DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
-import { AuthContext } from "../Stack/AuthContext";
+import { AuthContext } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
     const { NotLogged } = React.useContext(AuthContext);
