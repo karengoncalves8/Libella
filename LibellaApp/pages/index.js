@@ -54,3 +54,12 @@ export {default as NotificacoesPC} from './Paciente/home/DrawerPages/Notificacoe
 export {default as ConfigPC} from './Paciente/home/DrawerPages/Config';
 export {default as TermosPC} from './Paciente/home/DrawerPages/Termos';
 export {default as AjudaPC} from './Paciente/home/DrawerPages/Ajuda';
+
+// Screens
+export {default as ProgressoPC} from './Paciente/home/Progresso';
+export {default as AgendaPC} from './Paciente/home/Agenda';
+export {default as AtividadesPC} from './Paciente/home/Atividades';
+export {default as AtividadeEspPC} from './Paciente/home/AtividadeEsp';
+export {default as RegistroEmocoesPC} from './Paciente/home/RegistroEmocoes';
+export {default as PerfilPS} from './Paciente/home/PerfilPS';
+export {default as AlterarDadosPC} from './Paciente/home/AlterarDados';

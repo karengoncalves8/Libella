@@ -15,7 +15,7 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-const AtividadeScreen = ({ navigation }) => {
+const AtividadeEspScreen = ({ navigation }) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   return (
     <View style={styles.container}>
@@ -51,7 +51,7 @@ const AtividadeScreen = ({ navigation }) => {
             text="Não irei realizar"
             iconStyle={{ borderColor: "black", borderRadius:0 }}
             innerIconStyle={{ borderWidth: 2, borderRadius:0  }}
-            textStyle={{ fontFamily: "JosefinSans-Regular", textDecorationLine: "none" }}
+            textStyle={{ fontFamily: "Poppins_400Regular", textDecorationLine: "none" }}
           /> 
           
         </View>
@@ -66,7 +66,7 @@ const AtividadeScreen = ({ navigation }) => {
   );
 };
 
-export default AtividadeScreen;
+export default AtividadeEspScreen;
 
 
 const styles = StyleSheet.create({

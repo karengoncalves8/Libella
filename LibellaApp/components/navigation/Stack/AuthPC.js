@@ -10,7 +10,7 @@ import {
   Step4PC
 } from "../../../pages";
 
-import DrawerNavigator from "../Paciente/Drawer/DrawerNavigator";
+import PCNavigator from '../Stack/PCNavigator'
 
 
 const AuthStack = createNativeStackNavigator();
@@ -24,8 +24,8 @@ const AuthPC = () => {
         <AuthStack.Screen name="Step4PC" component={Step4PC} />
         <AuthStack.Screen name="LoginPC" component={LoginPC} />
         <AuthStack.Screen
-          name="Home"
-          component={DrawerNavigator}
+          name="PCNavigator"
+          component={PCNavigator}
           options={{ headerShown: false }}
         />
       </AuthStack.Navigator>

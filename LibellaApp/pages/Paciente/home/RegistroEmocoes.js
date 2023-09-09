@@ -10,18 +10,17 @@ const RegistroEmocoesScreen = ({ navigation }) => {
                     <View style={styles.iconContainer}>
                         <Image
                             style={styles.userImg}
-                            source={require('../../../assets/icons/IconFeliz.png')} /*Esse icon vai mudar de acordo com o Banco de dados*/
+                            source={require('../../../assets/icons/IconFeliz.png')} 
                         />
                     </View>
                     <View style={styles.containerText}>
-                        <Text style={styles.text}>Estou feliz com a vitória do Praia Clube</Text> {/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        <Text style={styles.text}>Estou feliz com a vitória do Praia Clube</Text> 
                     </View>
 
                     <View style={styles.containerData}>
-                        <Text style={styles.textData}>data</Text> {/*Esse número vai mudar de acordo com o Banco de dados*/}
+                        <Text style={styles.textData}>data</Text> 
                     </View>
                 </View>
-                {/* Só replicar o mesmo "pacienteContainer" para mais emoções Com ScrollView fica bugado com poucos elementos (Ent deixei sem por enquanto)*/}
             </View>
     );
 }

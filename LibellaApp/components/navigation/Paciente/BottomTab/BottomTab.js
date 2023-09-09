@@ -1,20 +1,16 @@
 import * as React from "react";
 import {
   StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Animated,
 } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { ProgressoPC, AgendaPC, AtividadesPC, RegistroEmocoesPC, InicioPC } from "../../../../pages";
+import { ProgressoPC, AgendaPC, AtividadesPC, InicioPC } from "../../../../pages";
 
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import IonIcon from "react-native-vector-icons/Ionicons";
+import OcticonsIcon from "react-native-vector-icons/Octicons";
 
 import TabButton from "./TabButton";
 import { useTabMenu } from "./TabContext";
@@ -26,7 +22,7 @@ const BottomTab = () => {
   const { opened, toggleOpened } = useTabMenu();
   return (
     <Tab.Navigator
-      initialRouteName="Inicio"
+    initialRouteName="InicioPC"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -37,10 +33,11 @@ const BottomTab = () => {
         tabBarItemStyle: { gap: -5 },
       }}
     >
+
       {/* ícone inicio */}
       <Tab.Screen
-        name={"Progresso"}
-        component={ProgressoPC}
+        name={"InicioPC"}
+        component={InicioPC}
         options={{
           tabBarIcon: ({ focused }) => (
             <IonIcon
@@ -54,6 +51,38 @@ const BottomTab = () => {
           tabPress: (e) => opened && e.preventDefault(),
         }}
       />
+
+      {/* ícone da tela de pacientes */}
+      <Tab.Screen
+        name={"AtividadesPC"}
+        component={AtividadesPC}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcon
+              name="clipboard-text-outline"
+              size={30}
+              color={focused ? "#53A7D7" : "#ABABAB"}
+            />
+          ),
+        }}
+        listeners={{
+          tabPress: (e) => opened && e.preventDefault(),
+        }}
+      />
+
+      {/* Botão post */}
+      <Tab.Screen
+        name={"Add"}
+        component={InicioPC}
+        options={{
+          tabBarButton: () => (
+            <TabButton opened={opened} toggleOpened={toggleOpened} />
+          ),
+          tabBarItemStyle: {
+            height: 0,
+          },
+        }}
+      ></Tab.Screen>
 
       {/* ícone da agenda */}
       <Tab.Screen
@@ -73,29 +102,15 @@ const BottomTab = () => {
         }}
       />
 
-      {/* Botão post */}
+      {/* ícone inicio */}
       <Tab.Screen
-        name={"Add"}
-        component={Inicio}
-        options={{
-          tabBarButton: () => (
-            <TabButton opened={opened} toggleOpened={toggleOpened} />
-          ),
-          tabBarItemStyle: {
-            height: 0,
-          },
-        }}
-      ></Tab.Screen>
-
-      {/* ícone da tela de pacientes */}
-      <Tab.Screen
-        name={"Atividades"}
-        component={AtividadesPC}
+        name={"ProgressoPC"}
+        component={ProgressoPC}
         options={{
           tabBarIcon: ({ focused }) => (
-            <IonIcon
-              name="people-outline"
-              size={30}
+            <OcticonsIcon
+              name="graph"
+              size={23}
               color={focused ? "#53A7D7" : "#ABABAB"}
             />
           ),
@@ -104,24 +119,8 @@ const BottomTab = () => {
           tabPress: (e) => opened && e.preventDefault(),
         }}
       />
+      
 
-      {/* ícone da tela de pacientes */}
-      <Tab.Screen
-        name={"RegistroEmocoes"}
-        component={RegistroEmocoesPC}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <IonIcon
-              name="notifications-outline"
-              size={30}
-              color={focused ? "#53A7D7" : "#ABABAB"}
-            />
-          ),
-        }}
-        listeners={{
-          tabPress: (e) => opened && e.preventDefault(),
-        }}
-      />
     </Tab.Navigator>
   );
 };

@@ -11,13 +11,17 @@ import {
 import CircularProgress from 'react-native-circular-progress-indicator'
 import Feather from "react-native-vector-icons/Feather";
 
+import TabContainer from "../../../components/navigation/Paciente/BottomTab/TabContainer";
 
 const ProgressoScreen = ({ navigation }) => {
  
   return (
+    <TabContainer>
       <View style={styles.container}>
         <Text>PROGRESSO</Text>
       </View>
+    </TabContainer>
+      
   );
 }
 

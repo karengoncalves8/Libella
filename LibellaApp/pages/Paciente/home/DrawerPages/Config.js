@@ -23,7 +23,7 @@ const ConfigScreen = ({ navigation }) => {
 
                 <TouchableOpacity
                     style={styles.containerConfigBloco}
-                    onPress={() => navigation.navigate('AlterarDadosPac')}>
+                    onPress={() => navigation.navigate('AlterarDadosPC')}>
                     <View style={styles.containerInfosBloco}>
                         <Text style={styles.text}>Alterar Dados</Text>
                         <EntypoIcon name="chevron-thin-right" size={20} color={"black"} style={styles.icon} />
@@ -95,7 +95,7 @@ const ConfigScreen = ({ navigation }) => {
 
                 <TouchableOpacity
                     style={styles.containerConfigBloco}
-                    onPress={() => navigation.navigate('PerfilPsPac')}>
+                    onPress={() => navigation.navigate('PerfilPS')}>
                     <View style={styles.containerInfosBloco}>
                         <Text style={styles.text}>Ver perfil</Text>
                         <EntypoIcon name="chevron-thin-right" size={20} color={"black"} style={styles.icon} />

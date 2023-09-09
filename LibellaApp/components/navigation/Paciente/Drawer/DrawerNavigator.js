@@ -60,7 +60,7 @@ function DrawerNavigator(){
             component={NotificacoesPC}
             options={{
               drawerIcon: ({color}) => (
-                <Ionicons name='person-outline' size={35} color={color} />
+                <Ionicons name='notifications-outline' size={35} color={color} />
               ),
             }}
           />

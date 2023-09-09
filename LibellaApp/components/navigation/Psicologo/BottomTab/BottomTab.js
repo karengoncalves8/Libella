@@ -10,7 +10,7 @@ import {
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Pacientes, Agenda, Inicio, Notificacoes } from "../../../pages";
+import { Pacientes, Agenda, Inicio, Notificacoes } from "../../../../pages";
 
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";

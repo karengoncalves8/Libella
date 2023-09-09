@@ -6,7 +6,7 @@ import {
   Image,
 } from "react-native";
 
-import TabContainer from "../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/Paciente/BottomTab/TabContainer";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
@@ -15,8 +15,8 @@ import { format,  } from "date-fns";
 const meetings = [
   {
     id: 1,
-    name: "Leslie Alexander",
-    date: "2023-08-05",
+    name: "Consulta",
+    date: "2023-09-09",
     time: "13:00",
   },
   {
@@ -83,7 +83,7 @@ const AgendaScreen = () => {
                       <View style={styles.card}>
                         <View style={{ flexDirection: "row", gap: 6 }}>
                           <Image
-                            source={require("../../assets/icons/VectorAzul.png")}
+                            source={require("../../../assets/icons/VectorAzul.png")}
                           />
                           <Text style={styles.text}>
                             {mettings.name}

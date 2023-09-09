@@ -58,7 +58,7 @@ const AjudaScreen = () => {
         }}> Fale Conosco!</Text></Text>
         <View style={{
           width: '100%',
-          padding: 10,
+          paddingVertical: 10,
           borderRadius: 0,
           backgroundColor: 'red',
           backgroundColor: "white",
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   },
   input: {
     fontFamily: 'Poppins_300Light',
-    color:"red",
     fontSize: 16,
     marginLeft:8,
     flex: 1,
@@ -108,7 +107,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 30,
     paddingHorizontal: 30,
-    backgroundColor: '#F8F8F8',
+    paddingVertical: 10,
+    backgroundColor:"#FFFFFF",
   },
   containerTopics: {
     width: '100%',
@@ -125,10 +125,12 @@ const styles = StyleSheet.create({
   },
   containerTopics3: {
     width: '100%',
-    height: '25%',
+    paddingHorizontal: 8,
+    paddingVertical: 15,
     backgroundColor: 'white',
     padding: 0,
     borderBottomWidth: 0.5,
+    borderColor: 'black',
     justifyContent: 'center',
   },
   containerFale: {

@@ -3,18 +3,9 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
-  Inicio,
-  PerfilPaciente,
-  Pacientes,
-  Agenda,
-  Notificacoes,
-  Atividades,
-  CadastroPaciente,
-  AtribuirAtividade,
-  AtividadeEsp,
-  AlterarDados,
-  RemoverPaciente,
-  TermosCondicoes
+  AlterarDadosPC,
+  AtividadeEspPC,
+  PerfilPS
 } from "../../../pages";
 
 import DrawerNavigator from "../Paciente/Drawer/DrawerNavigator"
@@ -32,10 +23,17 @@ const PCNavigator = () => {
           options={{ headerShown: false }}
         />
         <PacStack.Screen
-          name="CadastroPaciente"
-          component={CadastroPaciente}
+          name="AtividadeEsp"
+          component={AtividadeEspPC}
         />
-        
+        <PacStack.Screen
+          name="PerfilPS"
+          component={PerfilPS}
+        />
+        <PacStack.Screen
+          name="AlterarDadosPC"
+          component={AlterarDadosPC}
+        />
       </PacStack.Navigator>
     </TabContextProvider>
   );

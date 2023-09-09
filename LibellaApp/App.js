@@ -11,7 +11,7 @@ import { AuthContext } from './components/navigation/Stack/AuthContext';
 import RootStackScreen from './components/navigation/Stack/RootStack';
 
 // Importar fonts
-import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfortaa';
 
 export default function App() {
@@ -32,6 +32,7 @@ export default function App() {
     Poppins_300Light,
     Poppins_500Medium,
     Poppins_700Bold,
+    Poppins_400Regular,
     Comfortaa_500Medium,
     Comfortaa_700Bold,
   });

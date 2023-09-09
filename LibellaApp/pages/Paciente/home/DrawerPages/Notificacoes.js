@@ -6,13 +6,16 @@ import {
   View,
 } from "react-native";
 
+
+import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
+import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
+
 
 
 const NotificacoesScreen = () => {
   return (
-    <TabContainer>
       <View style={styles.container}>
         <View style={{ gap: 15, width: "100%" }}>
           <Text style={{ opacity: 0.4, marginLeft: 15 }}>Hoje</Text>
@@ -38,7 +41,7 @@ const NotificacoesScreen = () => {
           </View>
 
           <View style={styles.card}>
-          <AntIcon name="emoji-happy" size={35} color={"black"} />
+          <EntypoIcon name="emoji-happy" size={35} color={"black"} />
             <Text style={styles.texto}>
               <Text style={{ color: "" }}>Como está se sentindo? </Text>
             </Text>
@@ -62,14 +65,13 @@ const NotificacoesScreen = () => {
           </View>
 
           <View style={styles.card}>
-          <AntIcon name="emoji-happy" size={35} color={"black"} />
+          <EntypoIcon name="emoji-happy" size={35} color={"black"} />
             <Text style={styles.texto}>
               <Text style={{ color: "" }}>Como está se sentindo? </Text>
             </Text>
           </View>
         </View>
       </View>
-    </TabContainer>
   );
 };
 

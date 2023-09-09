@@ -114,7 +114,7 @@ const LoginPCScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() => login()}>
+      <TouchableOpacity onPress={() => navigation.navigate('PCNavigator')}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

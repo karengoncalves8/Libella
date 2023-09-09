@@ -9,94 +9,21 @@ import {
   Modal,
   TextInput,
   Pressable,
-  Platform
+  Platform,
+  TouchableOpacity,
 } from "react-native";
 
-import Dropdown from 'react-native-input-select';
-
 import AntIcon from "react-native-vector-icons/AntDesign";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import FeatherIcon from "react-native-vector-icons/Feather";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
-import { useNavigation } from '@react-navigation/native';
-
-import DateTimePicker from '@react-native-community/datetimepicker';
-
 const TabButton = ({ toggleOpened, opened }) => {
-  const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [paciente, setPaciente] = React.useState();
-
-  //Date Picker
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const [showTimePicker, setShowTimePicker] = useState(false)
-
-  const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker);
-  };
-
-  const toggleTimePicker = () => {
-    setShowTimePicker(!showTimePicker);
-  };
-
-
-  const onChangeDate = ({ type }, selectedDate) => {
-    if (type == "set") {
-      const currentDate = selectedDate;
-      setDate(currentDate);
-
-      if (Platform.OS === "android") {
-        toggleDatePicker();
-        setDateEvento(formatDate(currentDate));
-      }
-    }
-    else {
-      toggleDatePicker();
-    }
-  };
-
-  const onChangeTime = ({ type }, selectedDate) => {
-    if (type == "set") {
-      const currentDate = selectedDate;
-      setTime(currentDate);
-
-      if (Platform.OS === "android") {
-        toggleTimePicker();
-        setTimeEvento(formatTime(currentDate));
-      }
-    }
-    else {
-      toggleTimePicker();
-    }
-  };
-
-  const formatDate = (rawDate) => {
-    let date = new Date(rawDate);
-
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    return `${day}/${month}/${year}`;
-  };
-
-  const formatTime = (rawDate) => {
-    let time = new Date(rawDate);
-
-    let hours = time.getHours();
-    let min = time.getMinutes();
-
-    return `${hours}:${min}`;
-  };
-
   // Text Input
-  const [dataEvento, setDateEvento] = useState()
-  const [timeEvento, setTimeEvento] = useState()
+  const [anotacoes, setAnotacoes] = useState();
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -121,164 +48,100 @@ const TabButton = ({ toggleOpened, opened }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 80 }}>
-              <TouchableWithoutFeedback
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <AntIcon name="close" size={25} color={"black"} />
-              </TouchableWithoutFeedback>
-              <Text style={{ fontFamily: 'Poppins_300Light' }}>Agendar Sessão</Text>
-            </View>
-            <Dropdown
-              label="Paciente"
-              placeholder="Selecione o paciente"
-              options={[
-                { label: 'Paciente1', value: 'P1' },
-                { label: 'Paciente2', value: 'P2' },
-              ]}
-              selectedValue={paciente}
-              onValueChange={(value) => setPaciente(value)}
-              primaryColor={'#53A7D7'}
-              dropdownStyle={{
-                borderWidth: 0.5,
-                borderRadius: 80,
-                backgroundColor: 'white'
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-end",
+                width: "100%",
+                justifyContent: "space-between",
               }}
-              placeholderStyle={{
-                color: '#313131',
-                fontSize: 15,
-                opacity: 0.3
-              }}
-              labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Poppins_300Light', paddingTop: 10 }}
-              checkboxComponentStyles={{
-                checkboxSize: 5,
-                checkboxStyle: {
-                  backgroundColor: '#53A7D7',
-                  borderRadius: 10,
-                  padding: 10,
-                  borderColor: '#313131',
-                  borderWidth: 0.5,
-                },
-                checkboxLabelStyle: { color: 'black', fontSize: 20, fontFamily: 'Poppins_300Light' },
-              }}
-              dropdownIcon={
-                <MaterialIcon name="arrow-drop-down" size={35} color={"black"} style={{ opacity: 0.3 }} />
-              }
-              dropdownIconStyle={{ top: 13, right: 20 }}
-            />
-
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%', marginTop: -20}}>
-
-              <View style={{gap: 5}}>
-                <Text style={styles.inputText}> Data </Text>
-                {!showDatePicker && (
-                  <Pressable
-                    onPress={toggleDatePicker}>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="18/08/2008"
-                      value={dataEvento}
-                      onChange={setDateEvento}
-                      editable={false}
-                    />
-                  </Pressable>
-                )}
-                {showDatePicker && (
-                  <DateTimePicker
-                    mode="date"
-                    display="spinner"
-                    value={date}
-                    onChange={onChangeDate}
-                  />
-                )}
-              </View>
-              
-              <View style={{gap: 5}}>
-                <Text style={styles.inputText}> Horário </Text>
-                {!showTimePicker && (
-                  <Pressable
-                    onPress={toggleTimePicker}>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="18:00"
-                      value={timeEvento}
-                      onChange={setTimeEvento}
-                      editable={false}
-                    />
-                  </Pressable>
-                )}
-                {showTimePicker && (
-                  <DateTimePicker
-                    mode="time"
-                    display="spinner"
-                    value={time}
-                    onChange={onChangeTime}
-                  />
-                )}
-              </View>
+            >
+              <Text style={{ fontFamily: "Poppins_500Medium", fontSize: 15 }}>
+                Como você está se sentindo hoje?
+              </Text>
+              <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
+              <AntIcon name="close" size={25} color={"black"} />
+            </TouchableWithoutFeedback>
             </View>
 
-
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+                paddingHorizontal: 7,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+            >
+              <TouchableOpacity>
+                <View style={styles.iconButton}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../../../assets/icons/IconAnimado.png")}
+                  />
+                  <Text style={styles.iconText}>Feliz</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={styles.iconButton}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../../../assets/icons/IconFeliz.png")}
+                  />
+                  <Text style={styles.iconText}>Bem</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={styles.iconButton}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../../../assets/icons/IconNeutro.png")}
+                  />
+                  <Text style={styles.iconText}>Neutro</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={styles.iconButton}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../../../assets/icons/IconMal.png")}
+                  />
+                  <Text style={styles.iconText}>Mal</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={styles.iconButton}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../../../assets/icons/IconHorrivel.png")}
+                  />
+                  <Text style={styles.iconText}>Horrível</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: "100%", gap: 5 }}>
+              <Text style={{ fontFamily: "Poppins_500Medium" }}>Anotações</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Escreva aqui..."
+                value={anotacoes}
+                onChangeText={(text) => setAnotacoes(text)}
+                multiline={true}
+                numberOfLines={4}
+              />
+            </View>
           </View>
         </View>
       </Modal>
-      <View style={styles.box}>
-        {/*cadastrar pacientes*/}
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('CadastroPaciente')}>
-          <Animated.View
-            style={[
-              styles.item,
-              opacity,
-              {
-                transform: [
-                  {
-                    translateX: animation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -60],
-                    }),
-                  },
-                  {
-                    translateY: animation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -50],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            <AntIcon name="adduser" size={25} color={"white"} />
 
-          </Animated.View>
-        </TouchableWithoutFeedback>
-        {/*atribuir atividade*/}
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('AtribuirAtividade')}>
-          <Animated.View
-            style={[
-              styles.item,
-              opacity,
-              {
-                transform: [
-                  {
-                    translateY: animation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -100],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            <AntIcon name="addfile" size={25} color={"white"} />
-          </Animated.View>
-        </TouchableWithoutFeedback>
+      <View style={styles.box}>
         {/*agendar sessão*/}
         <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
           <Animated.View
@@ -288,22 +151,16 @@ const TabButton = ({ toggleOpened, opened }) => {
               {
                 transform: [
                   {
-                    translateX: animation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, 60],
-                    }),
-                  },
-                  {
                     translateY: animation.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [0, -50],
+                      outputRange: [0, -70],
                     }),
                   },
                 ],
               },
             ]}
           >
-            <FontAwesomeIcon name="calendar-plus-o" size={25} color={"white"} />
+            <FeatherIcon name="edit" size={23} color={"white"} />
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*botão add, animação*/}
@@ -375,19 +232,19 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 25,
     width: 350,
-    alignItems: 'center',
-    gap: 25,
-    shadowColor: '#000',
+    alignItems: "center",
+    gap: 15,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -398,17 +255,33 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 0.5,
-    borderRadius: 30,
+    borderRadius: 15,
     paddingHorizontal: 15,
     paddingVertical: 5,
-    backgroundColor: 'white',
-    color: 'black', 
-    textAlign: 'center'
+    backgroundColor: "white",
+    color: "black",
+    width: "100%",
   },
   inputText: {
-    color: 'black', 
-    fontSize: 15, 
-    fontFamily: 'Poppins_300Light', 
-  }
+    color: "black",
+    fontSize: 15,
+    fontFamily: " Poppins_400Regular",
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain",
+  },
+  iconButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  iconText: {
+    color: "black",
+    fontSize: 15,
+    fontFamily: "Poppins_300Light",
+  },
 });
+
 export default TabButton;
