@@ -49,7 +49,7 @@ const LoginPage = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
             alert("Login Realizado com sucesso");
-            navigation.navigate('Home')
+            navigation.navigate('PSNavigator')
           }
 
           else {
@@ -115,7 +115,7 @@ const LoginPage = ({ navigation }) => {
       </View>
 
 {/* <TouchableOpacity onPress={() => login()}> */}
-      <TouchableOpacity onPress={() => navigation.navigate('PCNavigator')}>
+      <TouchableOpacity onPress={() => login()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

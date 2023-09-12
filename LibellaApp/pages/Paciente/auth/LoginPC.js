@@ -12,7 +12,7 @@ const LoginPCScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const [timeOut, setTimeOut] = useState(10000);
+  const [timeOut, setTimeOut] = useState(10500);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
@@ -49,7 +49,7 @@ const LoginPCScreen = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
             alert("Login Realizado com sucesso");
-            navigation.navigate('Home')
+            navigation.navigate('PCNavigator')
           }
 
           else {
@@ -114,7 +114,7 @@ const LoginPCScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('PCNavigator')}>
+      <TouchableOpacity onPress={() =>  login()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>
