@@ -8,7 +8,7 @@ import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
-const LoginPage = ({ navigation }) => {
+const LoginPSScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -16,6 +16,12 @@ const LoginPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   async function login() {
     if (email == "" || senha == "") {
@@ -48,7 +54,6 @@ const LoginPage = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            alert("Login Realizado com sucesso");
             navigation.navigate('PSNavigator')
           }
 
@@ -102,12 +107,14 @@ const LoginPage = ({ navigation }) => {
               onChangeText={(text) => setSenha(text)}
               value={senha}
               placeholder="Senha"
+              secureTextEntry={!showPassword}
             />
             <Ionicons
-              name="eye-outline"
+              name={showPassword ? 'eye-off-outline' : 'eye-outline'}
               size={35}
               color={"black"}
               style={styles.icon}
+              onPress={toggleShowPassword}
             />
           </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
@@ -140,7 +147,7 @@ const LoginPage = ({ navigation }) => {
   );
 }
 
-export default LoginPage;
+export default LoginPSScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

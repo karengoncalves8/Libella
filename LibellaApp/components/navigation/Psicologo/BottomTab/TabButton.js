@@ -223,8 +223,6 @@ const TabButton = ({ toggleOpened, opened }) => {
                 )}
               </View>
             </View>
-
-
           </View>
         </View>
       </Modal>

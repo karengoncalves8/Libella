@@ -17,6 +17,12 @@ const LoginPCScreen = ({ navigation }) => {
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   async function login() {
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
@@ -48,7 +54,6 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            alert("Login Realizado com sucesso");
             navigation.navigate('PCNavigator')
           }
 
@@ -102,12 +107,14 @@ const LoginPCScreen = ({ navigation }) => {
               onChangeText={(text) => setSenha(text)}
               value={senha}
               placeholder="Senha"
+              secureTextEntry={!showPassword}
             />
             <Ionicons
-              name="eye-outline"
+              name={showPassword ? 'eye-off-outline' : 'eye-outline'}
               size={35}
               color={"black"}
               style={styles.icon}
+              onPress={toggleShowPassword}
             />
           </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
