@@ -4,14 +4,12 @@ import AppLoading from 'expo-app-loading';
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 
-
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
-import AlterarDadosPac from './pages/home/AlterarDadosPac';
-import ConfigPac from './pages/home/DrawerPages/ConfigPac';
-import InicioPac from './pages/home/DrawerPages/InicioPac';
+import NotificacoesPac from './pages/home/NotificacoesPac';
+
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
@@ -29,6 +27,7 @@ export default function App() {
       NotLogged: () => {
         setUserToken(null);
       },
+
     };
   }, []);
 
@@ -46,13 +45,7 @@ export default function App() {
 
 
   return (
-    <ConfigPac/>
-    /*<AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <RootStackScreen userToken={userToken} />
-      </NavigationContainer>
-    </AuthContext.Provider>
-   */
+  <NotificacoesPac />
 
   );
 }

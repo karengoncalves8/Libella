@@ -30,7 +30,7 @@ const Introduction3Page = ({ navigation }) => {
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircleActivated}></View>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end" }} onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end" }} onPress={() => navigation.navigate('IntroducaoPac4')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>

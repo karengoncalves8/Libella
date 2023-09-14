@@ -1,6 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Hr } from "react-native";
 
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import AntIcon from "react-native-vector-icons/AntDesign";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
+
 export default function WelcomePage() {
     return (
         <View style={styles.container}>
@@ -8,7 +13,7 @@ export default function WelcomePage() {
                 <View style={styles.containerUser}>
                     <Image
                         style={styles.userImg}
-                        source={require('../assets/userIconTeste.png')}
+                        source={require('../../assets/img/Pessoas/Andreia.jpg')}
                     />
                 </View>
                 <View style={styles.containerName}>
@@ -18,33 +23,21 @@ export default function WelcomePage() {
             <View style={styles.containerInfos}>
                 <Text style={styles.TitlePrincipal}>Contato</Text>
                 <View style={styles.containerInfosBloco}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../assets/Icons/IconEmailPreto.png')}
-                    />
+                <IonIcon name="mail-outline"></IonIcon>
                     <Text style={styles.text}>blablablablabla</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/} 
                 </View>
                 <View style={styles.containerInfosBloco}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../assets/Icons/call.png')}
-                    />
+                <IonIcon name="call-outline"></IonIcon>
                     <Text style={styles.text}>blablablablabla</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/} 
                 </View>
                 <Text style={styles.TitlePrincipal}>Consultório</Text>
                 <View style={styles.containerInfosBloco}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../assets/Icons/loc.png')}
-                    />
+                <IonIcon name="location-outline"></IonIcon>
                     <Text style={styles.text}>blablablablabla</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/} 
                 </View>
                 <Text style={styles.TitlePrincipal}>CRP</Text>
                 <View style={styles.containerInfosBloco}>
-                    <Image
-                        style={styles.icon}
-                        source={require('../assets/Icons/card.png')}
-                    />
+                        <AntIcon name="IdcardOutlined"></AntIcon>
                     <Text style={styles.text}>blablablablabla</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/} 
                 </View>
             </View>   
@@ -133,10 +126,5 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         borderRadius: 100,
-    },
-
-    icon: {
-        minWidth: 20,
-        minHeight: 20,
     },
 });

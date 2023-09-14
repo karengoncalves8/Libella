@@ -18,38 +18,7 @@ import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIc
 const AtividadeEspPage = ({ navigation }) => {
   const CheckBox = ({options = [], onChange}) => {
     const [selected, setSelection] = useState([]);
-  /*const CheckBox = ({options = [], onChange}) => {
-    const [selected, setSelection] = useState([]);
-
-    function toggle(id) {
-      let index = selected.findIndex(i => i === id);
-      let arrSelecteds = [...selected];
-      if (index !== -1){
-        arrSelecteds.Splice(index, 1);
-      }
-      else{
-        arrSelecteds.push(id);
-      }
-      setSelected(arrSelecteds);
-    }
-    return(
-      <View style={styles.checkContainer}>
-        {options.map((op, index) => (
-          <View style={styles.optionContainer}>
-            <TouchableOpacity
-            style={style.touchable}
-            onPress={() => toggle(op?.id)}>
-            {selected.findIndex(i=> i === op.id) !== -1 ? (
-              <EntypoIcon name="attachment" size={18} color={'#53A7D7'}/>
-            ) : null}
-            </TouchableOpacity>
-            <Text style={styles.texto}>{op?.text}</Text>
-            </View>
-        ))}
-      </View>
-    )
-  }
-  */
+  
   return (
     <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
