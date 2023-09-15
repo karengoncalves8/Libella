@@ -70,6 +70,7 @@ const AgendaPage = () => {
           }}
           // Mark specific dates as marked
           markedDates={markedDay}
+        
         />
 
         <View style={{ paddingHorizontal: 30, flex: 1, alignItems: "center" }}>
@@ -127,11 +128,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
+    fontFamily: 'Poppins_400Regular'
   },
   textDate: {
     marginLeft: 5,
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: 'Poppins_400Regular'
   },
 });
 

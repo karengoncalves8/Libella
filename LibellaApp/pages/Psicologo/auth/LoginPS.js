@@ -17,6 +17,8 @@ const LoginPSScreen = ({ navigation }) => {
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
 
+  const { Logged } = React.useContext(AuthContext);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -55,6 +57,7 @@ const LoginPSScreen = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
             navigation.navigate('PSNavigator')
+            Logged();
           }
 
           else {

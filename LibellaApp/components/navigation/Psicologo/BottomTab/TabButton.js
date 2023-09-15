@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Animated,
   Modal,
@@ -133,7 +133,7 @@ const TabButton = ({ toggleOpened, opened }) => {
                 onPress={() => setModalVisible(!modalVisible)}>
                 <AntIcon name="close" size={25} color={"black"} />
               </TouchableWithoutFeedback>
-              <Text style={{ fontFamily: 'Poppins_300Light' }}>Agendar Sessão</Text>
+              <Text style={{ fontFamily: 'Poppins_500Medium' }}>Agendar Sessão</Text>
             </View>
             <Dropdown
               label="Paciente"
@@ -181,13 +181,15 @@ const TabButton = ({ toggleOpened, opened }) => {
                   <Pressable
                     onPress={toggleDatePicker}>
                     <TextInput
-                      style={styles.input}
+                       style={[styles.input, {textAlign: 'center', paddingLeft: 35,}]}
                       placeholder="18/08/2008"
                       value={dataEvento}
                       onChange={setDateEvento}
                       editable={false}
                     />
+                    <AntIcon name="calendar" size={20} color={'gray'} style={{position: "absolute", top: 9, left: 14, opacity: 0.6}}/>
                   </Pressable>
+                  
                 )}
                 {showDatePicker && (
                   <DateTimePicker
@@ -223,6 +225,10 @@ const TabButton = ({ toggleOpened, opened }) => {
                 )}
               </View>
             </View>
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={{color: 'white', fontSize: 14, fontFamily: 'Poppins_400Regular'}}> Agendar </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -407,6 +413,13 @@ const styles = StyleSheet.create({
     color: 'black', 
     fontSize: 15, 
     fontFamily: 'Poppins_300Light', 
+  },
+  button: {
+    paddingHorizontal: 30,
+    paddingVertical: 9, 
+    backgroundColor: '#6D45C2',
+    borderRadius: 10,
+    alignSelf: 'center'
   }
 });
 export default TabButton;

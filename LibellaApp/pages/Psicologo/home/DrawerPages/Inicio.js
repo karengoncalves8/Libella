@@ -27,7 +27,7 @@ const InicioPage = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andressa!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_700Bold' }}>Olá, Andressa!</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center"}}>
@@ -63,9 +63,9 @@ const InicioPage = (navigation) => {
                 <Image
                   source={require("../../../../assets/icons/VectorAzul.png")}
                 />
-                <Text>Rui Barbosa</Text>
+                <Text style={styles.text}>Rui Barbosa</Text>
               </View>
-              <Text>21h40 - 23h40</Text>
+              <Text style={styles.text}>21h40 - 23h40</Text>
             </View>
           </View>
         </View>
@@ -84,7 +84,7 @@ const InicioPage = (navigation) => {
                   style={styles.imgIcon}
                   source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
                 />
-                <Text>Andreia Ramos</Text>
+                <Text style={styles.text}>Andreia Ramos</Text>
               </View>
               <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
             </TouchableOpacity>
@@ -96,7 +96,7 @@ const InicioPage = (navigation) => {
                   style={styles.imgIcon}
                   source={require("../../../../assets/img/Pessoas/Rui.jpg")}
                 />
-                <Text>Rui Barbosa</Text>
+                <Text style={styles.text}>Rui Barbosa</Text>
               </View>
               <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
             </View>
@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   subTitulo: {
     fontSize: 14,
     color: "#6D45C2",
+    fontFamily: 'Poppins_500Medium'
   },
   paciente: {
     flexDirection: "row",
@@ -144,4 +145,7 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 400 / 2,
   },
+  text: {
+    fontFamily: 'Poppins_400Regular'
+  }
 });

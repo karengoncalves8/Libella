@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, SafeAreaView, AsyncStorage } from 'react-native';
 
 
 // Navigation
@@ -17,6 +17,20 @@ import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfo
 export default function App() {
   const [userToken, setUserToken] = React.useState(null)
 
+  /*
+  const [isFirstLaunch, setIsFirstLaunch] = useState(false)
+
+  useEffect(() => {
+    AsyncStorage.getItem("alredyLaunched").then((value) => {
+      if (value === null){
+        AsyncStorage.setItem("alredyLaunched", "true");
+        setIsFirstLaunch(true);
+      }
+      else{
+        setIsFirstLaunch(false);
+      }
+    })
+  })*/
   const authContext = React.useMemo(() => {
     return {
       Logged: () => {
@@ -28,6 +42,7 @@ export default function App() {
     };
   }, []);
 
+  
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_500Medium,
