@@ -8,6 +8,7 @@ import { Text, View, StyleSheet, SafeAreaView, AsyncStorage } from 'react-native
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/Stack/AuthContext';
+import { SelectContext } from './components/navigation/Stack/SelectContext';
 import RootStackScreen from './components/navigation/Stack/RootStack';
 
 // Importar fonts
@@ -16,6 +17,7 @@ import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfo
 
 export default function App() {
   const [userToken, setUserToken] = React.useState(null)
+  const [choice, setChoice] = React.useState(null)
 
   /*
   const [isFirstLaunch, setIsFirstLaunch] = useState(false)
@@ -39,9 +41,11 @@ export default function App() {
       NotLogged: () => {
         setUserToken(null);
       },
+      select: (value) => {
+        setChoice(value)
+      },
     };
   }, []);
-
   
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -58,11 +62,13 @@ export default function App() {
 
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <RootStackScreen userToken={userToken} />
-      </NavigationContainer>
-    </AuthContext.Provider>
+
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          <RootStackScreen userToken={userToken} choice={choice} />
+        </NavigationContainer>
+      </AuthContext.Provider>
+
 
   );
 }

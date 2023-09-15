@@ -2,16 +2,19 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
+import { AuthContext } from "../../components/navigation/Stack/AuthContext";
+
 const SelectionScreen = ({ navigation }) => {
-  const [choice, setChoice] = React.useState(null)
+
+  const { select } = React.useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Organize suas atividades</Text>
       </View>
       <View style={styles.containerImgTop}>
-        <TouchableOpacity onPress={() =>
-            navigation.navigate('AuthPS')}>
+        <TouchableOpacity onPress={() => select('Psicologo')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePsicologo.png')}
@@ -22,8 +25,7 @@ const SelectionScreen = ({ navigation }) => {
         <Text style={styles.text}>ou</Text>
       </View>
       <View style={styles.containerImgBottom}>
-        <TouchableOpacity onPress={() =>
-            navigation.navigate('AuthPC')}>
+        <TouchableOpacity onPress={() => select('Paciente')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePaciente.png')}
