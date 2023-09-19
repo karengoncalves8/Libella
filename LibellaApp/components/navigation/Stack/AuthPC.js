@@ -12,7 +12,6 @@ import {
 
 import PCNavigator from '../Stack/PCNavigator'
 
-
 const AuthStack = createNativeStackNavigator();
 
 const AuthPC = () => {

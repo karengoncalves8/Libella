@@ -1,12 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import { AuthContext } from "../../components/navigation/Stack/AuthContext";
 
 const SelectionScreen = ({ navigation }) => {
 
-  const { select } = React.useContext(AuthContext);
+  const { select } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -32,7 +31,6 @@ const SelectionScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      <StatusBar backgroundColor={"white"} style="auto" />
     </View>
   );
 }
