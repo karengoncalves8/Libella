@@ -1,13 +1,6 @@
-import * as React from "react";
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, BackHandler } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -15,18 +8,36 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../components/navigation/TabContainer";
 
+// async storage
+import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // instalar
 import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
 const InicioPage = (navigation) => {
+  // Comando pra bloquear o botão de voltar
+  /*
+  useEffect(() => {
+    BackHandler.addEventListener('backPress', () => true)
+    return () => BackHandler.removeEventListener('backPress', () => true)
+  }, [])
+  */
+
+  const [id, setId] = useState('');
+
+  const resgatarId = async (key) => {
+    const value = await AsyncStorage_ID.getItem(key)
+    setId(value)
+  }
+
+  resgatarId('IdPsicologo');
   let startDate = moment();
 
   return (
     <TabContainer>
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
-
+        <Text style={{ fontSize: 30, color: "#4A2794" }}>{id}</Text>
         <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andressa!</Text>
 
         <View style={{ gap: 8 }}>

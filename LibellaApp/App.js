@@ -4,6 +4,8 @@ import AppLoading from 'expo-app-loading';
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 
+import FichaPacienteScreen from './pages/home/FichaPacienteScreen';
+
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -47,7 +49,6 @@ export default function App() {
         <RootStackScreen userToken={userToken} />
       </NavigationContainer>
     </AuthContext.Provider>
-
   );
 }
 
