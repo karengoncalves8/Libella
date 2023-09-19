@@ -14,7 +14,6 @@ import {
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
@@ -101,13 +100,12 @@ const NotificacoesPage = () => {
           <FlatList
             data={listaInfo}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-        
 
-
+          <View style={styles.container}>
             <View style={{ gap: 15, width: "100%" }}>
               <Text style={{ opacity: 0.4, marginLeft: 15 }}>Hoje</Text>
 
+              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
               <View style={styles.card}>
                 <MaterialCommunityIcon
                   name="calendar-clock-outline"
@@ -120,7 +118,9 @@ const NotificacoesPage = () => {
                   14:30
                 </Text>
               </View>
+              </TouchableOpacity>
 
+              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
               <View style={styles.card}>
                 <MaterialCommunityIcon
                   name="calendar-clock-outline"
@@ -129,23 +129,27 @@ const NotificacoesPage = () => {
                 />
                 <Text style={styles.texto}>
                   Sessão com
-                  <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> às
+                  <Text style={{ color: "#6D45C2" }}> Rui Barbosa</Text> às
                   14:30
                 </Text>
               </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("Atividades")}>
               <View style={styles.card}>
                 <AntIcon name="checkcircleo" size={35} color={"black"} />
-                <Text style={styles.texto}>
-                  Sessão com
-                  <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> às
-                  14:30
+                <Text style={{ color: "#6D45C2"}}>
+                Mariella Nakimura 
+                  <Text style={styles.texto}> entregou a atividade “Relatório diário”</Text>
                 </Text>
               </View>
+              </TouchableOpacity>
             </View>
 
             <View style={{ gap: 15, width: "100%" }}>
               <Text style={{ opacity: 0.4, marginLeft: 15 }}>12/03</Text>
 
+              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
               <View style={styles.card}>
                 <MaterialCommunityIcon
                   name="calendar-clock-outline"
@@ -157,7 +161,10 @@ const NotificacoesPage = () => {
                   <Text style={{ color: "#6D45C2" }}> Aline Dias</Text> às 14:30
                 </Text>
               </View>
+              </TouchableOpacity>
 
+
+              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
               <View style={styles.card}>
               <AntIcon name="checkcircleo" size={35} color={"black"} />
                 <Text style={styles.texto}>
@@ -165,11 +172,9 @@ const NotificacoesPage = () => {
                   entregou a atividade “Relatório diário”
                 </Text>
               </View>
+              </TouchableOpacity>
             </View>
-
-
-          
-          </TouchableOpacity>
+           </View>
 
             )}
           />

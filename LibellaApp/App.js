@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
 import NotificacoesPac from './pages/home/NotificacoesPac';
-
+import EmotionsRegisterScreen from './pages/home/EmotionsRegisterScreen';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
@@ -45,7 +45,7 @@ export default function App() {
 
 
   return (
-  <NotificacoesPac />
+  <EmotionsRegisterScreen/>
 
   );
 }

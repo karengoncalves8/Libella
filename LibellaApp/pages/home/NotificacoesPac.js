@@ -14,10 +14,7 @@ import {
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
-
-import TabContainer from "../../components/navigation/TabContainer";
 
 const NotificacoesPage = () => {
 
@@ -102,14 +99,12 @@ const NotificacoesPage = () => {
           <FlatList
             data={listaInfo}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-
-
     
         <View style={styles.container}>
           <View style={{ gap: 15, width: "100%" }}>
             <Text style={{ opacity: 0.4, marginLeft: 15 }}>Hoje</Text>
 
+            <TouchableOpacity onPress={() => navigation.navigate("AgendaPac")}>
             <View style={styles.card}>
               <MaterialCommunityIcon
                 name="calendar-clock-outline"
@@ -121,24 +116,28 @@ const NotificacoesPage = () => {
                 <Text style={{ color: "#6D45C2" }}> 14:30 </Text> 
               </Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate("AtividadePac")}>
             <View style={styles.card}>
-              <AntIcon name="checkcircleo" size={35} color={"black"} />
-              <Text style={styles.texto}>
+            <AntIcon name="checkcircleo" size={35} color={"black"} />
+            <Text style={styles.texto}>
                 Nova atividade:
                 <Text style={{ color: "#6D45C2" }}> "Auto Recompensa"</Text>
-              </Text>
+            </Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate("EmotionsRegisterScreen")}>
             <View style={styles.card}>
             <EntypoIcon name="emoji-happy" size={35} color={"black"} />
               <Text style={styles.texto}>
                 <Text style={{ color: "" }}>Como está se sentindo? </Text>
               </Text>
             </View>
+            </TouchableOpacity>
           </View>
           
-
           <View style={{ gap: 15, width: "100%" }}>
             <Text style={{ opacity: 0.4, marginLeft: 15 }}>12/03</Text>
 
@@ -162,7 +161,7 @@ const NotificacoesPage = () => {
             </View>
           </View>
         </View>
-        </TouchableOpacity>
+        
         )}
         />
         </View>
