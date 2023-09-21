@@ -9,12 +9,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from './components/navigation/AuthContext';
 import RootStackScreen from './components/navigation/RootStack';
 import NotificacoesPac from './pages/home/NotificacoesPac';
-import EmotionsRegisterScreen from './pages/home/EmotionsRegisterScreen';
+import EmotionsRegisterScreen from './pages/home/RegistroPac';
 
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfortaa';
-import { Ajuda, Atividades, Config, Notificacoes, Termos } from './pages';
+import { Ajuda, Atividades, Config, Notificacoes, Termos,Registro } from './pages';
+import Registro from './pages/home/Registro';
 
 export default function App() {
   const [userToken, setUserToken] = React.useState(null)
@@ -45,14 +46,14 @@ export default function App() {
 
 
   return (
-  <Atividades/>
+  <Registro/>
 
   );
 }
 
 /* <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        <RootStackScreen userToken={userToken} />
+        <RootStackScreen userToken={userToken} />a
       </NavigationContainer>
     </AuthContext.Provider> */
 

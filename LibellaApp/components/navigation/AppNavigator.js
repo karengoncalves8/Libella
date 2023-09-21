@@ -16,11 +16,14 @@ import {
   RemoverPaciente,
   TermosCondicoes,
   ConfigPac,
-  AlterarDadosPac
+  AlterarDadosPac,
+  EmotionsRegisterScreen,
+  Registro
 } from "../../pages";
 
 import DrawerNavigator from "./DrawerNavigator";
 import { TabContextProvider } from "./TabContext";
+import EmotionsRegisterScreen from "../../pages/home/RegistroPac";
 
 const AppStack = createNativeStackNavigator();
 
@@ -72,6 +75,16 @@ const AppNavigator = () => {
         <AppStack.Screen
           name="ConfigPac"
           component={ConfigPac}
+        />
+
+        <AppStack.Screen
+          name="RegistroPac"
+          component={EmotionsRegisterScreen}
+        />
+
+        <AppStack.Screen
+          name="Registro"
+          component={Registro}
         />
       </AppStack.Navigator>
     </TabContextProvider>
