@@ -1,59 +1,118 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
 } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import AntIcon from "react-native-vector-icons/AntDesign";
 
-const AtividadesPage = ({navigation}) => {
+
+const AtividadesPac = () => {
+
+  const [listaInfo, setListaInfo] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [timeOut, setTimeOut] = useState(50000);
+  const [viewLista, setViewLista] = useState(true);
+
+  const clickItemFlatList = (item) => {
+  };
+
+  useEffect(() => {
+    getInformacoesBD();
+  }, []);
+
+  async function getInformacoesBD() {
+    setLoading(true);
+    var url = 'https://aulapam23.000webhostapp.com/lista_usuarios.php';
+
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: 'GET',
+    })
+
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+
+        setListaInfo([]);
+        for (var i = 0; i < responseJson.usuarios.length; i++) {
+          setListaInfo((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                id: responseJson.usuarios[i].id,
+                nomePac: responseJson.usuarios[i].nome,
+
+              },
+            ];
+            return list;
+          });
+        }
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+
+        //  alert('erro'+error)
+      });
+
+    setLoading(false);
+  }
   return (
-      <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
-                  <TouchableOpacity onPress={() => navigation.goBack()}>
-            
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+        <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
+        <Text style={styles.texto}>Recentes</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+        <View style={{ flexDirection: 'column', gap: 8 }}>
+          <Text style={styles.titulo}>Roda da Vida</Text>
+          <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
         </View>
+        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+      </TouchableOpacity>
 
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+        <View style={{ flexDirection: 'column', gap: 8 }}>
+          <Text style={styles.titulo}>Auto Recompensa</Text>
+          <Text style={styles.texto}>Vence 1 de abril ás 13:59</Text>
+        </View>
+        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+      </TouchableOpacity>
 
-        <TouchableOpacity style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-          <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4}/>
-          <Text style={styles.texto}>Recentes</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-          <View style={{flexDirection: 'column', gap: 8}}>
-            <Text style={styles.titulo}>Roda da Vida</Text>
-            <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
-          </View>
-          <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.card}>
-          <View style={{flexDirection: 'column', gap: 8}}>
-            <Text style={styles.titulo}>Auto Recompensa</Text>
-            <Text style={styles.texto}>Vence 1 de abril ás 13:59</Text>
-          </View>
-          <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.card}>
-          <View style={{flexDirection: 'column', gap: 8}}>
-            <Text style={styles.titulo}>Máquina do Tempo</Text>
-            <Text style={styles.texto}>Vence 13 de abril ás 13:59</Text>
-          </View>
-          <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+        <View style={{ flexDirection: 'column', gap: 8 }}>
+          <Text style={styles.titulo}>Máquina do Tempo</Text>
+          <Text style={styles.texto}>Vence 13 de abril ás 13:59</Text>
+        </View>
+        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+      </TouchableOpacity>
+    </View>
   );
 };
 
-export default AtividadesPage;
+export default AtividadesPac;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F2F2",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginTop: 60,
     gap: 27,
     paddingHorizontal: 20,
   },
@@ -82,7 +140,7 @@ const styles = StyleSheet.create({
     color: '#3F3E3E',
     opacity: 0.7,
   },
-  titulo:{
+  titulo: {
     fontWeight: 'bold',
     fontSize: 16,
     color: '#313131'

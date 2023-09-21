@@ -14,7 +14,7 @@ import EmotionsRegisterScreen from './pages/home/EmotionsRegisterScreen';
 // Importar fonts
 import { Poppins_300Light, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Comfortaa_500Medium, Comfortaa_700Bold } from '@expo-google-fonts/comfortaa';
-import { Ajuda, Config, Notificacoes, Termos } from './pages';
+import { Ajuda, Atividades, Config, Notificacoes, Termos } from './pages';
 
 export default function App() {
   const [userToken, setUserToken] = React.useState(null)
@@ -45,7 +45,7 @@ export default function App() {
 
 
   return (
-  <EmotionsRegisterScreen/>
+  <Atividades/>
 
   );
 }
