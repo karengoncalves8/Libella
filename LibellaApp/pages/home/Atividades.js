@@ -13,7 +13,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 
-const Atividades= () => {
+const AtividadesPac = () => {
 
   const [listaInfo, setListaInfo] = useState([]);
 
@@ -79,40 +79,61 @@ const Atividades= () => {
     setLoading(false);
   }
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-        <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
-        <Text style={styles.texto}>Recentes</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Roda da Vida</Text>
-          <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
+    <View style={{ padding: 11 }}>
+      {loading ? (
+        <View style={styles.container}>
+          <Text
+            style={styles.textLoading}>
+            Aguarde, obtendo informações...
+          </Text>
+          <ActivityIndicator size="small" color="#0000ff" />
         </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
 
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Auto Recompensa</Text>
-          <Text style={styles.texto}>Vence 1 de abril ás 13:59</Text>
-        </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
+      ) : (
+        <View>
+          <FlatList
+            data={listaInfo}
+            renderItem={({ item }) => (
+              <View style={styles.container}>
+                <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+                  <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
+                  <Text style={styles.texto}>Recentes</Text>
+                </TouchableOpacity>
 
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Máquina do Tempo</Text>
-          <Text style={styles.texto}>Vence 13 de abril ás 13:59</Text>
+                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+                  <View style={{ flexDirection: 'column', gap: 8 }}>
+                    <Text style={styles.titulo}>Roda da Vida</Text>
+                    <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
+                  </View>
+                  <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+                  <View style={{ flexDirection: 'column', gap: 8 }}>
+                    <Text style={styles.titulo}>Auto Recompensa</Text>
+                    <Text style={styles.texto}>Vence 1 de abril ás 13:59</Text>
+                  </View>
+                  <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+                  <View style={{ flexDirection: 'column', gap: 8 }}>
+                    <Text style={styles.titulo}>Máquina do Tempo</Text>
+                    <Text style={styles.texto}>Vence 13 de abril ás 13:59</Text>
+                  </View>
+                  <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
+      )}
+
     </View>
   );
 };
 
-export default Atividades;
+export default AtividadesPac;
 
 const styles = StyleSheet.create({
   container: {

@@ -23,7 +23,7 @@ import {
 
 import DrawerNavigator from "./DrawerNavigator";
 import { TabContextProvider } from "./TabContext";
-import EmotionsRegisterScreen from "../../pages/home/RegistroPac";
+
 
 const AppStack = createNativeStackNavigator();
 
