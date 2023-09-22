@@ -9,6 +9,10 @@ import { AuthContext } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
     const { NotLogged } = React.useContext(AuthContext);
+    const onPressHandler = () => {
+
+        NotLogged()
+    }
     return (
         <View style={{flex: 1, backgroundColor: '#F2F2F2'}}>
             <DrawerContentScrollView {...props}
@@ -38,7 +42,7 @@ const CustomDrawer = (props) => {
                     paddingHorizontal:20,
                     paddingVertical: 30,
                 }}>
-                    <TouchableOpacity onPress={() => NotLogged()} style={{flexDirection: 'row', gap: 10, alignItems: 'center',}}>
+                    <TouchableOpacity onPress={() => onPressHandler()} style={{flexDirection: 'row', gap: 10, alignItems: 'center',}}>
                         <FeatherIcon name='log-out' size={30} color={'#EC4646'} />
                         <Text style={{fontSize: 20, color: '#EC4646'}}>Sair</Text>
                     </TouchableOpacity>

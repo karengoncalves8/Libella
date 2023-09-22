@@ -9,6 +9,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 const LoginPCScreen = ({ navigation }) => {
+  const { Logged } = React.useContext(AuthContext);
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -54,7 +56,8 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            navigation.navigate('PCNavigator')
+            navigation.navigate('PCNavigator');
+            Logged('Paciente');
           }
 
           else {

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect }from "react";
-import{ AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export const AuthContext = createContext({});
@@ -22,7 +22,20 @@ const [isFirstLaunch, setIsFirstLaunch] = useState(false)
     })
   })
 */}
-    
+
+  const [UserStatus, setUserStatus] = React.useState(null)
+
+  const loginContext = React.useMemo(() => {
+    return {
+      Logged: ({choice}) => {
+        setUserStatus("Logged");
+        setChoice(choice)
+      },
+      NotLogged: () => {
+        setUserStatus(null);
+      }
+    };
+  }, []);
 
     const navigation = useNavigation();
 
@@ -39,7 +52,7 @@ const [isFirstLaunch, setIsFirstLaunch] = useState(false)
     }
 
     return(
-        <AuthContext.Provider value={{choice, select}}>
+        <AuthContext.Provider value={{choice, select, loginContext}}>
             {children}
         </AuthContext.Provider>
     )

@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
     // Textos
     textData: {
         color: '#31313140',
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
     },
 
     text: {
         color: '#313131',
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
     },
 
     userImg: {
@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
     textExibition: {
         color: '#6D45C2',
         fontSize: 18,
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
     },
 });
