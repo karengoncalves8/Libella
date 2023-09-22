@@ -12,7 +12,10 @@ import {
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
-const AtividadesScreen = ({navigation}) => {
+
+import TabContainer from "../../../components/navigation/Paciente/BottomTab/TabContainer";
+
+const AtividadesScreen = ({ navigation }) => {
   const [listaInfo, setListaInfo] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -77,6 +80,7 @@ const AtividadesScreen = ({navigation}) => {
     setLoading(false);
   }
   return (
+    <TabContainer>
     <View style={styles.container}>
       <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
         <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
@@ -107,6 +111,7 @@ const AtividadesScreen = ({navigation}) => {
         <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
       </TouchableOpacity>
     </View>
+    </TabContainer>
   );
 };
 
@@ -118,12 +123,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F2F2",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginTop: 60,
+    marginTop: 40,
     gap: 27,
     paddingHorizontal: 20,
   },
   card: {
-    width: '100%',
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -136,12 +141,24 @@ const styles = StyleSheet.create({
   },
   texto: {
     fontSize: 14,
-    color: '#3F3E3E',
+    color: "#3F3E3E",
     opacity: 0.7,
+    fontFamily: "Poppins_400Regular",
   },
-  titulo:{
-    fontWeight: 'bold',
+  titulo: {
     fontSize: 16,
-    color: '#313131'
-  }
+    color: "#313131",
+    fontFamily: "Poppins_500Medium",
+  },
+  tituloData: {
+    paddingLeft: 7,
+    fontSize: 16,
+    color: "#53A7D7",
+    fontFamily: "Poppins_400Regular",
+  },
+  dataSem: {
+    fontSize: 16,
+    color: "#AFAFAF",
+    fontFamily: "Poppins_400Regular",
+  },
 });

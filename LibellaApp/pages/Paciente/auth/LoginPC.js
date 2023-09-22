@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityInd
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-import { AuthContext } from "../../../components/navigation/AuthContext";
+import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
@@ -12,10 +12,16 @@ const LoginPCScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const [timeOut, setTimeOut] = useState(10000);
+  const [timeOut, setTimeOut] = useState(10500);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   async function login() {
     if (email == "" || senha == "") {
@@ -48,8 +54,7 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            alert("Login Realizado com sucesso");
-            navigation.navigate('Home')
+            navigation.navigate('PCNavigator')
           }
 
           else {
@@ -74,7 +79,7 @@ const LoginPCScreen = ({ navigation }) => {
 
       <Image
         style={styles.img}
-        source={require('../../assets/img/Logos/Logo-roxa.png')}
+        source={require('../../../assets/img/Logos/Logo-roxa.png')}
       />
 
       <Text style={styles.title}> Login</Text>
@@ -102,19 +107,21 @@ const LoginPCScreen = ({ navigation }) => {
               onChangeText={(text) => setSenha(text)}
               value={senha}
               placeholder="Senha"
+              secureTextEntry={!showPassword}
             />
             <Ionicons
-              name="eye-outline"
+              name={showPassword ? 'eye-off-outline' : 'eye-outline'}
               size={35}
               color={"black"}
               style={styles.icon}
+              onPress={toggleShowPassword}
             />
           </View>
           <Text style={styles.text}>Esqueceu a senha?</Text>
         </View>
       </View>
 
-      <TouchableOpacity onPress={() => login()}>
+      <TouchableOpacity onPress={() =>  login()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

@@ -6,7 +6,7 @@ import {
   Image,
 } from "react-native";
 
-import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
+import TabContainer from "../../../components/navigation/Paciente/BottomTab/TabContainer";
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
@@ -15,8 +15,8 @@ import { format,  } from "date-fns";
 const meetings = [
   {
     id: 1,
-    name: "Leslie Alexander",
-    date: "2023-08-05",
+    name: "Consulta",
+    date: "2023-09-09",
     time: "13:00",
   },
   {
@@ -35,7 +35,7 @@ const meetings = [
 
 
 
-const AgendaPage = () => {
+const AgendaScreen = () => {
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   const [selected, setSelected] = useState(currentDate);
@@ -70,7 +70,6 @@ const AgendaPage = () => {
           }}
           // Mark specific dates as marked
           markedDates={markedDay}
-        
         />
 
         <View style={{ paddingHorizontal: 30, flex: 1, alignItems: "center" }}>
@@ -106,7 +105,7 @@ const AgendaPage = () => {
   );
 };
 
-export default AgendaPage;
+export default AgendaScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -128,13 +127,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: 'Poppins_400Regular'
   },
   textDate: {
     marginLeft: 5,
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: 'Poppins_400Regular'
   },
 });
 

@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "reac
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
-const AjudaPage = () => {
+const AjudaScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={{
@@ -33,10 +33,10 @@ const AjudaPage = () => {
         }}>Tópicos</Text>
         <View style={styles.containerTopics2}>
           <View style={styles.containerTopics3}>
-            <Text style={styles.font} > Cadastrar Paciente</Text>
+            <Text style={styles.font} > Registrar humor</Text>
           </View>
           <View style={styles.containerTopics3}>
-            <Text style={styles.font}> Atribuir Atividade</Text>
+            <Text style={styles.font}> Entregar atividade</Text>
           </View>
           <View style={styles.containerTopics3}>
             <Text style={styles.font}> Alterar Senha</Text>
@@ -58,7 +58,7 @@ const AjudaPage = () => {
         }}> Fale Conosco!</Text></Text>
         <View style={{
           width: '100%',
-          padding: 10,
+          paddingVertical: 10,
           borderRadius: 0,
           backgroundColor: 'red',
           backgroundColor: "white",
@@ -78,7 +78,7 @@ const AjudaPage = () => {
   );
 }
 
-export default AjudaPage;
+export default AjudaScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -148,4 +148,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_300Light',
     marginLeft: 5,
   }
+
+
 });

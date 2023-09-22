@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
@@ -11,7 +10,7 @@ const Perfil = () => {
                 <View style={styles.containerUser}>
                     <Image
                         style={styles.userImg}
-                        source={require('../../../assets/img/Pessoas/Andressa.jpg')}
+                        source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
                     />
                 </View>
                 <View style={styles.containerName}>

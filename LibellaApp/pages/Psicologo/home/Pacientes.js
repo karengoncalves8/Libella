@@ -11,7 +11,7 @@ import {
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../components/navigation/TabContainer";
+import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
 
 const PacientesPage = ({ navigation }) => {
 
@@ -28,7 +28,7 @@ const PacientesPage = ({ navigation }) => {
             >
               <Image
                 style={styles.userImg}
-                source={require("../../assets/img/Pessoas/Andreia.jpg")}
+                source={require("../../../assets/img/Pessoas/Andreia.jpg")}
               />
               <Text style={styles.text}>Paciente 1</Text>
             </View>

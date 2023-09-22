@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Image
 } from "react-native";
 
-import { AuthContext } from "../../components/navigation/AuthContext";
+import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
@@ -33,6 +34,12 @@ const CadastroScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   async function cadastrar() {
     if (nome == "" || telefone == "" || cpf == "" || rg == "" || crp == "" || endereco == "" || email == "" || senha == "") {
@@ -86,6 +93,14 @@ const CadastroScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
+
+      < Image
+        style={styles.img}
+        source={require('../../../assets/img/Logos/Logo-roxa.png')}
+      />
+
+      <Text style={styles.title}> Cadastro </Text>
+
         <Ionicons
           name="person-outline"
           size={23}
@@ -192,14 +207,15 @@ const CadastroScreen = ({ navigation }) => {
           placeholderTextColor="#ffffff"
           onChangeText={(text) => setSenha(text)}
           value={senha}
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
         />
 
         <Ionicons
-          name="eye-outline"
+          name={showPassword ? 'eye-off-outline' : 'eye-outline'}
           size={25}
           color={"white"}
           style={styles.icon}
+          onPress={toggleShowPassword}
         />
 
         <TouchableOpacity onPress={() => cadastrar()}>
@@ -230,18 +246,19 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    padding: 24,
     backgroundColor: "#53A7D7",
+    paddingHorizontal: 30,
+    paddingVertical: 30,
   },
 
   icons: {
-    marginRight: 335,
+    left: -130,
     top: 39,
   },
 
   icon: {
-    top: -65,
-    left: 150,
+    top: -38,
+    left: 130,
   },
 
   button: {
@@ -255,13 +272,23 @@ const styles = StyleSheet.create({
   Input: {
     fontSize: 22,
     color: "white",
-    padding: 10,
-    marginBottom: 30,
-    marginLeft: 30,
+    paddingLeft: 50,
+    paddingVertical: 10,
     textAlign: "left",
-    borderRadius: 0,
+    borderRadius: 20,
     width: "90%",
-    borderBottomColor: "#ffffff",
-    borderBottomWidth: 1,
+    borderColor: "#ffffff",
+    borderWidth: 1,
+  },
+
+  img: {
+    width: 167,
+    height: 167,
+    resizeMode: 'contain',
+  },
+
+  title: {
+    color: 'white',
+    fontSize: 36,
   },
 });

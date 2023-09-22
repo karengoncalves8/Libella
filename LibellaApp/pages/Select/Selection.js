@@ -1,30 +1,36 @@
-import { StatusBar } from "expo-status-bar";
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const SelectionScreen = ({navigation}) => {
+import { AuthContext } from "../../components/navigation/Stack/AuthContext";
+
+const SelectionScreen = ({ navigation }) => {
+
+  const { select } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Organize suas atividades</Text>
       </View>
       <View style={styles.containerImgTop}>
-      <TouchableOpacity onPress={() => navigation.navigate('Introduction1')}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/Auth/ChoicePsicologo.png')}
-        />
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => select('Psicologo')}>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/Auth/ChoicePsicologo.png')}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.containerText}>
         <Text style={styles.text}>ou</Text>
       </View>
       <View style={styles.containerImgBottom}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/img/Auth/ChoicePaciente.png')}
-        />
+        <TouchableOpacity onPress={() => select('Paciente')}>
+          <Image
+            style={styles.img}
+            source={require('../../assets/img/Auth/ChoicePaciente.png')}
+          />
+        </TouchableOpacity>
       </View>
-      <StatusBar backgroundColor={"white"} style="auto" />
     </View>
   );
 }
@@ -32,7 +38,7 @@ const SelectionScreen = ({navigation}) => {
 export default SelectionScreen;
 
 const styles = StyleSheet.create({
-  
+
   // Container
   container: {
     flex: 1,

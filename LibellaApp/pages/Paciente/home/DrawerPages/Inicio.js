@@ -13,13 +13,13 @@ import moment from "moment";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
-import TabContainer from "../../../../components/navigation/Psicologo/BottomTab/TabContainer";
+import TabContainer from "../../../../components/navigation/Paciente/BottomTab/TabContainer";
 
 import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
-const InicioPage = ({navigation}) => {
+const InicioScreen = (navigation) => {
   let startDate = moment();
 
   return (
@@ -27,10 +27,10 @@ const InicioPage = ({navigation}) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_700Bold' }}>Olá, Andressa!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andreia!</Text>
 
         <View style={{ gap: 8 }}>
-          <View style={{ flexDirection: "row", alignItems: "center"}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={styles.subTitulo}>AGENDA</Text>
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
@@ -63,40 +63,39 @@ const InicioPage = ({navigation}) => {
                 <Image
                   source={require("../../../../assets/icons/VectorAzul.png")}
                 />
-                <Text style={styles.text}>Rui Barbosa</Text>
+                <Text>Consulta</Text>
               </View>
-              <Text style={styles.text}>21h40 - 23h40</Text>
+              <Text>21h40 - 23h40</Text>
             </View>
           </View>
         </View>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.subTitulo}>PACIENTES</Text>
+            
+            <Text style={styles.subTitulo}>ATIVIDADES</Text>
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
           <View style={styles.card}>
-            <TouchableOpacity onPress={() => navigation.navigate('PerfilPaciente')} style={styles.paciente}>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
-              >
-                <Image
-                  style={styles.imgIcon}
-                  source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
-                />
-                <Text style={styles.text}>Andreia Ramos</Text>
-              </View>
-              <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-            </TouchableOpacity>
+
+           
             <View style={styles.paciente}>
               <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
+                style={{ flexDirection: "column", gap: 10 }}>
+
+                <Text style={styles.titulo}>Roda da Vida</Text>
+                <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
+              </View>
+              <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+            </View>
+
+
+            <View style={styles.paciente}>
+              <View
+                style={{ flexDirection: "column", gap: 10 }}
               >
-                <Image
-                  style={styles.imgIcon}
-                  source={require("../../../../assets/img/Pessoas/Rui.jpg")}
-                />
-                <Text style={styles.text}>Rui Barbosa</Text>
+                <Text style={styles.titulo}>Auto Recompensa</Text>
+                <Text style={styles.texto}>Vence em 1 de abril as 13:59</Text>
               </View>
               <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
             </View>
@@ -107,7 +106,7 @@ const InicioPage = ({navigation}) => {
   );
 };
 
-export default InicioPage;
+export default InicioScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -132,7 +131,6 @@ const styles = StyleSheet.create({
   subTitulo: {
     fontSize: 14,
     color: "#6D45C2",
-    fontFamily: 'Poppins_500Medium'
   },
   paciente: {
     flexDirection: "row",
@@ -140,12 +138,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  imgIcon: {
-    width: 45,
-    height: 45,
-    borderRadius: 400 / 2,
+  texto: {
+    fontSize: 14,
+    color: '#3F3E3E',
+    opacity: 0.7,
   },
-  text: {
-    fontFamily: 'Poppins_400Regular'
+  titulo:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#313131'
   }
 });

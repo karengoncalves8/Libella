@@ -2,41 +2,19 @@ import * as React from 'react';
 
 import {StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Hr } from "react-native";
 
-import FeatherIcons from 'react-native-vector-icons/Feather'
-
-const PerfilPacienteScreen = ({navigation}) => {
+const PerfilScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
                 <View style={styles.containerUser}>
                     <Image
                         style={styles.userImg}
-                        source={require('../../../assets/img/Pessoas/Andreia.jpg')}
+                        source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
                     />
                 </View>
                 <View style={styles.containerName}>
                     <Text style={styles.text}>Ser Humano</Text>
                 </View>
-                <View style={styles.containerButtons}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('Atividades')}>
-                        <Text style={{ color: 'white', fontSize: 15 }}>Atividades</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('FichaPaciente')}>
-                        <Text style={{ color: 'white', fontSize: 15 }}>Ficha</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('Chat')}>
-                        <FeatherIcons name='message-circle' size={20} color={'white'} />
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.containerProgress}>
-                    <TouchableOpacity onPress={() => navigation.navigate('RegistroEmocoes')}>
-                        <Text>Registro Emoções</Text>
-                    </TouchableOpacity>
                 </View>
                 <View style={styles.containerSchedule}>
 
@@ -45,7 +23,7 @@ const PerfilPacienteScreen = ({navigation}) => {
   );
 }
 
-export default PerfilPacienteScreen;
+export default PerfilScreen;
 
 const styles = StyleSheet.create({
     container: {

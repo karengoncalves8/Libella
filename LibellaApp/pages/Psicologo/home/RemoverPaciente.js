@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StatusBar } from "expo-status-bar";
+
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,11 @@ import {
   Image,
 } from "react-native";
 
-import EntypoIcon from "react-native-vector-icons/Entypo";
+
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
-import TabContainer from "../../../components/navigation/TabContainer";
-
-const PacientePage = ({ navigation }) => {
+const RemoverPacienteScreen = ({ navigation }) => {
   return (
-    <TabContainer>
       <View style={styles.container}>
         <View style={styles.mainContainer}>
           <TouchableOpacity
@@ -27,7 +24,7 @@ const PacientePage = ({ navigation }) => {
               style={styles.containerContent}>
               <Image
                 style={styles.userImg}
-                source={require('../../assets/img/Pessoas/Andreia.jpg')}
+                source={require('../../../assets/img/Pessoas/Andreia.jpg')}
               />
               <View style={styles.containerText}>
                 <Text style={styles.text}>Andreia Ramos</Text>{/*Esse texto pode mudar de acordo com o Banco de dados*/}
@@ -38,11 +35,10 @@ const PacientePage = ({ navigation }) => {
           {/*Pra adicionar mais pacientes basta copiar toda a touchableOpacity*/}
         </View>
       </View>
-    </TabContainer>
   );
 };
 
-export default PacientePage;
+export default RemoverPacienteScreen;
 
 const styles = StyleSheet.create({
 

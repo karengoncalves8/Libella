@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const Step3Screen = ({ navigation }) => {
+const Step4Screen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerSkip} onPress={() => navigation.navigate('LoginPC')}>
@@ -10,16 +10,16 @@ const Step3Screen = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Progresso Pessoal</Text>
+        <Text style={styles.title}>Registro de Emoções</Text>
       </View>
       <View style={styles.containerImg}>
         <Image
           style={styles.img}
-          source={require('../../../assets/img/Auth/Introduction-3.png')}
+          source={require('../../../assets/img/Auth/Introduction-4.png')}
         />
       </View>
       <View style={styles.containerText}>
-        <Text style={styles.text}>Veja seu progresso ao longo do tempo</Text>
+        <Text style={styles.text}>Faça anotações diárias de seus sentimentos</Text>
       </View>
       <View style={styles.containerCarrousel}>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
@@ -27,9 +27,9 @@ const Step3Screen = ({ navigation }) => {
         </TouchableOpacity>
         <View style={styles.CarrousselCircle}></View>
         <View style={styles.CarrousselCircle}></View>
-        <View style={styles.CarrousselCircleActivated}></View>
         <View style={styles.CarrousselCircle}></View>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end" }} onPress={() => navigation.navigate('Step4PC')}>
+        <View style={styles.CarrousselCircleActivated}></View>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end" }} onPress={() => navigation.navigate('LoginPC')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
       </View>
@@ -38,7 +38,7 @@ const Step3Screen = ({ navigation }) => {
   );
 }
 
-export default Step3Screen;
+export default Step4Screen;
 
 const styles = StyleSheet.create({
   container: {

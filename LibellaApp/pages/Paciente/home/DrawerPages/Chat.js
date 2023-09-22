@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 
-const Chat = () => {
+const ChatScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -49,7 +49,7 @@ const Chat = () => {
     );
 }
 
-export default Chat;
+export default ChatScreen;
 
 const styles = StyleSheet.create({
     //Containers 

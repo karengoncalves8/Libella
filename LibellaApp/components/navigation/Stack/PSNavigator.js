@@ -3,67 +3,80 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
-  Inicio,
   PerfilPaciente,
-  Pacientes,
-  Agenda,
-  Notificacoes,
   Atividades,
   CadastroPaciente,
   AtribuirAtividade,
   AtividadeEsp,
   AlterarDados,
   RemoverPaciente,
-  TermosCondicoes
-} from "../../pages";
+  FichaPaciente,
+  RegistroEmocoes,
+  Chat
+} from "../../../pages";
 
-import DrawerNavigator from "./DrawerNavigator";
-import { TabContextProvider } from "./TabContext";
+import DrawerNavigator from "../Psicologo/Drawer/DrawerNavigator";
+import { TabContextProvider } from "../Psicologo/BottomTab/TabContext";
 
-const AppStack = createNativeStackNavigator();
+const PsicoStack = createNativeStackNavigator();
 
-const AppNavigator = () => {
+const PSNavigator = () => {
   return (
     <TabContextProvider>
-      <AppStack.Navigator screenOptions={{ headerShown: false }}>
-        <AppStack.Screen
+      <PsicoStack.Navigator screenOptions={{ headerShown: false }}>
+        <PsicoStack.Screen
           name="Home"
           component={DrawerNavigator}
           options={{ headerShown: false }}
         />
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="CadastroPaciente"
           component={CadastroPaciente}
         />
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="PerfilPaciente"
           component={PerfilPaciente}
         />
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="Atividades"
           component={Atividades}
         />
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="AtribuirAtividade"
           component={AtribuirAtividade}
         />
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="AtividadeEsp"
           component={AtividadeEsp}
         />
 
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="AlterarDados"
           component={AlterarDados}
         />
 
-        <AppStack.Screen
+        <PsicoStack.Screen
           name="RemoverPaciente"
           component={RemoverPaciente}
         />
-      </AppStack.Navigator>
+
+        <PsicoStack.Screen
+          name="FichaPaciente"
+          component={FichaPaciente}
+        />
+
+        <PsicoStack.Screen
+          name="RegistroEmocoes"
+          component={RegistroEmocoes}
+        />
+
+        <PsicoStack.Screen
+          name="Chat"
+          component={Chat}
+        />
+      </PsicoStack.Navigator>
     </TabContextProvider>
   );
 };
 
-export default AppNavigator;
+export default PSNavigator;

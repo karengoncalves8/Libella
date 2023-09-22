@@ -4,7 +4,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
-import { AuthContext } from "./AuthContext";
+
+import { AuthContext } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
     const { NotLogged } = React.useContext(AuthContext);
@@ -24,7 +25,7 @@ const CustomDrawer = (props) => {
                         height:45,
                         resizeMode: 'contain',
                     }}
-                        source={require('../../assets/img/Logos/Logo-azul-libella.png')
+                        source={require('../../../../assets/img/Logos//Logo-azul-libella.png')
                     }/>
                     <Text style={{fontSize: 24, color: '#53A7D7'}}>Libella</Text>
                 </View>

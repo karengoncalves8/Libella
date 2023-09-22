@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
+
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import AntIcon from "react-native-vector-icons/AntDesign"
@@ -11,7 +11,7 @@ const FichaPacienteScreen = ({ navigation }) => {
                 <View style={styles.containerUserImg}>
                     <Image
                         style={styles.userImg}
-                        source={require("../../assets/img/Pessoas/Andreia.jpg")}
+                        source={require("../../../assets/img/Pessoas/Andreia.jpg")}
                     />
                 </View>
                 <View style={styles.containerName}>
