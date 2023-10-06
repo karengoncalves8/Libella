@@ -11,22 +11,90 @@ import {
 } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator'
 import Feather from "react-native-vector-icons/Feather";
-
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import TabContainer from "../../../components/navigation/Paciente/BottomTab/TabContainer";
 
 const ProgressoScreen = ({ navigation }) => {
- 
-  return (
-    <TabContainer>
-      <View style={styles.container}>
-        <Text>PROGRESSO</Text>
 
-        <TouchableOpacity onPress={() => navigation.navigate('RegistroEmocoesPC')}>
+ const [value, setValue] = useState(0);
+ 
+ 
+ return (
+ <TabContainer>
+   <ScrollView>
+     <View style={styles.container}>
+        
+     <View style={styles.graphic}>
+     <LineChart
+              data={{
+                labels: [1, 5, 9, 13, 17, 21, 25, 29],
+                datasets: [
+                  {
+                    data: [
+                      2,4,3,1,5, 
+                    ]
+                  }
+                ]
+              }}
+              width={Dimensions.get('window').width - 65} // from react-native
+              height={220}
+              chartConfig={{
+                backgroundColor: "white",
+                backgroundGradientFrom: "white",
+                backgroundGradientTo: "white",
+                decimalPlaces: 2, // optional, defaults to 2dp
+                color: (opacity) => `#A9A9A9`,
+                labelColor: (opacity = 1) => `black`,
+                style: {
+                  borderRadius: 16,
+                },
+                propsForDots: {
+                  r: "6",
+                }
+              }}
+              //bezier curva
+              style={{
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+              withHorizontalLabels={false}
+              withInnerLines={false}
+              withShadow={false}
+              withOuterLines={false}
+              getDotColor={(dataPoint, dataPointIndex) => {
+                if(dataPoint == 5) {
+                  return "#00ff00";// red
+                }
+                else if (dataPoint == 4){
+                   return 'green';
+                }
+                else if (dataPoint == 3){
+                  return 'blue';
+               }
+               else if (dataPoint == 2){
+                return 'orange';
+              }
+              else if (dataPoint == 1){
+                return 'red';
+              }
+               
+              }}
+            />
+            <View style={styles.icons}> 
+              <Image style={styles.icon} source={require("../../../assets/icons/IconAnimado.png")}/>
+              <Image style={styles.icon} source={require("../../../assets/icons/IconFeliz.png")}/>
+              <Image style={styles.icon} source={require("../../../assets/icons/IconNeutro.png")}/>
+              <Image style={styles.icon} source={require("../../../assets/icons/IconMal.png")}/>
+              <Image style={styles.icon} source={require("../../../assets/icons/IconHorrivel.png")}/>
+            </View>
+              
+       </View>
+       <TouchableOpacity onPress={() => navigation.navigate('RegistroEmocoesPC')}>
           <Text>Registro de Emoções</Text>
         </TouchableOpacity>
-      </View>
-    </TabContainer>
-      
+     </View>
+   </ScrollView>
+   </TabContainer>
   );
 }
 
@@ -94,6 +162,19 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 100,
   },
-
+  icons: {
+    width: 25,
+    height: 25,
+    position: 'absolute',
+    display: 'flex',
+    gap: 15,
+    top: 10,
+    left: 25,
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+  }
 
 });
