@@ -26,12 +26,13 @@ const LoginPCScreen = ({ navigation }) => {
   };
 
   async function login() {
+    
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
 
     else {
-
+      
       var url = 'https://libellatcc.000webhostapp.com/Login/LoginPsicologo.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {

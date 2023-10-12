@@ -86,7 +86,7 @@ const BottomTab = () => {
 
       {/* ícone da agenda */}
       <Tab.Screen
-        name={"Agenda"}
+        name={"AgendaPC"}
         component={AgendaPC}
         options={{
           tabBarIcon: ({ focused }) => (
