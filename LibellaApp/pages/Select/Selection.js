@@ -1,11 +1,19 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { AuthContext } from "../../components/navigation/Stack/AuthContext";
+import { useAuth } from "../../components/navigation/Stack/AuthContext";
 
 const SelectionScreen = ({ navigation }) => {
 
-  const { select } = useContext(AuthContext);
+  const { login } = useAuth();
+
+  const [userType, setUserType] = useState('');
+
+  const select = (choice) => {
+    setUserType(choice)
+    login({ userType });
+  };
+
 
   return (
     <View style={styles.container}>

@@ -11,9 +11,9 @@ import {
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
-import AuthProvider from "./components/navigation/Stack/AuthContext";
+import { AuthProvider } from "./components/navigation/Stack/AuthContext";
 
-import RootStackScreen from "./components/navigation/Stack/RootStack";
+import ProtectedRoute from "./components/navigation/Stack/RootStack";
 
 // Importar fonts
 import {
@@ -29,7 +29,6 @@ import {
 
 export default function App() {
 
-
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_500Medium,
@@ -44,11 +43,9 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
       <AuthProvider>
-        <RootStackScreen />
+        <ProtectedRoute />
       </AuthProvider>
-    </NavigationContainer>
   );
 }
 

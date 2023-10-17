@@ -4,11 +4,13 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityInd
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
+import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 const LoginPSScreen = ({ navigation }) => {
+  const { login } = useAuth();
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -25,7 +27,7 @@ const LoginPSScreen = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
-  async function login() {
+  async function auth() {
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
@@ -56,8 +58,7 @@ const LoginPSScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            navigation.navigate('PSNavigator')
-            Logged();
+            login({ email, senha });
           }
 
           else {
@@ -125,7 +126,7 @@ const LoginPSScreen = ({ navigation }) => {
       </View>
 
 {/* <TouchableOpacity onPress={() => login()}> */}
-      <TouchableOpacity onPress={() => login()}>
+      <TouchableOpacity onPress={() => auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

@@ -14,12 +14,13 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../../components/navigation/Paciente/BottomTab/TabContainer";
-
+import { useAuth } from "../../../../components/navigation/Stack/AuthContext";
 import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
 const InicioScreen = (navigation) => {
+  const { user } = useAuth();
   let startDate = moment();
 
   return (
@@ -27,7 +28,7 @@ const InicioScreen = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, Andreia!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {user.email}</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
