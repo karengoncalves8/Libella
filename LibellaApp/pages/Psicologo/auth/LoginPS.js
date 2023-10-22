@@ -10,6 +10,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const LoginPSScreen = ({ navigation }) => {
   const { login } = useAuth();
+  const { logged } = useAuth();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -19,7 +20,6 @@ const LoginPSScreen = ({ navigation }) => {
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
 
-  const { Logged } = React.useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -59,6 +59,7 @@ const LoginPSScreen = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
             login({ email, senha });
+            logged()
           }
 
           else {
@@ -125,7 +126,6 @@ const LoginPSScreen = ({ navigation }) => {
         </View>
       </View>
 
-{/* <TouchableOpacity onPress={() => login()}> */}
       <TouchableOpacity onPress={() => auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}

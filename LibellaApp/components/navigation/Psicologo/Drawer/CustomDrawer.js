@@ -11,10 +11,11 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { useAuth } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
-  const { authenticated, logout } = useAuth();
+  const { loggedOut, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
+    loggedOut();
   };
 
   return (

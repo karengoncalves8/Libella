@@ -4,16 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useAuth } from "../../components/navigation/Stack/AuthContext";
 
 const SelectionScreen = ({ navigation }) => {
-
-  const { login } = useAuth();
-
-  const [userType, setUserType] = useState('');
-
-  const select = (choice) => {
-    setUserType(choice)
-    login({ userType });
-  };
-
+  const { setUserType } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -21,7 +12,7 @@ const SelectionScreen = ({ navigation }) => {
         <Text style={styles.title}>Organize suas atividades</Text>
       </View>
       <View style={styles.containerImgTop}>
-        <TouchableOpacity onPress={() => select('Psicologo')}>
+        <TouchableOpacity onPress={() => setUserType('Psicologo')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePsicologo.png')}
@@ -32,7 +23,7 @@ const SelectionScreen = ({ navigation }) => {
         <Text style={styles.text}>ou</Text>
       </View>
       <View style={styles.containerImgBottom}>
-        <TouchableOpacity onPress={() => select('Paciente')}>
+        <TouchableOpacity onPress={() => setUserType('Paciente')}>
           <Image
             style={styles.img}
             source={require('../../assets/img/Auth/ChoicePaciente.png')}

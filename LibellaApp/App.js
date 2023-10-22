@@ -12,8 +12,11 @@ import {
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthProvider } from "./components/navigation/Stack/AuthContext";
+import SelectNavigator from "./components/navigation/Stack/SelectNavigator";
 
 import ProtectedRoute from "./components/navigation/Stack/RootStack";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Importar fonts
 import {
@@ -43,9 +46,12 @@ export default function App() {
   }
 
   return (
+    <NavigationContainer>
       <AuthProvider>
-        <ProtectedRoute />
+          <ProtectedRoute />
       </AuthProvider>
+    </NavigationContainer>
+      
   );
 }
 

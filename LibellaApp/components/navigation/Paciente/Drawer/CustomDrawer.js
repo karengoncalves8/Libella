@@ -11,10 +11,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
-  const { authenticated, logout } = useAuth();
+  const { loggedOut, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
+    loggedOut();
   };
 
   const navigation = useNavigation();

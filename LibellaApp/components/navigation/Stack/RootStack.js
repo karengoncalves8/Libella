@@ -13,24 +13,28 @@ import PSNavigator from "./PSNavigator";
 import { useAuth } from "./AuthContext";
 
 const ProtectedRoute = () => {
- 
   const { user } = useAuth();
+  const { isLogged } = useAuth();
+  const { userType } = useAuth();
 
-  return (
-    <NavigationContainer>
-      {user ? (
-        user.userType === "Paciente" ? (
-          <PCNavigator />
-        ) :
-        user.userType === "Psicologo" ? (
-          <PSNavigator />
-        ) : (
-          <SelectNavigator />
-        )
+  return userType ? (
+    userType === "Paciente" ? (
+      isLogged ? (
+        <PCNavigator />
       ) : (
-        <SelectNavigator />
-      )}
-    </NavigationContainer>
+        <AuthPC/>
+      )
+    ) : userType === "Psicologo" ? (
+      isLogged ? (
+        <PSNavigator />
+      ) : (
+        <AuthPS />
+      )
+    ) : (
+      <SelectNavigator />  
+    )
+  ) : (
+    <SelectNavigator />
   );
 };
 

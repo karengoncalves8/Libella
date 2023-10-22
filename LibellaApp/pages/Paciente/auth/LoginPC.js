@@ -10,10 +10,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const LoginPCScreen = ({ navigation }) => {
   const { login } = useAuth();
+  const { logged } = useAuth();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [userType, setUserType] = useState('Paciente');
 
   const [timeOut, setTimeOut] = useState(10500);
   const [loading, setLoading] = useState(false);
@@ -59,6 +59,7 @@ const LoginPCScreen = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
             login({ email, senha });
+            logged()
           }
 
           else {
