@@ -4,12 +4,13 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityInd
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
-import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
+import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 const LoginPCScreen = ({ navigation }) => {
-  const { Logged } = React.useContext(AuthContext);
+  const { login } = useAuth();
+  const { logged } = useAuth();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -25,13 +26,14 @@ const LoginPCScreen = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
-  async function login() {
+  async function auth() {
+    
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
 
     else {
-
+      
       var url = 'https://libellatcc.000webhostapp.com/Login/LoginPsicologo.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
@@ -56,8 +58,8 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            navigation.navigate('PCNavigator');
-            Logged('Paciente');
+            login({ email, senha });
+            logged()
           }
 
           else {
@@ -124,7 +126,7 @@ const LoginPCScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() =>  login()}>
+      <TouchableOpacity onPress={() =>  auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

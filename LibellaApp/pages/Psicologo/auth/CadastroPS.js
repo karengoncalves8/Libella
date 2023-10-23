@@ -10,7 +10,8 @@ import {
   Image
 } from "react-native";
 
-import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
+
+import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
@@ -20,6 +21,8 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
 const CadastroScreen = ({ navigation }) => {
+  const { logged } = useAuth();
+
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -72,7 +75,7 @@ const CadastroScreen = ({ navigation }) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Informações inseridas com sucesso"') {
             alert(mensagem);
-            navigation.navigate('Home')
+            logged()
           }
 
           else {

@@ -23,13 +23,12 @@ const Step1Screen = ({navigation}) => {
       <Text style={styles.text}>Tenha acesso as atividades atribuidas por seu psicólogo</Text>
       </View>
       <View style={styles.containerCarrousel}>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>
-          <Text style={styles.LinkButton}>&#60; Voltar</Text>
-        </TouchableOpacity>
-        <View style={styles.CarrousselCircleActivated}></View>
-        <View style={styles.CarrousselCircle}></View>
-        <View style={styles.CarrousselCircle}></View>
-        <View style={styles.CarrousselCircle}></View>
+        <View style={styles.containerCircles}>
+          <View style={styles.CarrousselCircleActivated}></View>
+          <View style={styles.CarrousselCircle}></View>
+          <View style={styles.CarrousselCircle}></View>
+          <View style={styles.CarrousselCircle}></View>
+        </View>
         <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end"}} onPress={() => navigation.navigate('Step2PC')}>
           <Text style={styles.LinkButton}>Continuar &#62;</Text>
         </TouchableOpacity>
@@ -82,12 +81,21 @@ const styles = StyleSheet.create({
   },
 
   containerCarrousel: {
-    height: '15%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+    height: "15%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    flexDirection: "row",
     marginTop: 10,
+    padding: 40,
+  },
+
+  containerCircles: {
+    height: "15%",
+    alignItems: "center",
+    justifyContent: 'center',
+    flexDirection: "row",
+    gap: 20,
     padding: 40,
   },
 

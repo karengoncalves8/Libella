@@ -1,76 +1,36 @@
-import React, { createContext, useState, useEffect }from "react";
-import { AsyncStorage } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { createContext, useContext, useState } from 'react';
 
-export const AuthContext = createContext({});
+const AuthContext = createContext();
 
-function AuthProvider({children}){
-    const [choice, setChoice] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const [userType, setUserType] = useState(null);
 
-{/*
-const [isFirstLaunch, setIsFirstLaunch] = useState(false)
+  const login = (userData) => {
+    setUser(userData);
+  };
 
-  useEffect(() => {
-    AsyncStorage.getItem("alredyLaunched").then((value) => {
-      if (value === null){
-        AsyncStorage.setItem("alredyLaunched", "true");
-        setIsFirstLaunch(true);
-      }
-      else{
-        setIsFirstLaunch(false);
-      }
-    })
-  })
-*/}
+  const logged = () => {
+    setIsLogged(true);
+  };
 
-  const [UserStatus, setUserStatus] = React.useState(null)
+  const loggedOut = () => {
+    setIsLogged(false);
+  };
 
-  const loginContext = React.useMemo(() => {
-    return {
-      Logged: ({choice}) => {
-        setUserStatus("Logged");
-        setChoice(choice)
-      },
-      NotLogged: () => {
-        setUserStatus(null);
-      }
-    };
-  }, []);
+  const logout = () => {
+    setUser(null);
+    setIsLogged(false)
+  };
 
-    const navigation = useNavigation();
+  return (
+    <AuthContext.Provider value={{ user, login, logout, isLogged, logged, loggedOut, setUserType, userType}}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-    function select(choice){
-        setChoice(choice)
-
-        if (choice === 'Psicologo') {
-          navigation.navigate('AuthPS')
-        }
-        if (choice === 'Paciente') {
-          navigation.navigate('AuthPC')
-        }
-        
-    }
-
-    return(
-        <AuthContext.Provider value={{choice, select, loginContext}}>
-            {children}
-        </AuthContext.Provider>
-    )
-
-}
-
-export default AuthProvider;
-
-/*const authContext = React.useMemo(() => {
-    return {
-      Logged: () => {
-        setUserToken("abc");
-      },
-      NotLogged: () => {
-        setUserToken(null);
-      },
-      select: (value) => {
-        setChoice(value)
-      },
-    };
-  }, []);*/
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

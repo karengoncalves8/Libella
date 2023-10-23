@@ -11,9 +11,7 @@ import {
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
-import AuthProvider from "./components/navigation/Stack/AuthContext";
-
-import RootStackScreen from "./components/navigation/Stack/RootStack";
+import { AuthProvider } from "./components/navigation/Stack/AuthContext";
 
 // Importar fonts
 import {
@@ -26,9 +24,9 @@ import {
   Comfortaa_500Medium,
   Comfortaa_700Bold,
 } from "@expo-google-fonts/comfortaa";
+import RootStack from "./components/navigation/Stack/RootStack";
 
 export default function App() {
-
 
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
@@ -46,9 +44,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthProvider>
-        <RootStackScreen />
+          <RootStack />
       </AuthProvider>
     </NavigationContainer>
+      
   );
 }
 

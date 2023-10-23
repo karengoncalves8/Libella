@@ -19,7 +19,7 @@ const Step2Screen = ({navigation}) => {
       />
       </View>
       <View style={styles.containerText}>
-      <Text style={styles.text}>Receba notificações avisando de sua próxima consulta</Text>
+      <Text style={styles.text}>Agende suas sessões e receba notificações</Text>
       </View>
       <View style={styles.containerCarrousel}>
       <TouchableOpacity style={{ flexDirection: "row", alignItems: "flex-end", gap: -3 }} onPress={() => navigation.goBack()}>

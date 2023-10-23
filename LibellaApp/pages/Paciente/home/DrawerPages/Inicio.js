@@ -14,12 +14,13 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../../components/navigation/Paciente/BottomTab/TabContainer";
-
+import { useAuth } from "../../../../components/navigation/Stack/AuthContext";
 import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
 const InicioScreen = (navigation) => {
+  const { user } = useAuth();
   let startDate = moment();
 
   return (
@@ -27,7 +28,7 @@ const InicioScreen = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794" }}>Olá, Andreia!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {user.email}</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
   subTitulo: {
     fontSize: 14,
     color: "#6D45C2",
+    fontFamily: 'Poppins_500Medium',
   },
   paciente: {
     flexDirection: "row",
@@ -142,10 +144,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#3F3E3E',
     opacity: 0.7,
+    fontFamily: 'Poppins_400Regular'
   },
   titulo:{
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#313131'
+    color: '#313131',
+    fontFamily: 'Poppins_400Regular'
   }
 });
