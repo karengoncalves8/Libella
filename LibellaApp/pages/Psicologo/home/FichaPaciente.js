@@ -1,61 +1,140 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 
-import AntIcon from "react-native-vector-icons/AntDesign"
+import AntIcon from "react-native-vector-icons/AntDesign";
+
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
 const FichaPacienteScreen = ({ navigation }) => {
+    const [idPaciente, setIdPaciente] = useState('');
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [escolaridade, setEscolaridade] = useState('');
+    const [ocupacao, setOcupacao] = useState('');
+    const [sintomas, setSintomas] = useState('');
+
+
+    const [timeOut, setTimeOut] = useState(10000);
+    const [loading, setLoading] = useState(false);
+    const [acess, setAcess] = useState(false);
+    const [msg, setMsg] = useState('');
+
+    useEffect(() => {
+        async function recuperarId() {
+            const value = await AsyncStorage_Paciente.getItem("PacienteSelected")
+            setIdPaciente(value)
+        }
+        recuperarId();
+        getInformacoesBD();
+    }, [idPaciente]);
+
+    async function getInformacoesBD() {
+        setLoading(true)
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes2.php';
+        var wasServerTimeout = false;
+        var timeout = setTimeout(() => {
+            wasServerTimeout = true;
+            setLoading(false);
+            alert('Tempo de espera para busca de informações excedido');
+        }, timeOut);
+
+        const resposta = await fetch(url, {
+            method: 'POST', //tipo de requisição
+            body: JSON.stringify({ IdPaciente: idPaciente }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    return response.json();
+                }
+            })
+            .then((responseJson) => {
+                setNome(responseJson.paciente[0].NomePaciente)
+                setEmail(responseJson.paciente[0].EmailPaciente)
+                setEndereco(responseJson.paciente[0].EnderecoPaciente)
+                setCidade(responseJson.paciente[0].CidadePaciente)
+                setEstado(responseJson.paciente[0].EstadoPaciente)
+                setTelefone(responseJson.paciente[0].TelefonePaciente)
+                setEscolaridade(responseJson.paciente[0].EscolaridadePaciente)
+                setOcupacao(responseJson.paciente[0].OcupacaoPaciente)
+                setSintomas(responseJson.paciente[0].SintomasPaciente)
+            })
+
+            .catch((error) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    //Error logic here
+                }
+                //  alert('erro'+error)
+            });
+        setLoading(false)
+    }
     return (
-        <View style={styles.container}>
-            <View style={styles.containerProfile}>
-                <View style={styles.containerUserImg}>
-                    <Image
-                        style={styles.userImg}
-                        source={require("../../../assets/img/Pessoas/Andreia.jpg")}
-                    />
-                </View>
-                <View style={styles.containerName}>
-                    <Text style={styles.name}>Ser Humano</Text>
-                </View>
-
-            </View>
-            <View style={styles.containerInfPessoais}>
-                <View style={styles.containerIcon}>
-
-                    <AntIcon name="idcard" size={25} color={"black"} style={styles.icons} />
+        <ScrollView>
+            <View style={styles.container}>
+                <View style={styles.containerProfile}>
+                    <View style={styles.containerUserImg}>
+                        <Image
+                            style={styles.userImg}
+                            source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                        />
+                    </View>
+                    <View style={styles.containerName}>
+                        <Text style={styles.name}>{nome}</Text>
+                    </View>
 
                 </View>
-                <View style={styles.containerInfPessoaisText}>
-                    <Text style={styles.InfPessoaisText}>Informações Pessoais</Text>
+                <View style={styles.containerInfPessoais}>
+                    <View style={styles.containerIcon}>
+
+                        <AntIcon name="idcard" size={25} color={"black"} style={styles.icons} />
+
+                    </View>
+                    <View style={styles.containerInfPessoaisText}>
+                        <Text style={styles.InfPessoaisText}>Informações Pessoais</Text>
+                    </View>
+                </View>
+                <View style={styles.containerContent}>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Nome Completo</Text>
+                        <Text style={styles.text}>{nome}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Email</Text>
+                        <Text style={styles.text}>{email}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Endereço</Text>
+                        <Text style={styles.text}>{endereco}, {cidade}, {estado}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Telefone</Text>
+                        <Text style={styles.text}>{telefone}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Escolaridade</Text>
+                        <Text style={styles.text}>{escolaridade}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Ocupação</Text>
+                        <Text style={styles.text}>{ocupacao}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
+                    <View style={styles.containerInfBloco}>
+                        <Text style={styles.Title}>Sintomas</Text>
+                        <Text style={styles.text}>{sintomas}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                    </View>
                 </View>
             </View>
-            <View style={styles.containerContent}>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Nome Completo</Text>
-                    <Text style={styles.text}>Andreia Menezes Ramos</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Email</Text>
-                    <Text style={styles.text}>andreiaramos11@gmail.com</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Endereço</Text>
-                    <Text style={styles.text}>R. Nelson Avarez, 102 - Jardim Satélite, São José dos Campos, SP</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Telefone</Text>
-                    <Text style={styles.text}>(12) 99274-4243</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Escolaridade</Text>
-                    <Text style={styles.text}>Formada em Direito</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfBloco}>
-                    <Text style={styles.Title}>Ocupação</Text>
-                    <Text style={styles.text}>Advogada</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-            </View>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -120,6 +199,7 @@ const styles = StyleSheet.create({
         padding: 20,
         gap: 15,
         borderRadius: 15,
+        marginBottom: 100,
     },
 
     containerInfBloco: {

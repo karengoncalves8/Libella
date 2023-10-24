@@ -1,48 +1,103 @@
-import * as React from 'react';
-
-import {StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Hr } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, ActivityIndicator } from "react-native";
 
 import FeatherIcons from 'react-native-vector-icons/Feather'
 
-const PerfilPacienteScreen = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-                <View style={styles.containerUser}>
-                    <Image
-                        style={styles.userImg}
-                        source={require('../../../assets/img/Pessoas/Andreia.jpg')}
-                    />
-                </View>
-                <View style={styles.containerName}>
-                    <Text style={styles.text}>Ser Humano</Text>
-                </View>
-                <View style={styles.containerButtons}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('Atividades')}>
-                        <Text style={{ color: 'white', fontSize: 15 }}>Atividades</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('FichaPaciente')}>
-                        <Text style={{ color: 'white', fontSize: 15 }}>Ficha</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('Chat')}>
-                        <FeatherIcons name='message-circle' size={20} color={'white'} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.containerProgress}>
-                    <TouchableOpacity onPress={() => navigation.navigate('RegistroEmocoes')}>
-                        <Text>Registro Emoções</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.containerSchedule}>
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
-                </View>
+function PerfilPacienteScreen({ navigation }) {
+    const [idPaciente, setIdPaciente] = useState('');
+    const [nome, setNome] = useState('');
+
+    const [timeOut, setTimeOut] = useState(10000);
+    const [loading, setLoading] = useState(false);
+    const [acess, setAcess] = useState(false);
+    const [msg, setMsg] = useState('');
+
+    useEffect(() => {
+        async function recuperarId() {
+        const value = await AsyncStorage_Paciente.getItem("PacienteSelected")
+        setIdPaciente(value)
+        }
+        recuperarId();
+        getInformacoesBD();
+    }, [idPaciente]);
+
+    async function getInformacoesBD() {
+        setLoading(true)
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes2.php';
+        var wasServerTimeout = false;
+        var timeout = setTimeout(() => {
+            wasServerTimeout = true;
+            setLoading(false);
+            alert('Tempo de espera para busca de informações excedido');
+        }, timeOut);
+
+        const resposta = await fetch(url, {
+            method: 'POST', //tipo de requisição
+            body: JSON.stringify({ IdPaciente: idPaciente }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    return response.json();
+                }
+            })
+            .then((responseJson) => {
+                setNome(responseJson.paciente[0].NomePaciente)
+            })
+
+            .catch((error) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    //Error logic here
+                }
+                //  alert('erro'+error)
+            });
+        setLoading(false)
+    }
+    return (
+        <View style={styles.container}>
+            <View style={styles.containerUser}>
+                <Image
+                    style={styles.userImg}
+                    source={require('../../../assets/img/Pessoas/Andreia.jpg')}
+                />
             </View>
-  );
+            <View style={styles.containerName}>
+                <Text style={styles.text}>{nome}</Text>
+            </View>
+            <View style={styles.containerButtons}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Atividades')}>
+                    <Text style={{ color: 'white', fontSize: 15 }}>Atividades</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('FichaPaciente')}>
+                    <Text style={{ color: 'white', fontSize: 15 }}>Ficha</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Chat')}>
+                    <FeatherIcons name='message-circle' size={20} color={'white'} />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.containerProgress}>
+                <TouchableOpacity onPress={() => navigation.navigate('RegistroEmocoes')}>
+                    <Text>Registro Emoções</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.containerSchedule}>
+
+            </View>
+        </View>
+    );
 }
 
 export default PerfilPacienteScreen;
@@ -120,5 +175,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
     },
-  },
+},
 );

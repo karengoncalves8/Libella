@@ -1,74 +1,180 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Image, ScrollView, Alert, ActivityIndicator } from "react-native";
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import AntIcon from "react-native-vector-icons/AntDesign";
 
-const Perfil = () => {
+import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // instalar
+
+function Perfil() {
+    const [id, setId] = useState('');
+    const [nome, setNome] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [rg, setRg] = useState('');       
+    const [crp, setCrp] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [estado, setEstado] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [email, setEmail] = useState('');
+
+    const [timeOut, setTimeOut] = useState(10000);
+    const [loading, setLoading] = useState(false);
+    const [acess, setAcess] = useState(false);
+    const [msg, setMsg] = useState('');
+
+    useEffect(() => {
+        async function recuperarId() {
+            const value = await AsyncStorage_ID.getItem('IdPsicologo')
+            setId(value)
+        }
+        recuperarId()
+        getInformacoesBD()
+    }, [id]);
+    async function getInformacoesBD() {
+        setLoading(true);
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php';
+        var wasServerTimeout = false;
+        var timeout = setTimeout(() => {
+            wasServerTimeout = true;
+            alert('Tempo de espera para busca de informações excedido');
+        }, timeOut);
+
+        const resposta = fetch(url, {
+            method: 'POST', //tipo de requisição
+            body: JSON.stringify({ IdPsicologo: id }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    return response.json();
+                }
+            })
+            .then((responseJson) => {
+                // Recolhendo as informações do banco de dados e salvando nas váriaveis
+                setNome(responseJson.psicologo[0].NomePsicologo)
+                setTelefone(responseJson.psicologo[0].TelefonePsicologo)
+                setCpf(responseJson.psicologo[0].CpfPsicologo)
+                setRg(responseJson.psicologo[0].RgPsicologo)
+                setCrp(responseJson.psicologo[0].CrpPsicologo)
+                setEstado(responseJson.psicologo[0].EstadoPsicologo)
+                setCidade(responseJson.psicologo[0].CidadePsicologo)
+                setEndereco(responseJson.psicologo[0].EnderecoPsicologo)
+                setEmail(responseJson.psicologo[0].EmailPsicologo)
+            })
+            //se ocorrer erro na requisição ou conversão
+            .catch((error) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                    Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+                }
+
+            });
+        setLoading(false);
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.containerProfile}>
-                <View style={styles.containerUser}>
-                    <Image
-                        style={styles.userImg}
-                        source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
-                    />
+        <View>
+            {loading ? (
+                <View style={{
+                    width: '100%',
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 20,
+                    gap: 20,
+                }}>
+                    <Text style={{ fontFamily: 'Poppins_500Medium', fontSize: 22, color: 'black', }}>Aguarde, Carregando</Text>{/*Nome do Psicologo*/}
+                    <ActivityIndicator size="large" color="#53A7D7" />
                 </View>
-                <View style={styles.containerName}>
-                    <Text style={styles.name}>Ser Humano</Text>
-                    <FeatherIcon
-                        name="edit"
-                        size={20}
-                        color={"black"}
-                        style={styles.icon}
-                    />
-                </View>
-            </View>
-            <View style={styles.containerInfos}>
-                <Text style={styles.TitlePrincipal}>Contato</Text>
-                <View style={styles.containerInfosBloco}>
-                    <View style={styles.containerIcon}>
-                        <FeatherIcon
-                            name="mail"
-                            size={20}
-                            color={"black"}
-                            style={styles.icon}
-                        />
+            ) : (
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View style={styles.containerProfile}>
+                            <View style={styles.containerUser}>
+                                <Image
+                                    style={styles.userImg}
+                                    source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
+                                />
+                            </View>
+                            <View style={styles.containerName}>
+                                <Text style={styles.name}>{nome}</Text>{/*Nome do Psicologo*/}
+                                <FeatherIcon
+                                    name="edit"
+                                    size={20}
+                                    color={"black"}
+                                    style={styles.icon}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.containerInfos}>
+                            <Text style={styles.TitlePrincipal}>Informações pessoais</Text>
+
+
+                            {/*Container do CRP*/}
+                            <View style={styles.containerInfosBloco}>
+                                <Text style={styles.subtitle}>CRP:</Text>
+                                <Text style={styles.text}>{crp}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                            </View>
+
+                            {/*Container do CPF*/}
+                            <View style={styles.containerInfosBloco}>
+                                <Text style={styles.subtitle}>CPF:</Text>
+                                <Text style={styles.text}>{cpf}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                            </View>
+
+                            {/*Container do RG*/}
+                            <View style={styles.containerInfosBloco}>
+                                <Text style={styles.subtitle}>RG:</Text>
+                                <Text style={styles.text}>{rg}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                            </View>
+                            <Text style={styles.TitlePrincipal}>Contato</Text>
+                            <View style={styles.containerInfosBloco}>
+                                <View style={styles.containerIcon}>
+                                    <FeatherIcon
+                                        name="mail"
+                                        size={20}
+                                        color={"black"}
+                                        style={styles.icon}
+                                    />
+                                </View>
+                                <Text style={styles.text}>{email}</Text>{/*Email do Psicologo*/}
+                            </View>
+                            <View style={styles.containerInfosBloco}>
+                                <View style={styles.containerIcon}>
+                                    <FeatherIcon
+                                        name="phone"
+                                        size={20}
+                                        color={"black"}
+                                        style={styles.icon}
+                                    />
+                                </View>
+                                <Text style={styles.text}>{telefone}</Text>{/*Telefone do Psicologo*/}
+                            </View>
+                            <Text style={styles.TitlePrincipal}>Consultório</Text>
+                            <View style={styles.containerInfosBloco}>
+                                <View style={styles.containerIcon}>
+                                    <FeatherIcon
+                                        name="map-pin"
+                                        size={20}
+                                        color={"black"}
+                                        style={styles.icon}
+                                    />
+                                </View>
+                                <Text style={styles.text}>{endereco}, {cidade}, {estado}</Text>{/*Endereço do Psicologo*/}
+                            </View>
+                        </View>
                     </View>
-                    <Text style={styles.text}>andressasilva81@gmail.com</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <View style={styles.containerInfosBloco}>
-                    <View style={styles.containerIcon}>
-                        <FeatherIcon
-                            name="phone"
-                            size={20}
-                            color={"black"}
-                            style={styles.icon}
-                        />
-                    </View>
-                    <Text style={styles.text}>(12) 99784-4923</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <Text style={styles.TitlePrincipal}>Consultório</Text>
-                <View style={styles.containerInfosBloco}>
-                    <View style={styles.containerIcon}>
-                        <FeatherIcon
-                            name="map-pin"
-                            size={20}
-                            color={"black"}
-                            style={styles.icon}
-                        />
-                    </View>
-                    <Text style={styles.text}>R. Pico da Neblina, 97 - Jardim Altos de Santana, São José dos Campos</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-                <Text style={styles.TitlePrincipal}>CRP</Text>
-                <View style={styles.containerInfosBloco}>
-                    <View style={styles.containerIcon}>
-                        <AntIcon name="idcard" size={20} color={"black"} style={styles.icon} />
-                    </View>
-                    <Text style={styles.text}>21/04209</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                </View>
-            </View>
+                </ScrollView>
+            )}
         </View>
-    ); W
+
+
+    );
 }
 
 export default Perfil;
@@ -88,20 +194,31 @@ const styles = StyleSheet.create({
         color: 'white',
     },
 
+    containerLoading: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+        gap: 20,
+        color: 'white',
+    },
+
     containerProfile: {
         width: '100%',
-        height: '35%',
+        height: '30%',
         backgroundColor: 'white',
         gap: 10,
         padding: 20,
         borderRadius: 10,
+        shadowColor: "gray",
+        elevation: 3,
     },
 
     containerUser: {
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-
     },
 
     containerName: {
@@ -120,6 +237,8 @@ const styles = StyleSheet.create({
         paddingLeft: 30,
         borderRadius: 10,
         gap: 15,
+        shadowColor: "gray",
+        elevation: 3,
     },
 
     containerInfosBloco: {
@@ -127,6 +246,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 10,
         paddingLeft: 0,
+        paddingRight: 50,
     },
 
     containerIcon: {
@@ -153,6 +273,13 @@ const styles = StyleSheet.create({
 
     text: {
         fontFamily: 'Poppins_500Medium',
+        fontSize: 15,
+        color: 'black',
+        textAlign: 'justify',
+    },
+
+    subtitle: {
+        fontFamily: 'Poppins_700Bold',
         fontSize: 15,
         color: 'black',
     },

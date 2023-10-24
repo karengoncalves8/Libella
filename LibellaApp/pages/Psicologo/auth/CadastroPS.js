@@ -7,11 +7,11 @@ import {
   TextInput,
   ScrollView,
   ActivityIndicator,
-  Image
+  Image,
+  Alert
 } from "react-native";
 
-
-import { useAuth } from "../../../components/navigation/Stack/AuthContext";
+import { AuthContext } from "../../../components/navigation/Stack/AuthContext";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
@@ -20,8 +20,11 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
+import { TextInputMask } from 'react-native-masked-text'; // instalar
+import SelectDropdown from 'react-native-select-dropdown'; // instalar
+
 const CadastroScreen = ({ navigation }) => {
-  const { logged } = useAuth();
+  const states = ["Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goías", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraiba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"]
 
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
@@ -29,12 +32,14 @@ const CadastroScreen = ({ navigation }) => {
   const [cpf, setCpf] = useState('');
   const [rg, setRg] = useState('');
   const [crp, setCrp] = useState('');
+  const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
   const [endereco, setEndereco] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState('');
 
-  const [timeOut, setTimeOut] = useState(10000);
-  const [loading, setLoading] = useState(false);
+  const [timeOut, setTimeOut] = useState(100000);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
 
@@ -45,12 +50,22 @@ const CadastroScreen = ({ navigation }) => {
   };
 
   async function cadastrar() {
-    if (nome == "" || telefone == "" || cpf == "" || rg == "" || crp == "" || endereco == "" || email == "" || senha == "") {
+    if (nome == "" || telefone == "" || cpf == "" || rg == "" || crp == "" || endereco == "" || email == "" || senha == "" || cidade == "" || estado == "") {
       alert("Erro: Preencha todos os campos!")
     }
-
+    else if (telefone.length < 14) {
+      Alert.alert("Alerta de dados incorretos!", "Telefone inserido inválido")
+    }
+    else if (cpf.length < 14) {
+      Alert.alert("Alerta de dados incorretos!", "CPF inserido inválido")
+    }
+    else if (rg.length < 12) {
+      Alert.alert("Alerta de dados incorretos!", "RG inserido inválido")
+    }
+    else if (crp.length < 8) {
+      Alert.alert("Alerta de dados incorretos!", "CRP inserido inválido")
+    }
     else {
-
       var url = 'https://libellatcc.000webhostapp.com/Cadastro/CadastroPsicologo.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
@@ -60,7 +75,7 @@ const CadastroScreen = ({ navigation }) => {
 
       const resposta = await fetch(url, {
         method: 'POST', //tipo de requisição
-        body: JSON.stringify({ NomePsicologo: nome, TelefonePsicologo: telefone, CpfPsicologo: cpf, RgPsicologo: rg, CrpPsicologo: crp, EnderecoPsicologo: endereco, EmailPsicologo: email, SenhaPsicologo: senha }),
+        body: JSON.stringify({ NomePsicologo: nome, TelefonePsicologo: telefone, CpfPsicologo: cpf, RgPsicologo: rg, CrpPsicologo: crp, CidadePsicologo: cidade, EstadoPsicologo: estado, EnderecoPsicologo: endereco, EmailPsicologo: email, SenhaPsicologo: senha }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -72,24 +87,28 @@ const CadastroScreen = ({ navigation }) => {
           }
         })
         .then((responseJson) => {
-          var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
-          if (mensagem == '"Informações inseridas com sucesso"') {
-            alert(mensagem);
-            logged()
+          var mensagem = responseJson.informacoes[0].msg
+          if (mensagem == "Informações repetidas") {
+            Alert.alert("Informações repetidas!", "Alguma(s) informação(ões) (CPF, Telefone, CRP ou email) inserida(s) já existe em nosso aplicativo \nConfira as informações, e caso já tenha um cadastro volte para tela de login e realize-o!");
+          }
+
+          else if (mensagem == "Informações inseridas com sucesso") {
+            Alert.alert("Cadastro realizado com sucesso", "Faça seu Login!");
+            navigation.navigate('LoginPS')
           }
 
           else {
-            alert("mensagem");
+            // Aviso de Erro dados inseridos incorretos
+            Alert.alert("Erro!", "Revise os dados inseridos!");
           }
         })
-        //se ocorrer erro na requisição ou conversãok
+        //se ocorrer erro na requisição ou conversão
         .catch((error) => {
           timeout && clearTimeout(timeout);
           if (!wasServerTimeout) {
-            //Error logic here
+            Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
           }
 
-          //  alert('erro'+error)
         });
     }
   }
@@ -97,20 +116,14 @@ const CadastroScreen = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
 
-      < Image
-        style={styles.img}
-        source={require('../../../assets/img/Logos/Logo-roxa.png')}
-      />
-
-      <Text style={styles.title}> Cadastro </Text>
-
-        <Ionicons
-          name="person-outline"
-          size={23}
-          color={"white"}
-          style={styles.icons}
+        < Image
+          style={styles.img}
+          source={require('../../../assets/img/Logos/Logo-roxa.png')}
         />
+        <Text style={styles.title}>Cadastro</Text>
 
+        {/* Input do Nome */}
+        <Ionicons name="person-outline" size={23} color={"white"} style={styles.icons} />
         <TextInput
           style={styles.Input}
           placeholder="Nome Completo"
@@ -119,61 +132,93 @@ const CadastroScreen = ({ navigation }) => {
           value={nome}
         />
 
-        <FeatherIcon
-          name="phone"
-          size={23}
-          color={"white"}
-          style={styles.icons}
-        />
-
-        <TextInput
+        {/* Input do Telefone */}
+        <FeatherIcon name="phone" size={23} color={"white"} style={styles.icons} />
+        <TextInputMask
           style={styles.Input}
           placeholder="Telefone"
           placeholderTextColor="#ffffff"
+          type={'cel-phone'}
+          options={{
+            maskType: 'BRL',
+            withDDD: true,
+            dddMask: '(99) '
+          }}
           onChangeText={(text) => setTelefone(text)}
           value={telefone}
           keyboardType={'phone-pad'}
         />
 
+        {/* Input do CPF */}
         <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
-
-        <TextInput
+        <TextInputMask
           style={styles.Input}
           placeholder="CPF"
           placeholderTextColor="#ffffff"
           onChangeText={(text) => setCpf(text)}
           value={cpf}
           keyboardType={'phone-pad'}
+          type={'cpf'}
         />
 
+        {/* Input do CRP */}
         <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
-
-        <TextInput
+        <TextInputMask
           style={styles.Input}
           placeholder="CRP"
           placeholderTextColor="#ffffff"
           onChangeText={(text) => setCrp(text)}
           value={crp}
+          type={'custom'}
+          options={{
+            mask: '99/99999'
+          }}
         />
 
+        {/* Input do RG */}
         <AntIcon name="idcard" size={25} color={"white"} style={styles.icons} />
-
-        <TextInput
+        <TextInputMask
           style={styles.Input}
           placeholder="RG"
           placeholderTextColor="#ffffff"
           onChangeText={(text) => setRg(text)}
           value={rg}
           keyboardType={'phone-pad'}
+          type={'custom'}
+          options={{
+            mask: '99.999.999-9',
+          }}
         />
 
-        <Ionicons
-          name="location-outline"
-          size={25}
-          color={"white"}
-          style={styles.icons}
+        {/* Text Input Estado */}
+        <Ionicons name="location-outline" size={25} color={"white"} style={styles.icons}/>
+        <SelectDropdown
+          defaultButtonText={"Estado"}
+          buttonStyle={styles.DropDownButton}
+          buttonTextStyle={styles.DropDownButtonText}
+          dropdownStyle={styles.DropDown}
+          data={states}
+          onSelect={(selectedItem) => setEstado(selectedItem)}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem
+          }}
+          rowTextForSelection={(item, index) => {
+            return item
+          }}
         />
 
+        {/* Input da cidade */}
+        <Ionicons name="location-outline" size={25} color={"white"} style={styles.icons} />
+        <TextInput
+          style={styles.Input}
+          placeholder="Cidade"
+          placeholderTextColor="#ffffff"
+          onChangeText={(text) => setCidade(text)}
+          value={cidade}
+        />
+
+        {/* Input do Endereço */}
+        <Ionicons name="location-outline" size={25} color={"white"} style={styles.icons} />
         <TextInput
           style={styles.Input}
           placeholder="Endereço"
@@ -182,13 +227,8 @@ const CadastroScreen = ({ navigation }) => {
           value={endereco}
         />
 
-        <Ionicons
-          name="ios-mail-outline"
-          size={25}
-          color={"white"}
-          style={styles.icons}
-        />
-
+        {/* Input do Email */}
+        <Ionicons name="ios-mail-outline" size={25} color={"white"} style={styles.icons} />
         <TextInput
           style={styles.Input}
           placeholder="Email"
@@ -197,13 +237,8 @@ const CadastroScreen = ({ navigation }) => {
           value={email}
         />
 
-        <SimpleLineIcon
-          name="lock"
-          size={25}
-          color={"white"}
-          style={styles.icons}
-        />
-
+        {/* Input do Senha */}
+        <SimpleLineIcon name="lock" size={25} color={"white"} style={styles.icons} />
         <TextInput
           style={styles.Input}
           placeholder="Senha"
@@ -213,16 +248,11 @@ const CadastroScreen = ({ navigation }) => {
           secureTextEntry={!showPassword}
         />
 
-        <Ionicons
-          name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-          size={25}
-          color={"white"}
-          style={styles.icon}
-          onPress={toggleShowPassword}
-        />
+        {/* Input do Olho de visualizar senha */}
+        <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={25} color={"white"} style={styles.icon} onPress={toggleShowPassword} />
 
+        {/* Input do Botão de cadastrar */}
         <TouchableOpacity onPress={() => cadastrar()}>
-
           <LinearGradient
             colors={['#764DCC', '#4A2794']}
             style={styles.button}>
@@ -273,7 +303,7 @@ const styles = StyleSheet.create({
   },
 
   Input: {
-    fontSize: 22,
+    fontSize: 20,
     color: "white",
     paddingLeft: 50,
     paddingVertical: 10,
@@ -282,6 +312,7 @@ const styles = StyleSheet.create({
     width: "90%",
     borderColor: "#ffffff",
     borderWidth: 1,
+    paddingTop: 15,
   },
 
   img: {
@@ -293,5 +324,36 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontSize: 36,
+  },
+
+
+  // DropDownConfigs
+  DropDown: {
+    padding: 0,
+    borderRadius: 5,
+    borderBottomWidth: 1,
+    justifyContent: 'flex-start',
+  },
+
+  DropDownButton: {
+    paddingLeft: 50,
+    paddingVertical: 10,
+    textAlignVertical: 'bottom',
+    borderRadius: 20,
+    width: "90%",
+    borderColor: "white",
+    borderWidth: 1,
+    fontSize: 22,
+    backgroundColor: "#ffffff00",
+  },
+
+  DropDownButtonText: {
+    color: "white",
+    paddingLeft: 35,
+    fontSize: 22,
+    justifyContent: 'flex-start',
+    alignItems: "flex-start",
+    textAlign: "left",
+    width: '100%',
   },
 });

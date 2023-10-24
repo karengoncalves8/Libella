@@ -33,7 +33,6 @@ const LoginPSScreen = ({ navigation }) => {
     }
 
     else {
-
       var url = 'https://libellatcc.000webhostapp.com/Login/LoginPsicologo.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
