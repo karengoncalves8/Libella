@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
 
 const LoginPSScreen = ({ navigation }) => {
   const { login } = useAuth();
@@ -14,6 +15,7 @@ const LoginPSScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [id, setId] = useState(0);
 
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,15 @@ const LoginPSScreen = ({ navigation }) => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const SalvarId = (key, value) => {
+    AsyncStorage_ID.setItem(key, value)
+  }
+
+  async function recuperarId() {
+    const value = await AsyncStorage_ID.getItem('IdPsicologo')
+    setId(value)
+  }
 
   async function auth() {
     if (email == "" || senha == "") {
@@ -57,6 +68,42 @@ const LoginPSScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
+            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getInformaçõesBD.php';
+            var wasServerTimeout = false;
+            var timeout = setTimeout(() => {
+              wasServerTimeout = true;
+              alert('Tempo de espera para busca de informações excedido');
+            }, timeOut);
+
+            const resposta = fetch(urlBD, {
+              method: 'POST', //tipo de requisição
+              body: JSON.stringify({ EmailPsicologo: email, SenhaPsicologo: senha }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+
+              .then((response) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                  return response.json();
+                }
+              })
+              .then((responseJson) => {
+                // IMPORTANTE recolhendo o id do banco de dados
+                var PsicologoInfos = (responseJson.psicologo[0].IdPsicologo)
+                // Salvando o Id para outras páginas
+                SalvarId('IdPsicologo', PsicologoInfos)
+              })
+              //se ocorrer erro na requisição ou conversão
+              .catch((error) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                  //Error logic here
+                }
+
+                alert('erro' + error)
+              });
             login({ email, senha });
             logged()
           }
@@ -86,7 +133,7 @@ const LoginPSScreen = ({ navigation }) => {
         source={require('../../../assets/img/Logos/Logo-roxa.png')}
       />
 
-      <Text style={styles.title}> Login</Text>
+      <Text style={styles.title}>Login</Text>
 
       <View style={styles.inputbox}>
         <View style={styles.inputView}>
@@ -146,6 +193,9 @@ const LoginPSScreen = ({ navigation }) => {
           <Text style={{ color: '#4A2794', fontSize: 16, }}>Cadastre-se!</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPressa={() => recuperarId()}>
+        <Text style={{ color: '#4A2794', fontSize: 16, }}>Recuperar</Text>
+      </TouchableOpacity>
     </View>
   );
 }

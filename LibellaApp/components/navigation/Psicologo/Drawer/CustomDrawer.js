@@ -8,6 +8,8 @@ import {
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
+
 import { useAuth } from "../../Stack/AuthContext";
 
 const CustomDrawer = (props) => {
@@ -16,6 +18,7 @@ const CustomDrawer = (props) => {
   const handleLogout = () => {
     logout();
     loggedOut();
+    AsyncStorage_ID.clear()
   };
 
   return (

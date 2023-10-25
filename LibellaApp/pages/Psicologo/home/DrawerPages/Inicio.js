@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -15,11 +15,64 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../../components/navigation/Psicologo/BottomTab/TabContainer";
 
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
+
 import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
 const InicioPage = ({navigation}) => {
+  const [idPsicologo, setIdPsicologo] = useState(0)
+  const [nome, setNome] = useState('')
+
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
+  const [acess, setAcess] = useState(false);
+  const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    getInformacoesBD();
+  }, [nome]);
+
+  async function getInformacoesBD() {
+    setLoading(true);
+    const value = await AsyncStorage_ID.getItem('IdPsicologo')
+    setIdPsicologo(value)
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        // Recolhendo as informações do banco de dados e salvando nas váriaveis
+        setNome(responseJson.psicologo[0].NomePsicologo)
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+
+      });
+    setLoading(false);
+  }
+
   let startDate = moment();
 
   return (
@@ -27,7 +80,7 @@ const InicioPage = ({navigation}) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_700Bold' }}>Olá, Andressa!</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_700Bold' }}>Olá, {nome}!</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center"}}>
