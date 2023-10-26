@@ -47,15 +47,6 @@ function DrawerNavigator(){
             }}
           />
           <Drawer.Screen
-            name="Chat" 
-            component={Chat}
-            options={{
-              drawerIcon: ({color}) => (
-                <Ionicons name='chatbubble-outline' size={35} color={color} />
-              ),
-            }}
-          />
-          <Drawer.Screen
             name="Configurações" 
             component={Config}
             options={{

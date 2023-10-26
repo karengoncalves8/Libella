@@ -3,6 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
+  AgendaPC,
   AlterarDadosPC,
   AtividadeEspPC,
   PerfilPS,
@@ -38,6 +39,10 @@ const PCNavigator = () => {
         <PacStack.Screen
           name="RegistroEmocoesPC"
           component={RegistroEmocoesPC}
+        />
+        <PacStack.Screen
+          name="AgendaPC"
+          component={AgendaPC}
         />
       </PacStack.Navigator>
     </TabContextProvider>

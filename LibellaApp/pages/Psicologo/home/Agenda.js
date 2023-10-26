@@ -16,7 +16,7 @@ const meetings = [
   {
     id: 1,
     name: "Leslie Alexander",
-    date: "2023-08-05",
+    date: "2023-10-24",
     time: "13:00",
   },
   {

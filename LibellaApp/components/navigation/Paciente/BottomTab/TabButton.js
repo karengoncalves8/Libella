@@ -137,6 +137,9 @@ const TabButton = ({ toggleOpened, opened }) => {
                 numberOfLines={4}
               />
             </View>
+            <TouchableOpacity style={styles.button}>
+                <Text style={{color: 'white', fontSize: 14, fontFamily: 'Poppins_400Regular'}}> Registrar </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -282,6 +285,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Poppins_300Light",
   },
+  button: {
+    paddingHorizontal: 30,
+    paddingVertical: 9, 
+    backgroundColor: '#6D45C2',
+    borderRadius: 10,
+    alignSelf: 'center'
+  }
 });
 
 export default TabButton;
