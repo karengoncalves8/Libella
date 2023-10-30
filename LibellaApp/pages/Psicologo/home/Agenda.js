@@ -5,7 +5,6 @@ import {
   View,
   Image,
   Alert,
-  TouchableOpacity
 } from "react-native";
 
 import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
@@ -15,28 +14,6 @@ import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // inst
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
 import { format,  } from "date-fns";
-
-{/*const meetings = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    date: "2023-10-24",
-    time: "13:00",
-  },
-  {
-    id: 3,
-    name: "Antoni",
-    date: "2023-08-05",
-    time: "13:00",
-  },
-  {
-    id: 2,
-    name: "Alo",
-    date: "2023-08-25",
-    time: "13:00",
-  },
-];*/}
-
 
 const AgendaPage = () => {
   const [id, setId] = useState('');
