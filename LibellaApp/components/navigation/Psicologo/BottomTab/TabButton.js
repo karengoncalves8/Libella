@@ -10,6 +10,7 @@ import {
   TextInput,
   Pressable,
   Platform,
+  Alert
 } from "react-native";
 
 import SelectDropdown from "react-native-select-dropdown";
@@ -33,6 +34,7 @@ const TabButton = ({ toggleOpened, opened }) => {
       setId(value)
     }
     recuperarId()
+    getInformacoesBD()
   }, [id]);
 
   const [timeOut, setTimeOut] = useState(10000);
@@ -65,9 +67,16 @@ const TabButton = ({ toggleOpened, opened }) => {
       .then((responseJson) => {
         setPacientes([]);
         for (var i = 0; i < responseJson.paciente.length; i++) {
-          setPacientes(pacientes.push(responseJson.paciente[i].NomePaciente));
+          setPacientes((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                NomePaciente: responseJson.paciente[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
         }
-        console.log(pacientes)
       })
       //se ocorrer erro na requisição ou conversão
       .catch((error) => {
@@ -79,19 +88,63 @@ const TabButton = ({ toggleOpened, opened }) => {
       });
     setLoading(false);
   }
+
+  async function cadastrar() {
+    if (paciente == "" || dataEvento == "" || timeEvento == "" ) {
+      alert("Erro: Preencha todos os campos!")
+    }
+    else {
+      var url = 'https://libellatcc.000webhostapp.com/Cadastro/CadastroPaciente.php';
+      var wasServerTimeout = false;
+      var timeout = setTimeout(() => {
+        wasServerTimeout = true;
+        alert('Tempo de espera para busca de informações excedido');
+      }, timeOut);
+
+      const resposta = await fetch(url, {
+        method: 'POST', //tipo de requisição
+        body: JSON.stringify({ IdPsicologo: idPsicologo, NomePaciente: nome, TelefonePaciente: telefone, CpfPaciente: cpf, RgPaciente: rg, EscolaridadePaciente: escolaridade, OcupacaoPaciente: ocupacao, SintomasPaciente: sintomas, CidadePaciente: cidade, EstadoPaciente: estado, EnderecoPaciente: endereco, EmailPaciente: email, SenhaPaciente: senha }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            return response.json();
+          }
+        })
+        .then((responseJson) => {
+          var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
+          if (mensagem == '"Informações repetidas"') {
+            Alert.alert("Informações repetidas!", "Alguma(s) informação(ões) (CPF, Telefone ou email) inserida(s) já existe em nosso aplicativo \nConfira as informações, e caso já tenha um cadastro volte para tela de login e realize-o!");
+          }
+
+          else if (mensagem == '"Informações inseridas com sucesso"') {
+            Alert.alert("Cadastro realizado com sucesso", "Cadastrado!");
+            navigation.navigate('PSNavigator')
+          }
+
+          else {
+            // Aviso de Erro dados inseridos incorretos
+            Alert.alert("Erro!", "Revise os dados inseridos!");
+          }
+        })
+        //se ocorrer erro na requisição ou conversão
+        .catch((error) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          }
+        });
+    }
+  }
   const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
 
   const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
-
   const [modalVisible, setModalVisible] = useState(false);
-
-  function abrirModal() {
-    getInformacoesBD();
-    setModalVisible(true)
-
-  }
 
   const [paciente, setPaciente] = React.useState();
 
@@ -207,41 +260,44 @@ const TabButton = ({ toggleOpened, opened }) => {
                 Agendar Sessão
               </Text>
             </View>
-            <SelectDropdown
-              data={pacientes}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index, pacientes);
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                // text represented after item is selected
-                // if data array is an array of objects then return selectedItem.property to render after item is selected
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                // text represented for each item in dropdown
-                // if data array is an array of objects then return item.property to represent item in dropdown
-                return item;
-              }}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
-              renderDropdownIcon={isOpened => {
-                return <FontAwesomeIcon name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
-              }}
-              dropdownIconPosition={'right'}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
-            />
+            <View style={{ gap: 1 }}>
+              <Text style={styles.inputText}> Paciente </Text>
+              <SelectDropdown
+                data={pacientes}
+                onSelect={(selectedItem, index) => {
+                  setPaciente(selectedItem.NomePaciente)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem.NomePaciente;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item.NomePaciente;
+                }}
+                buttonStyle={styles.dropdownBtnStyle}
+                buttonTextStyle={styles.dropdownBtnTxtStyle}
+                renderDropdownIcon={isOpened => {
+                  return <FontAwesomeIcon name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+                }}
+                dropdownIconPosition={'right'}
+                dropdownStyle={styles.dropdownStyle}
+                rowStyle={styles.dropdownRowStyle}
+                rowTextStyle={styles.dropdownRowTxtStyle}
+                selectedRowTextStyle={styles.selectedRowTextStyle}
+                defaultButtonText={'Selecione o Paciente'}
 
+              />
+            </View>
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
                 width: "100%",
-                marginTop: -20,
+                marginTop: -10,
               }}
             >
-              <View style={{ gap: 5 }}>
+              <View style={{ gap: 1 }}>
                 <Text style={styles.inputText}> Data </Text>
                 {!showDatePicker && (
                   <Pressable onPress={toggleDatePicker}>
@@ -278,7 +334,7 @@ const TabButton = ({ toggleOpened, opened }) => {
                 )}
               </View>
 
-              <View style={{ gap: 5 }}>
+              <View style={{ gap: 1 }}>
                 <Text style={styles.inputText}> Horário </Text>
                 {!showTimePicker && (
                   <Pressable onPress={toggleTimePicker}>
@@ -371,7 +427,7 @@ const TabButton = ({ toggleOpened, opened }) => {
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*agendar sessão*/}
-        <TouchableWithoutFeedback onPress={() => abrirModal()}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
           <Animated.View
             style={[
               styles.item,
@@ -488,11 +544,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   input: {
-    borderWidth: 0.5,
     borderRadius: 30,
     paddingHorizontal: 15,
     paddingVertical: 5,
     backgroundColor: "white",
+    borderColor: '#444',
+    borderWidth: 1,
     color: "black",
     textAlign: "center",
   },
@@ -508,17 +565,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignSelf: "center",
   },
-  dropdown1BtnStyle: {
-    width: '80%',
+  dropdownBtnStyle: {
+    width: '100%',
     height: 50,
     backgroundColor: '#FFF',
-    borderRadius: 8,
+    borderRadius: 30,
     borderWidth: 1,
     borderColor: '#444',
   },
-  dropdown1BtnTxtStyle: { color: '#444', textAlign: 'left' },
-  dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
-  dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
-  dropdown1RowTxtStyle: { color: '#444', textAlign: 'left' },
+  dropdownBtnTxtStyle: { color: '#313131', textAlign: 'left' },
+  dropdownStyle: { backgroundColor: '#EFEFEF' },
+  dropdownRowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
+  dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
+  selectedRowTextStyle: {color: '#53A7D7'}
 });
 export default TabButton;
