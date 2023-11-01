@@ -29,57 +29,56 @@ const TabButton = ({ toggleOpened, opened }) => {
 
   useEffect(() => {
     async function recuperarId() {
-        const value = await AsyncStorage_ID.getItem('IdPsicologo')
-        setId(value)
+      const value = await AsyncStorage_ID.getItem('IdPsicologo')
+      setId(value)
     }
     recuperarId()
-    getInformacoesBD()
-}, [id]);
+  }, [id]);
 
-const [timeOut, setTimeOut] = useState(10000);
-const [loading, setLoading] = useState(false);
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
 
-const [pacientes, setPacientes] = useState([]);
+  const [pacientes, setPacientes] = useState([]);
 
-async function getInformacoesBD() {
-  setLoading(true);
-  var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
-  var wasServerTimeout = false;
-  var timeout = setTimeout(() => {
+  async function getInformacoesBD() {
+    setLoading(true);
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
       wasServerTimeout = true;
       alert('Tempo de espera para busca de informações excedido');
-  }, timeOut);
+    }, timeOut);
 
-  const resposta = fetch(url, {
+    const resposta = fetch(url, {
       method: 'POST', //tipo de requisição
       body: JSON.stringify({ IdPsicologo: id }),
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
-  })
+    })
       .then((response) => {
-          timeout && clearTimeout(timeout);
-          if (!wasServerTimeout) {
-              return response.json();
-          }
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
       })
       .then((responseJson) => {
-        setPacientes([])
-        for (var i = 0; i < responseJson.paciente.length; i++) { 
-          pacientes.push(responseJson.paciente[i].NomePaciente);
+        setPacientes([]);
+        for (var i = 0; i < responseJson.paciente.length; i++) {
+          setPacientes(pacientes.push(responseJson.paciente[i].NomePaciente));
         }
         console.log(pacientes)
       })
       //se ocorrer erro na requisição ou conversão
       .catch((error) => {
-          timeout && clearTimeout(timeout);
-          if (!wasServerTimeout) {
-              Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
-          }
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
 
       });
-  setLoading(false);
-}
+    setLoading(false);
+  }
   const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
 
@@ -87,6 +86,12 @@ async function getInformacoesBD() {
 
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  function abrirModal() {
+    getInformacoesBD();
+    setModalVisible(true)
+
+  }
 
   const [paciente, setPaciente] = React.useState();
 
@@ -205,7 +210,7 @@ async function getInformacoesBD() {
             <SelectDropdown
               data={pacientes}
               onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
+                console.log(selectedItem, index, pacientes);
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 // text represented after item is selected
@@ -218,14 +223,14 @@ async function getInformacoesBD() {
                 return item;
               }}
               buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            renderDropdownIcon={isOpened => {
-              return <FontAwesomeIcon name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
-            }}
-            dropdownIconPosition={'right'}
-            dropdownStyle={styles.dropdown1DropdownStyle}
-            rowStyle={styles.dropdown1RowStyle}
-            rowTextStyle={styles.dropdown1RowTxtStyle}
+              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              renderDropdownIcon={isOpened => {
+                return <FontAwesomeIcon name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+              }}
+              dropdownIconPosition={'right'}
+              dropdownStyle={styles.dropdown1DropdownStyle}
+              rowStyle={styles.dropdown1RowStyle}
+              rowTextStyle={styles.dropdown1RowTxtStyle}
             />
 
             <View
@@ -366,7 +371,7 @@ async function getInformacoesBD() {
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*agendar sessão*/}
-        <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
+        <TouchableWithoutFeedback onPress={() => abrirModal()}>
           <Animated.View
             style={[
               styles.item,
@@ -511,9 +516,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#444',
   },
-  dropdown1BtnTxtStyle: {color: '#444', textAlign: 'left'},
-  dropdown1DropdownStyle: {backgroundColor: '#EFEFEF'},
-  dropdown1RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5'},
-  dropdown1RowTxtStyle: {color: '#444', textAlign: 'left'},
+  dropdown1BtnTxtStyle: { color: '#444', textAlign: 'left' },
+  dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
+  dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
+  dropdown1RowTxtStyle: { color: '#444', textAlign: 'left' },
 });
 export default TabButton;
