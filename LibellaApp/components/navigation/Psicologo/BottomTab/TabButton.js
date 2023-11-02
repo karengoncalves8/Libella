@@ -89,12 +89,12 @@ const TabButton = ({ toggleOpened, opened }) => {
     setLoading(false);
   }
 
-  async function cadastrar() {
+  async function agendar() {
     if (paciente == "" || dataEvento == "" || timeEvento == "" ) {
       alert("Erro: Preencha todos os campos!")
     }
     else {
-      var url = 'https://libellatcc.000webhostapp.com/Cadastro/CadastroPaciente.php';
+      var url = 'https://libellatcc.000webhostapp.com/Funcionalidades/AgendarSessao.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
         wasServerTimeout = true;
@@ -103,7 +103,12 @@ const TabButton = ({ toggleOpened, opened }) => {
 
       const resposta = await fetch(url, {
         method: 'POST', //tipo de requisição
-        body: JSON.stringify({ IdPsicologo: idPsicologo, NomePaciente: nome, TelefonePaciente: telefone, CpfPaciente: cpf, RgPaciente: rg, EscolaridadePaciente: escolaridade, OcupacaoPaciente: ocupacao, SintomasPaciente: sintomas, CidadePaciente: cidade, EstadoPaciente: estado, EnderecoPaciente: endereco, EmailPaciente: email, SenhaPaciente: senha }),
+        body: JSON.stringify({ 
+          Data: dataEvento, 
+          Horario: timeEvento,
+          IdPsicologo: id,
+          NomePaciente: paciente
+         }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -116,15 +121,10 @@ const TabButton = ({ toggleOpened, opened }) => {
         })
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
-          if (mensagem == '"Informações repetidas"') {
-            Alert.alert("Informações repetidas!", "Alguma(s) informação(ões) (CPF, Telefone ou email) inserida(s) já existe em nosso aplicativo \nConfira as informações, e caso já tenha um cadastro volte para tela de login e realize-o!");
+          if (mensagem == '"Informações inseridas com sucesso"') {
+            Alert.alert("Agendado!", "Sessão agendada com sucesso!");
+            setModalVisible(false)
           }
-
-          else if (mensagem == '"Informações inseridas com sucesso"') {
-            Alert.alert("Cadastro realizado com sucesso", "Cadastrado!");
-            navigation.navigate('PSNavigator')
-          }
-
           else {
             // Aviso de Erro dados inseridos incorretos
             Alert.alert("Erro!", "Revise os dados inseridos!");
@@ -141,8 +141,6 @@ const TabButton = ({ toggleOpened, opened }) => {
   }
   const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
-
-  const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -197,7 +195,7 @@ const TabButton = ({ toggleOpened, opened }) => {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    return `${day}/${month}/${year}`;
+    return `${year}-${month}-${day}`;
   };
 
   const formatTime = (rawDate) => {
@@ -358,7 +356,7 @@ const TabButton = ({ toggleOpened, opened }) => {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => agendar()}>
               <Text
                 style={{
                   color: "white",
@@ -366,8 +364,7 @@ const TabButton = ({ toggleOpened, opened }) => {
                   fontFamily: "Poppins_400Regular",
                 }}
               >
-                {" "}
-                Agendar{" "}
+                Agendar
               </Text>
             </TouchableOpacity>
           </View>

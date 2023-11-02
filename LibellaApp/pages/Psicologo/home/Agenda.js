@@ -55,6 +55,7 @@ async function getInformacoesBD() {
           }
       })
       .then((responseJson) => {
+        console.log(responseJson)
         setMeetings([]);
         for (var i = 0; i < responseJson.consultas.length; i++) { 
           setMeetings((listaInfo) => {
@@ -82,8 +83,6 @@ async function getInformacoesBD() {
       });
   setLoading(false);
 }
-
-
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   const [selected, setSelected] = useState(currentDate);
