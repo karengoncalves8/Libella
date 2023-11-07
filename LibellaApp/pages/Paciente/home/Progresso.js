@@ -12,11 +12,6 @@ import {
 
 import {
   LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
 } from "react-native-chart-kit";
 import CircularProgress from "react-native-circular-progress-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";

@@ -30,6 +30,10 @@ function PerfilPacienteScreen({ navigation }) {
   const [idPaciente, setIdPaciente] = useState("");
   const [nome, setNome] = useState("");
 
+  const dataAtual = new Date();
+  const ano = dataAtual.getFullYear();;
+  const mes = dataAtual.getMonth();;
+
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
@@ -42,6 +46,7 @@ function PerfilPacienteScreen({ navigation }) {
     }
     recuperarId();
     getInformacoesBD();
+    getGraficoInfo();
   }, [idPaciente]);
 
   async function getInformacoesBD() {
@@ -57,7 +62,9 @@ function PerfilPacienteScreen({ navigation }) {
 
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ IdPaciente: idPaciente }),
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -78,6 +85,49 @@ function PerfilPacienteScreen({ navigation }) {
           //Error logic here
         }
         //  alert('erro'+error)
+      });
+    setLoading(false);
+  }
+
+  async function getGraficoInfo() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/Funcionalidades/Grafico.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente,
+        Ano: ano,
+        Mes: mes
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        console.log('mimi');
+        console.log(responseJson)
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        console.log(error)
       });
     setLoading(false);
   }

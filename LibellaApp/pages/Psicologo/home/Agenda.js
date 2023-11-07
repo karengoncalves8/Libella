@@ -55,7 +55,6 @@ async function getInformacoesBD() {
           }
       })
       .then((responseJson) => {
-        console.log(responseJson)
         setMeetings([]);
         for (var i = 0; i < responseJson.consultas.length; i++) { 
           setMeetings((listaInfo) => {

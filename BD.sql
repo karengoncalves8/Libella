@@ -37,7 +37,7 @@ CREATE TABLE Pacientes (
 );
 
 -- CRIANDO A TABELA ATIVIDADES
-CREATE TABLE Atvidades (
+CREATE TABLE Atividades (
 	IdAtividade INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     TituloAtividade VARCHAR(50),
     InstrucoesAtividade VARCHAR(240),
@@ -51,7 +51,8 @@ CREATE TABLE Atvidades (
 -- CRIANDO A TABELA REGISTROS (Registro de emoções)
 CREATE TABLE Registros (
 	IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
-    Registro VARCHAR(50),
+    Registro INT NOT NULL,
+    Data DATE,
     Anotacoes VARCHAR(250),
     IdPsicologo INT NOT NULL,
     FOREIGN KEY (IdPsicologo) REFERENCES Psicologos (IdPsicologo), -- Chave estrangeira do psicologo
@@ -118,3 +119,25 @@ INSERT INTO Consultas (
 VALUES
 	('2023-10-24',  '13:00', 2, 'Olivier Florence'), -- Consulta do Oliver com a Andressa
     ('2023-10-29',  '16:30', 1, 'Amelie Florence'); -- Consulta da Amelie com o teste
+    
+INSERT INTO Registros (
+    Registro,
+    Data,
+    Anotacoes,
+    IdPsicologo,
+    IdPaciente
+)
+VALUES
+	(2,  '2023-11-01', 'Tive um desempenho ruim na prova', 1, 1), -- Registro do Oliver do sentimento MAL, paciente do Teste
+	(4,  '2023-11-05', 'Fui muito produtivo!', 1, 1), -- Registro do Oliver do sentimento BEM, paciente do Teste
+    (3,  '2023-11-09', 'Não realizei as atividades que deveria', 1, 1), -- Registro do Oliver do sentimento NEUTRO, paciente do Teste
+    (1,  '2023-11-13', 'Briguei com meus familiares', 1, 1), -- Registro do Oliver do sentimento HORRIVEL, paciente do Teste
+    (5,  '2023-11-17', 'Fui ao cinema com amigos', 1, 1), -- Registro do Oliver do sentimento FELIZ, paciente do Teste
+    (3,  '2023-11-21', 'Me sinto ansioso', 1, 1), -- Registro do Oliver do sentimento NEUTRO, paciente do Teste
+    (1,  '2023-11-25', 'Tive ataques de pânico constantes', 1, 1), -- Registro do Oliver do sentimento HORRIVEL, paciente do Teste
+    (4,  '2023-11-29', 'Briguei com meus familiares', 1, 1), -- Registro do Oliver do sentimento BEM, paciente do Teste
+    (5,  '2023-11-23', 'Passei o dia com minha namorada', 1, 1), -- Registro do Oliver do sentimento FELIZ, paciente do Teste
+    (5,  '2023-10-12', 'Passei o dia com minha namorada', 1, 2); -- Registro da Amelie do sentimento FELIZ, paciente do Teste
+
+Drop table Registros;
+SELECT Registro FROM Registros WHERE YEAR(Data) = 2023 AND MONTH(Data) = 11 AND IdPaciente = 1;
