@@ -7,18 +7,21 @@ import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
-const LoginPCScreen = ({ navigation }) => {
+const LoginPSScreen = ({ navigation }) => {
   const { login } = useAuth();
   const { logged } = useAuth();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [id, setId] = useState(0);
 
-  const [timeOut, setTimeOut] = useState(10500);
+  const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState('');
+
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,15 +29,23 @@ const LoginPCScreen = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
+  const SalvarId = (key, value) => {
+    AsyncStorage_Paciente.setItem(key, value)
+  }
+
+  async function recuperarId() {
+    const value = await AsyncStorage_Paciente.getItem('IdPaciente')
+    setId(value)
+  }
+
   async function auth() {
-    
+    setLoading(true)
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
 
     else {
-      
-      var url = 'https://libellatcc.000webhostapp.com/Login/LoginPsicologo.php';
+      var url = 'https://libellatcc.000webhostapp.com/Login/LoginPaciente.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
         wasServerTimeout = true;
@@ -43,7 +54,7 @@ const LoginPCScreen = ({ navigation }) => {
 
       const resposta = await fetch(url, {
         method: 'POST', //tipo de requisição
-        body: JSON.stringify({ EmailPsicologo: email, SenhaPsicologo: senha }),
+        body: JSON.stringify({ EmailPaciente: email, SenhaPaciente: senha }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,6 +69,42 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
+            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getIdPsicologo.php';
+            var wasServerTimeout = false;
+            var timeout = setTimeout(() => {
+              wasServerTimeout = true;
+              alert('Tempo de espera para busca de informações excedido');
+            }, timeOut);
+
+            const resposta = fetch(urlBD, {
+              method: 'POST', //tipo de requisição
+              body: JSON.stringify({ EmailPaciente: email, SenhaPaciente: senha }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+
+              .then((response) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                  return response.json();
+                }
+              })
+              .then((responseJson) => {
+                // IMPORTANTE recolhendo o id do banco de dados
+                var PsicologoInfos = (responseJson.psicologo[0].IdPsicologo)
+                // Salvando o Id para outras páginas
+                SalvarId('IdPaciente', PsicologoInfos)
+              })
+              //se ocorrer erro na requisição ou conversão
+              .catch((error) => {
+                timeout && clearTimeout(timeout);
+                if (!wasServerTimeout) {
+                  //Error logic here
+                }
+
+                alert('erro' + error)
+              });
             login({ email, senha });
             logged()
           }
@@ -75,8 +122,8 @@ const LoginPCScreen = ({ navigation }) => {
 
           //  alert('erro'+error)
         });
-
     }
+    setLoading(false)
   }
   return (
     <View style={styles.container}>
@@ -87,7 +134,7 @@ const LoginPCScreen = ({ navigation }) => {
         source={require('../../../assets/img/Logos/Logo-roxa.png')}
       />
 
-      <Text style={styles.title}> Login</Text>
+      <Text style={styles.title}>Login</Text>
 
       <View style={styles.inputbox}>
         <View style={styles.inputView}>
@@ -125,8 +172,21 @@ const LoginPCScreen = ({ navigation }) => {
           <Text style={styles.text}>Esqueceu a senha?</Text>
         </View>
       </View>
-
-      <TouchableOpacity onPress={() =>  auth()}>
+      {loading ? (
+        <View style={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 10,
+          gap: 10,
+          color: 'white',
+        }}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      ) : (
+        null
+      )}
+      <TouchableOpacity onPress={() => auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>
@@ -142,13 +202,16 @@ const LoginPCScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.text}>Não possui login? Peça ao seu psicólogo que realize o cadastro </Text>
+        <Text style={styles.text}>Não tem uma conta? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('CadastroPS')}>
+          <Text style={{ color: '#4A2794', fontSize: 16, }}>Cadastre-se!</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export default LoginPCScreen;
+export default LoginPSScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

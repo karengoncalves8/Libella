@@ -34,7 +34,7 @@ function Perfil() {
     }, [id]);
     async function getInformacoesBD() {
         setLoading(true);
-        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php';
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php';
         var wasServerTimeout = false;
         var timeout = setTimeout(() => {
             wasServerTimeout = true;

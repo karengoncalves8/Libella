@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
-const AtividadesScreen = ({navigation}) => {
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
+const AtividadesScreen = ({ navigation }) => {
+  const [IdPaciente, setIdPaciente] = useState('');
+
   const [listaInfo, setListaInfo] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -23,22 +27,30 @@ const AtividadesScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    async function recuperarId() {
+      const value = await AsyncStorage_Paciente.getItem('PacienteSelected')
+      setIdPaciente(value)
+    }
+    recuperarId()
     getInformacoesBD();
   }, []);
 
   async function getInformacoesBD() {
     setLoading(true);
-    var url = 'https://aulapam23.000webhostapp.com/lista_usuarios.php';
-
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getAtividades.php';
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
-      setLoading(false);
       alert('Tempo de espera para busca de informações excedido');
+      setLoading(false);
     }, timeOut);
 
     const resposta = await fetch(url, {
-      method: 'GET',
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPaciente: IdPaciente }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
 
       .then((response) => {
@@ -48,16 +60,14 @@ const AtividadesScreen = ({navigation}) => {
         }
       })
       .then((responseJson) => {
-
         setListaInfo([]);
         for (var i = 0; i < responseJson.usuarios.length; i++) {
           setListaInfo((listaInfo) => {
             const list = [
               ...listaInfo,
               {
-                id: responseJson.usuarios[i].id,
-                nomePac: responseJson.usuarios[i].nome,
-
+                titulo: responseJson.atividade[i].TituloAtividade,
+                data: responseJson.atividade[i].EntregaAtividade,
               },
             ];
             return list;
@@ -77,35 +87,29 @@ const AtividadesScreen = ({navigation}) => {
     setLoading(false);
   }
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-        <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
-        <Text style={styles.texto}>Recentes</Text>
-      </TouchableOpacity>
+    <View style={{ width: '100%', height: '100%' }}>
+      <View style={styles.container}>
+        <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+          <FeatherIcon name="filter" size={18} color={"black"} opacity={0.4} />
+          <Text style={styles.texto}>Recente</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Roda da Vida</Text>
-          <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
-        </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Auto Recompensa</Text>
-          <Text style={styles.texto}>Vence 1 de abril ás 13:59</Text>
-        </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
-        <View style={{ flexDirection: 'column', gap: 8 }}>
-          <Text style={styles.titulo}>Máquina do Tempo</Text>
-          <Text style={styles.texto}>Vence 13 de abril ás 13:59</Text>
-        </View>
-        <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.AddButton}>
+          <Text style={styles.Addtext}>+</Text>
+        </TouchableOpacity>
+        <FlatList
+          data={listaInfo}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AtividadeEsp')}>
+              <View style={{ flexDirection: 'column', gap: 8 }}>
+                <Text style={styles.titulo}>{item.titulo}</Text>
+                <Text style={styles.texto}>Vence {item.data}</Text>
+              </View>
+              <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -114,7 +118,8 @@ export default AtividadesScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: "#F2F2F2",
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -122,6 +127,7 @@ const styles = StyleSheet.create({
     gap: 27,
     paddingHorizontal: 20,
   },
+
   card: {
     width: '100%',
     flexDirection: "row",
@@ -134,12 +140,41 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     elevation: 5,
   },
+
+  containerAdd: {
+    width: '100%',
+    minHeight: '100%',
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    position: 'absolute',
+  },
+
+  AddButton: {
+    right: 20,
+    top: 500,
+    height: 70,
+    width: 70,
+    backgroundColor: '#53A7D7',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1,
+  },
+
+  Addtext: {
+    color: 'white',
+    fontSize: 40,
+    fontFamily: 'Poppins_400Regular',
+    marginTop: 8,
+  },
+
   texto: {
     fontSize: 14,
     color: '#3F3E3E',
     opacity: 0.7,
   },
-  titulo:{
+  titulo: {
     fontWeight: 'bold',
     fontSize: 16,
     color: '#313131'

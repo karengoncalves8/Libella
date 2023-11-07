@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -17,10 +17,62 @@ import TabContainer from "../../../../components/navigation/Paciente/BottomTab/T
 import { useAuth } from "../../../../components/navigation/Stack/AuthContext";
 import 'moment/locale/pt-br';
 
+import AsyncStorage_Paciente from "@react-native-async-storage/async-storage";
+
 moment.locale('pt-br');
 
 const InicioScreen = (navigation) => {
-  const { user } = useAuth();
+  const [idPaciente, setIdPaciente] = useState(0);
+  const [nome, setNome] = useState("");
+
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
+  const [acess, setAcess] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    getInformacoesBD();
+  }, [nome]);
+
+  async function getInformacoesBD() {
+    setLoading(true);
+    const value = await AsyncStorage_Paciente.getItem("IdPaciente");
+    setIdPaciente(value);
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        // Recolhendo as informações do banco de dados e salvando nas váriaveis
+        setNome(responseJson.psicologo[0].NomePsicologo);
+        setLoading(false);
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
   let startDate = moment();
 
   return (
@@ -28,7 +80,7 @@ const InicioScreen = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {user.email}</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {user.nome}</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>

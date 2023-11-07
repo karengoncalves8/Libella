@@ -39,6 +39,7 @@ const LoginPSScreen = ({ navigation }) => {
   }
 
   async function auth() {
+    setLoading(true)
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
@@ -68,7 +69,7 @@ const LoginPSScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getInformaçõesBD.php';
+            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getIdPsicologo.php';
             var wasServerTimeout = false;
             var timeout = setTimeout(() => {
               wasServerTimeout = true;
@@ -121,8 +122,8 @@ const LoginPSScreen = ({ navigation }) => {
 
           //  alert('erro'+error)
         });
-
     }
+    setLoading(false)
   }
   return (
     <View style={styles.container}>
@@ -171,7 +172,20 @@ const LoginPSScreen = ({ navigation }) => {
           <Text style={styles.text}>Esqueceu a senha?</Text>
         </View>
       </View>
-
+      {loading ? (
+        <View style={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 10,
+          gap: 10,
+          color: 'white',
+        }}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      ) : (
+        null
+      )}
       <TouchableOpacity onPress={() => auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
@@ -193,9 +207,6 @@ const LoginPSScreen = ({ navigation }) => {
           <Text style={{ color: '#4A2794', fontSize: 16, }}>Cadastre-se!</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPressa={() => recuperarId()}>
-        <Text style={{ color: '#4A2794', fontSize: 16, }}>Recuperar</Text>
-      </TouchableOpacity>
     </View>
   );
 }

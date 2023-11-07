@@ -41,7 +41,7 @@ const InicioPage = ({ navigation }) => {
     const value = await AsyncStorage_ID.getItem("IdPsicologo");
     setIdPsicologo(value);
     var url =
-      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php";
+      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
