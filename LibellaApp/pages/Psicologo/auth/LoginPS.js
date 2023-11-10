@@ -68,7 +68,7 @@ const LoginPSScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getInformaçõesBD.php';
+            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getIdPsicologo.php';
             var wasServerTimeout = false;
             var timeout = setTimeout(() => {
               wasServerTimeout = true;
