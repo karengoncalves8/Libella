@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 
 import AntIcon from "react-native-vector-icons/AntDesign";
 
@@ -103,36 +103,53 @@ const FichaPacienteScreen = ({ navigation }) => {
                         <Text style={styles.InfPessoaisText}>Informações Pessoais</Text>
                     </View>
                 </View>
-                <View style={styles.containerContent}>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Nome Completo</Text>
-                        <Text style={styles.text}>{nome}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                {loading ? (
+                    <View style={styles.containerContent}>
+                        <View style={{
+                            width: '100%',
+                            height: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 20,
+                            gap: 20,
+                        }}>
+                            <Text style={{ fontFamily: 'Poppins_500Medium', fontSize: 22, color: 'black', }}>Aguarde, Carregando</Text>{/*Nome do Psicologo*/}
+                            <ActivityIndicator size="large" color="#53A7D7" />
+                        </View>
                     </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Email</Text>
-                        <Text style={styles.text}>{email}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                ) : (
+                    <View style={styles.containerContent}>
+
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Nome Completo</Text>
+                            <Text style={styles.text}>{nome}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Email</Text>
+                            <Text style={styles.text}>{email}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Endereço</Text>
+                            <Text style={styles.text}>{endereco}, {cidade}, {estado}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Telefone</Text>
+                            <Text style={styles.text}>{telefone}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Escolaridade</Text>
+                            <Text style={styles.text}>{escolaridade}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Ocupação</Text>
+                            <Text style={styles.text}>{ocupacao}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
+                        <View style={styles.containerInfBloco}>
+                            <Text style={styles.Title}>Sintomas</Text>
+                            <Text style={styles.text}>{sintomas}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
+                        </View>
                     </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Endereço</Text>
-                        <Text style={styles.text}>{endereco}, {cidade}, {estado}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                    </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Telefone</Text>
-                        <Text style={styles.text}>{telefone}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                    </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Escolaridade</Text>
-                        <Text style={styles.text}>{escolaridade}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                    </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Ocupação</Text>
-                        <Text style={styles.text}>{ocupacao}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                    </View>
-                    <View style={styles.containerInfBloco}>
-                        <Text style={styles.Title}>Sintomas</Text>
-                        <Text style={styles.text}>{sintomas}</Text>{/*Esse texto vai mudar de acordo com o Banco de dados*/}
-                    </View>
-                </View>
+                )}
             </View>
         </ScrollView>
     );

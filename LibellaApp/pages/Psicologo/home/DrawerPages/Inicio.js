@@ -33,15 +33,16 @@ const InicioPage = ({ navigation }) => {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
+    async function recuperarId() {
+      const value = await AsyncStorage_ID.getItem("IdPsicologo");
+      setIdPsicologo(value);
+    }
+    recuperarId();
     getInformacoesBD();
   }, [nome]);
 
   async function getInformacoesBD() {
-    setLoading(true);
-    const value = await AsyncStorage_ID.getItem("IdPsicologo");
-    setIdPsicologo(value);
-    var url =
-      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php";
+    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;

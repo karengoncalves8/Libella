@@ -30,9 +30,6 @@ const AtividadeEspPage = ({ navigation }) => {
             </View>
             <Text style={{color:'#313131', opacity: 0.4}}>Vence amanhã às 23:59</Text>
         </View>
-
-
-
             <View style={{gap: 8}}>
                 <Text style={styles.subTitulo}>Instruções</Text>
                 <Text style={styles.texto}>Escolha uma pontuação para cada um dos aspectos traçados de acordo com o grau de satisfação que sente em relação a ele. A pontuação varia entre o número 1 e 10, sendo 10 a pontuação máxima. Quanto mais baixa for a pontuação, mais se aproxima do centro e, quanto mais elevada, mais próxima da margem.</Text>

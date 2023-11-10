@@ -24,6 +24,7 @@ import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 function PacientesPage({ navigation }) {
   const [id, setId] = useState('');
   const [idPsicologo, setIdPsicologo] = useState(0);
+  const [resposta, setResposta] = useState('');
 
   const [listaInfo, setListaInfo] = useState([]);
 
@@ -66,6 +67,7 @@ function PacientesPage({ navigation }) {
         }
       })
       .then((responseJson) => {
+        setResposta(responseJson.paciente[0].resposta);
         setListaInfo([]);
         for (var i = 0; i < responseJson.paciente.length; i++) {
           setListaInfo((listaInfo) => {
@@ -103,25 +105,12 @@ function PacientesPage({ navigation }) {
           <Text style={styles.textButton}>Recarregar</Text>
         </TouchableOpacity>
       </View>
-      {loading ? (
+      {resposta == 'informação recebida' ? (
         <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
           width: '100%',
           height: '90%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 20,
-          gap: 20,
-          color: 'white',
-        }}>
-          <Text style={{ fontFamily: 'Poppins_500Medium', fontSize: 22, color: 'black', }}>Aguarde, Carregando</Text>{/*Nome do Psicologo*/}
-          <ActivityIndicator size="large" color="#53A7D7" />
-        </View>
-      ) : (
-        <View style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
         }}>
           <FlatList
             data={listaInfo}
@@ -139,6 +128,8 @@ function PacientesPage({ navigation }) {
             )}
           />
         </View>
+      ) : (
+        null
       )}
     </View>
   );
@@ -177,7 +168,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 20,
   },
-
 
   text: {
     fontSize: 15,

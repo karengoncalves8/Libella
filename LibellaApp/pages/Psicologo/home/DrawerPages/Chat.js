@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        maringBottom: 5,
+        margingBottom: 5,
     },
 
 

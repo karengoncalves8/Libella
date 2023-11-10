@@ -37,10 +37,10 @@ CREATE TABLE Pacientes (
 );
 
 -- CRIANDO A TABELA ATIVIDADES
-CREATE TABLE Atvidades (
+CREATE TABLE Atividades (
 	IdAtividade INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     TituloAtividade VARCHAR(50),
-    InstrucoesAtividade VARCHAR(240),
+    InstrucoesAtividade VARCHAR(500),
     EntregaAtividade DATE,
     IdPsicologo INT NOT NULL,
     FOREIGN KEY (IdPsicologo) REFERENCES Psicologos (IdPsicologo), -- Chave estrangeira do psicologo
@@ -96,5 +96,15 @@ VALUES
 ('Arthur Cervero', '(12)99757-1277', '543.890.321-65', '99.544.123-6', 'Taubaté', 'São Paulo', 'Rua da juventude, 91, Parque das Ameixas', 'Ensino superior em TI', 'Trabalha no Facebook, e estuda na faculdade da USP', 'Ansiedade', 'arthur@gmail.com', 'arthur123', 1),
 ('Ellie', '(15)98712-1199', '123.321.456-99', '51.888.888-8', 'Rio de Janeiro', 'Rio de Janeiro', 'Rua dos Jardineiro, 777, Vila Armadeira', 'Ensino médio completo', 'Trabalha no hortfruit', 'Ansiedade e depressão', 'ellie@gmail.com', 'ellie123', 1),
 ('Wanderley', '(12)98811-2233', '231.876.564-88', '55.551.118-2', 'São José dos Campos', 'São Paulo', 'Rua das flores, 91, Vila das Cerejeiras', 'Ensino médio completo', 'Trabalha no hortfruit', 'Ansiedade e depressão', 'wanderley@gmail.com', 'wanderley123', 2);
+
+INSERT INTO Atividades (
+    TituloAtividade,
+    EntregaAtividade,
+    InstrucoesAtividade,
+    IdPsicologo,
+    IdPaciente
+)
+VALUES 
+    ('Roda da Vida', 20231102, 'Escolha uma pontuação para cada um dos aspectos traçados de acordo com o grau de satisfação que sente em relação a ele. A pontuação varia entre o número 1 e 10, sendo 10 a pontuação máxima. Quanto mais baixa for a pontuação, mais se aproxima do centro e, quanto mais elevada, mais próxima da margem', 1, 1);
 
 -- "INSERT INTO Psicologos (NomePsicologo, TelefonePsicologo, CpfPsicologo, RgPsicologo, CrpPsicologo, CidadePsicologo, EstadoPsicologo, EnderecoPsicologo, EmailPsicologo, SenhaPsicologo) VALUES ('".$data->NomePsicologo."','".$data->TelefonePsicologo."','".$data->CpfPsicologo."','".$data->RgPsicologo."','".$data->CrpPsicologo."','".$data->CidadePsicologo."','".$data->EstadoPsicologo."','".$data->EnderecoPsicologo."','".$data->EmailPsicologo."','".$data->SenhaPsicologo."');";
