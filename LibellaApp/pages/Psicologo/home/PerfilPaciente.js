@@ -31,8 +31,9 @@ function PerfilPacienteScreen({ navigation }) {
   const [nome, setNome] = useState("");
 
   const dataAtual = new Date();
-  const ano = dataAtual.getFullYear();;
-  const mes = dataAtual.getMonth();;
+  const ano = dataAtual.getFullYear();
+  const mes = dataAtual.getMonth() + 1;
+  const [registros, setRegistros] = useState([]);
 
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
@@ -118,7 +119,9 @@ function PerfilPacienteScreen({ navigation }) {
         }
       })
       .then((responseJson) => {
-        console.log('mimi');
+        const registrosInt = responseJson.Registros.map(str => parseInt(str, 10));
+        setRegistros(registrosInt);
+        console.log(registros)
         console.log(responseJson)
       })
 
@@ -165,7 +168,7 @@ function PerfilPacienteScreen({ navigation }) {
               labels: [1, 5, 9, 13, 17, 21, 25, 29],
               datasets: [
                 {
-                  data: [2, 4, 3, 1, 5, 3, 1, 4],
+                  data: registros,
                 },
               ],
             }}

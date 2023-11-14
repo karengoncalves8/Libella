@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ActivityIndicator, Alert } from "react-native";
 
 import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 
@@ -68,7 +68,7 @@ const LoginPSScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
-            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getInformaçõesBD.php';
+            var urlBD = 'https://libellatcc.000webhostapp.com/Login/getIdPsicologo.php';
             var wasServerTimeout = false;
             var timeout = setTimeout(() => {
               wasServerTimeout = true;
@@ -109,7 +109,7 @@ const LoginPSScreen = ({ navigation }) => {
           }
 
           else {
-            alert(mensagem);
+            Alert.alert('Erro de Login', 'Revise seu email e senha e tente novamente!');
           }
         })
         //se ocorrer erro na requisição ou conversãok
@@ -193,9 +193,6 @@ const LoginPSScreen = ({ navigation }) => {
           <Text style={{ color: '#4A2794', fontSize: 16, }}>Cadastre-se!</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPressa={() => recuperarId()}>
-        <Text style={{ color: '#4A2794', fontSize: 16, }}>Recuperar</Text>
-      </TouchableOpacity>
     </View>
   );
 }
