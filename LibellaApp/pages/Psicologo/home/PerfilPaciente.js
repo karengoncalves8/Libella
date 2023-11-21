@@ -47,7 +47,8 @@ function PerfilPacienteScreen({ navigation }) {
     }
     recuperarId();
     getInformacoesBD();
-    getGraficoInfo();
+    getGraficoEmInfo();
+    getGraficoAtvInfo();
   }, [idPaciente]);
 
   async function getInformacoesBD() {
@@ -90,10 +91,10 @@ function PerfilPacienteScreen({ navigation }) {
     setLoading(false);
   }
 
-  async function getGraficoInfo() {
+  async function getGraficoEmInfo() {
     setLoading(true);
     var url =
-      "https://libellatcc.000webhostapp.com/Funcionalidades/Grafico.php";
+      "https://libellatcc.000webhostapp.com/Funcionalidades/GraficoEm.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
@@ -119,10 +120,50 @@ function PerfilPacienteScreen({ navigation }) {
         }
       })
       .then((responseJson) => {
-        const registrosInt = responseJson.Registros.map(str => parseInt(str, 10));
+        const registrosInt = responseJson.Registros.map(value => {
+          return value !== null ? parseInt(value, 10) : null;
+        });
         setRegistros(registrosInt);
-        console.log(registros)
-        console.log(responseJson)
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        console.log(error)
+      });
+    setLoading(false);
+  }
+
+  async function getGraficoAtvInfo() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/Funcionalidades/GraficoAtv.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setValue(responseJson.Porcentagem)
       })
 
       .catch((error) => {
@@ -237,14 +278,13 @@ function PerfilPacienteScreen({ navigation }) {
           <Text style={styles.titulo}>Atividades Realizadas</Text>
           <CircularProgress
             radius={90}
-            value={90}
+            value={value}
             textColor="#222"
             valueSuffix={"%"}
             activeStrokeColor="#53A7D7"
             inActiveStrokeColor={"gray"}
             inActiveStrokeOpacity={0.2}
             duration={3000}
-            onAnimationComplete={() => setValue(50)}
           />
         </View>
         <View style={styles.card}>

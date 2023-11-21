@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
@@ -32,6 +32,17 @@ const InicioPage = ({ navigation }) => {
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState("");
 
+  let startDate = moment();
+  const [meetings, setMeetings] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(moment(startDate, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+
+  let currentMetting = [];
+  for (let i = 0; i < meetings.length; i++) {
+    if (meetings[i].date === selectedDay) {
+      currentMetting.push(meetings[i]);
+    }
+  }
+
   useEffect(() => {
     async function recuperarId() {
       const value = await AsyncStorage_ID.getItem("IdPsicologo");
@@ -39,10 +50,12 @@ const InicioPage = ({ navigation }) => {
     }
     recuperarId();
     getInformacoesBD();
+    getConsultasBD();
   }, [nome]);
 
   async function getInformacoesBD() {
-    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
@@ -77,7 +90,56 @@ const InicioPage = ({ navigation }) => {
     setLoading(false);
   }
 
-  let startDate = moment();
+  async function getConsultasBD() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/GetConsultas.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setMeetings([]);
+        for (var i = 0; i < responseJson.consultas.length; i++) {
+          setMeetings((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                // componentes da tabela
+                id: responseJson.consultas[i].IdConsulta,
+                date: responseJson.consultas[i].Data,
+                time: responseJson.consultas[i].Horario,
+                name: responseJson.consultas[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
 
   return (
     <TabContainer>
@@ -115,26 +177,43 @@ const InicioPage = ({ navigation }) => {
                 highlightDateNameStyle={{ color: "white" }}
                 dayContainerStyle={{ gap: 3 }}
                 selectedDate={startDate}
-              />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  backgroundColor: "#EAEEEF",
-                  paddingHorizontal: 15,
-                  paddingVertical: 10,
-                  borderRadius: 5,
-                  width: 300,
+                onDateSelected={(day) => {
+                  setSelectedDay(moment(day, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+                  console.log(selectedDay)
                 }}
-              >
-                <View style={{ flexDirection: "row", gap: 6 }}>
-                  <Image
-                    source={require("../../../../assets/icons/VectorAzul.png")}
-                  />
-                  <Text style={styles.text}>Rui Barbosa</Text>
-                </View>
-                <Text style={styles.text}>21h40 - 23h40</Text>
-              </View>
+              />
+
+              {currentMetting.length > 0 ? (
+                currentMetting.map((mettings, i) => {
+                  return (
+                    <View key={i} style={{ gap: 10 }}>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            backgroundColor: "#EAEEEF",
+                            paddingHorizontal: 15,
+                            paddingVertical: 10,
+                            borderRadius: 5,
+                            width: 300,
+                          }}
+                        >
+                          <View style={{ flexDirection: "row", gap: 6 }}>
+                          <Image
+                            source={require("../../../../assets/icons/VectorAzul.png")}
+                          />
+                          <Text style={styles.text}>{mettings.name}</Text>
+                          </View>
+                          <Text style={styles.text}> {mettings.time}</Text>
+                        </View>
+                    </View>
+                  );
+                })
+              ) : (
+                <Text style={{ textAlign: "center" }}>
+                  Não há sessões agendadas hoje.
+                </Text>
+              )}
             </View>
           </View>
 

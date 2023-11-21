@@ -42,12 +42,12 @@ CREATE TABLE Atividades (
     TituloAtividade VARCHAR(50),
     InstrucoesAtividade VARCHAR(240),
     EntregaAtividade DATE,
+    Status VARCHAR(20),
     IdPsicologo INT NOT NULL,
     FOREIGN KEY (IdPsicologo) REFERENCES Psicologos (IdPsicologo), -- Chave estrangeira do psicologo
     IdPaciente INT NOT NULL,
     FOREIGN KEY (IdPaciente) REFERENCES Pacientes (IdPaciente) -- Chave estrangeira do paciente
 );
-
 -- CRIANDO A TABELA REGISTROS (Registro de emoções)
 CREATE TABLE Registros (
 	IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
@@ -137,7 +137,17 @@ VALUES
     (1,  '2023-11-25', 'Tive ataques de pânico constantes', 1, 1), -- Registro do Oliver do sentimento HORRIVEL, paciente do Teste
     (4,  '2023-11-29', 'Briguei com meus familiares', 1, 1), -- Registro do Oliver do sentimento BEM, paciente do Teste
     (5,  '2023-11-23', 'Passei o dia com minha namorada', 1, 1), -- Registro do Oliver do sentimento FELIZ, paciente do Teste
-    (5,  '2023-10-12', 'Passei o dia com minha namorada', 1, 2); -- Registro da Amelie do sentimento FELIZ, paciente do Teste
+    (5,  '2023-10-12', 'Passei o dia com minha namorada', 1, 2), -- Registro da Amelie do sentimento FELIZ, paciente do Teste
+	(4,  '2023-11-12', 'Fui ao cinema com amigos', 1, 2), -- Registro da Amelie do sentimento BEM, paciente do Teste
+    (2,  '2023-11-21', 'Vi a nota do ENEM', 1, 2); -- Registro da Amelie do sentimento MAL, paciente do Teste
 
-Drop table Registros;
-SELECT Registro FROM Registros WHERE YEAR(Data) = 2023 AND MONTH(Data) = 11 AND IdPaciente = 1;
+INSERT INTO Atividades (
+    TituloAtividade,
+    EntregaAtividade,
+    InstrucoesAtividade,
+    Status,
+    IdPsicologo,
+    IdPaciente
+)
+VALUES 
+    ('Roda da Vida', '2023-11-02', 'Escolha uma pontuação para cada um dos aspectos traçados de acordo com o grau de satisfação que sente em relação a ele. A pontuação varia entre o número 1 e 10, sendo 10 a pontuação máxima. Quanto mais baixa for a pontuação, mais se aproxima do centro e, quanto mais elevada, mais próxima da margem', 'Feita', 1, 1);
