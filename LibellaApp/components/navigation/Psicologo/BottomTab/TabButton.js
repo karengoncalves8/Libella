@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,20 +9,136 @@ import {
   Modal,
   TextInput,
   Pressable,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 
-import Dropdown from 'react-native-input-select';
+import SelectDropdown from "react-native-select-dropdown";
 
 import AntIcon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
+
+import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // instalar
 
 const TabButton = ({ toggleOpened, opened }) => {
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    async function recuperarId() {
+      const value = await AsyncStorage_ID.getItem('IdPsicologo')
+      setId(value)
+    }
+    recuperarId()
+    getInformacoesBD()
+  }, [id]);
+
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
+
+  const [pacientes, setPacientes] = useState([]);
+
+  async function getInformacoesBD() {
+    setLoading(true);
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setPacientes([]);
+        for (var i = 0; i < responseJson.paciente.length; i++) {
+          setPacientes((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                NomePaciente: responseJson.paciente[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+
+      });
+    setLoading(false);
+  }
+
+  async function agendar() {
+    if (paciente == "" || dataEvento == "" || timeEvento == "" ) {
+      alert("Erro: Preencha todos os campos!")
+    }
+    else {
+      var url = 'https://libellatcc.000webhostapp.com/Funcionalidades/AgendarSessao.php';
+      var wasServerTimeout = false;
+      var timeout = setTimeout(() => {
+        wasServerTimeout = true;
+        alert('Tempo de espera para busca de informações excedido');
+      }, timeOut);
+
+      const resposta = await fetch(url, {
+        method: 'POST', //tipo de requisição
+        body: JSON.stringify({ 
+          Data: dataEvento, 
+          Horario: timeEvento,
+          IdPsicologo: id,
+          NomePaciente: paciente
+         }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            return response.json();
+          }
+        })
+        .then((responseJson) => {
+          var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
+          if (mensagem == '"Informações inseridas com sucesso"') {
+            Alert.alert("Agendado!", "Sessão agendada com sucesso!");
+            setModalVisible(false)
+          }
+          else {
+            // Aviso de Erro dados inseridos incorretos
+            Alert.alert("Erro!", "Revise os dados inseridos!");
+          }
+        })
+        //se ocorrer erro na requisição ou conversão
+        .catch((error) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          }
+        });
+    }
+  }
   const navigation = useNavigation();
   const animation = React.useRef(new Animated.Value(0)).current;
 
@@ -33,8 +149,8 @@ const TabButton = ({ toggleOpened, opened }) => {
   //Date Picker
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const [showTimePicker, setShowTimePicker] = useState(false)
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
@@ -43,7 +159,6 @@ const TabButton = ({ toggleOpened, opened }) => {
   const toggleTimePicker = () => {
     setShowTimePicker(!showTimePicker);
   };
-
 
   const onChangeDate = ({ type }, selectedDate) => {
     if (type == "set") {
@@ -54,8 +169,7 @@ const TabButton = ({ toggleOpened, opened }) => {
         toggleDatePicker();
         setDateEvento(formatDate(currentDate));
       }
-    }
-    else {
+    } else {
       toggleDatePicker();
     }
   };
@@ -69,8 +183,7 @@ const TabButton = ({ toggleOpened, opened }) => {
         toggleTimePicker();
         setTimeEvento(formatTime(currentDate));
       }
-    }
-    else {
+    } else {
       toggleTimePicker();
     }
   };
@@ -82,7 +195,7 @@ const TabButton = ({ toggleOpened, opened }) => {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    return `${day}/${month}/${year}`;
+    return `${year}-${month}-${day}`;
   };
 
   const formatTime = (rawDate) => {
@@ -95,8 +208,8 @@ const TabButton = ({ toggleOpened, opened }) => {
   };
 
   // Text Input
-  const [dataEvento, setDateEvento] = useState()
-  const [timeEvento, setTimeEvento] = useState()
+  const [dataEvento, setDateEvento] = useState();
+  const [timeEvento, setTimeEvento] = useState();
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -121,75 +234,93 @@ const TabButton = ({ toggleOpened, opened }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 80 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "100%",
+                gap: 80,
+              }}
+            >
               <TouchableWithoutFeedback
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => setModalVisible(!modalVisible)}
+              >
                 <AntIcon name="close" size={25} color={"black"} />
               </TouchableWithoutFeedback>
-              <Text style={{ fontFamily: 'Poppins_500Medium' }}>Agendar Sessão</Text>
+              <Text style={{ fontFamily: "Poppins_500Medium" }}>
+                Agendar Sessão
+              </Text>
             </View>
-            <Dropdown
-              label="Paciente"
-              placeholder="Selecione o paciente"
-              options={[
-                { label: 'Paciente1', value: 'P1' },
-                { label: 'Paciente2', value: 'P2' },
-              ]}
-              selectedValue={paciente}
-              onValueChange={(value) => setPaciente(value)}
-              primaryColor={'#53A7D7'}
-              dropdownStyle={{
-                borderWidth: 0.5,
-                borderRadius: 80,
-                backgroundColor: 'white'
-              }}
-              placeholderStyle={{
-                color: '#313131',
-                fontSize: 15,
-                opacity: 0.3
-              }}
-              labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Poppins_300Light', paddingTop: 10 }}
-              checkboxComponentStyles={{
-                checkboxSize: 5,
-                checkboxStyle: {
-                  backgroundColor: '#53A7D7',
-                  borderRadius: 10,
-                  padding: 10,
-                  borderColor: '#313131',
-                  borderWidth: 0.5,
-                },
-                checkboxLabelStyle: { color: 'black', fontSize: 20, fontFamily: 'Poppins_300Light' },
-              }}
-              dropdownIcon={
-                <MaterialIcon name="arrow-drop-down" size={35} color={"black"} style={{ opacity: 0.3 }} />
-              }
-              dropdownIconStyle={{ top: 13, right: 20 }}
-            />
+            <View style={{ gap: 1 }}>
+              <Text style={styles.inputText}> Paciente </Text>
+              <SelectDropdown
+                data={pacientes}
+                onSelect={(selectedItem, index) => {
+                  setPaciente(selectedItem.NomePaciente)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem.NomePaciente;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item.NomePaciente;
+                }}
+                buttonStyle={styles.dropdownBtnStyle}
+                buttonTextStyle={styles.dropdownBtnTxtStyle}
+                renderDropdownIcon={isOpened => {
+                  return <FontAwesomeIcon name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+                }}
+                dropdownIconPosition={'right'}
+                dropdownStyle={styles.dropdownStyle}
+                rowStyle={styles.dropdownRowStyle}
+                rowTextStyle={styles.dropdownRowTxtStyle}
+                selectedRowTextStyle={styles.selectedRowTextStyle}
+                defaultButtonText={'Selecione o Paciente'}
 
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%', marginTop: -20}}>
-
-              <View style={{gap: 5}}>
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: -10,
+              }}
+            >
+              <View style={{ gap: 1 }}>
                 <Text style={styles.inputText}> Data </Text>
                 {!showDatePicker && (
-                  <Pressable
-                    onPress={toggleDatePicker}>
+                  <Pressable onPress={toggleDatePicker}>
                     <TextInput
-                       style={[styles.input, {textAlign: 'center', paddingLeft: 35,}]}
+                      style={[
+                        styles.input,
+                        { textAlign: "center", paddingLeft: 35 },
+                      ]}
                       placeholder="18/08/2008"
                       value={dataEvento}
                       onChange={setDateEvento}
                       editable={false}
                     />
-                    <AntIcon name="calendar" size={20} color={'gray'} style={{position: "absolute", top: 9, left: 14, opacity: 0.6}}/>
+                    <AntIcon
+                      name="calendar"
+                      size={20}
+                      color={"gray"}
+                      style={{
+                        position: "absolute",
+                        top: 9,
+                        left: 14,
+                        opacity: 0.6,
+                      }}
+                    />
                   </Pressable>
-                  
                 )}
                 {showDatePicker && (
                   <DateTimePicker
@@ -200,12 +331,11 @@ const TabButton = ({ toggleOpened, opened }) => {
                   />
                 )}
               </View>
-              
-              <View style={{gap: 5}}>
+
+              <View style={{ gap: 1 }}>
                 <Text style={styles.inputText}> Horário </Text>
                 {!showTimePicker && (
-                  <Pressable
-                    onPress={toggleTimePicker}>
+                  <Pressable onPress={toggleTimePicker}>
                     <TextInput
                       style={styles.input}
                       placeholder="18:00"
@@ -226,8 +356,16 @@ const TabButton = ({ toggleOpened, opened }) => {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.button}>
-                <Text style={{color: 'white', fontSize: 14, fontFamily: 'Poppins_400Regular'}}> Agendar </Text>
+            <TouchableOpacity style={styles.button} onPress={() => agendar()}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "Poppins_400Regular",
+                }}
+              >
+                Agendar
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -235,7 +373,8 @@ const TabButton = ({ toggleOpened, opened }) => {
       <View style={styles.box}>
         {/*cadastrar pacientes*/}
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('CadastroPaciente')}>
+          onPress={() => navigation.navigate("CadastroPaciente")}
+        >
           <Animated.View
             style={[
               styles.item,
@@ -259,11 +398,12 @@ const TabButton = ({ toggleOpened, opened }) => {
             ]}
           >
             <AntIcon name="adduser" size={25} color={"white"} />
-
           </Animated.View>
         </TouchableWithoutFeedback>
         {/*atribuir atividade*/}
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('AtribuirAtividade')}>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("AtribuirAtividade")}
+        >
           <Animated.View
             style={[
               styles.item,
@@ -379,19 +519,19 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 25,
     width: 350,
-    alignItems: 'center',
+    alignItems: "center",
     gap: 25,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -401,25 +541,39 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   input: {
-    borderWidth: 0.5,
     borderRadius: 30,
     paddingHorizontal: 15,
     paddingVertical: 5,
-    backgroundColor: 'white',
-    color: 'black', 
-    textAlign: 'center'
+    backgroundColor: "white",
+    borderColor: '#444',
+    borderWidth: 1,
+    color: "black",
+    textAlign: "center",
   },
   inputText: {
-    color: 'black', 
-    fontSize: 15, 
-    fontFamily: 'Poppins_300Light', 
+    color: "black",
+    fontSize: 15,
+    fontFamily: "Poppins_300Light",
   },
   button: {
     paddingHorizontal: 30,
-    paddingVertical: 9, 
-    backgroundColor: '#6D45C2',
+    paddingVertical: 9,
+    backgroundColor: "#6D45C2",
     borderRadius: 10,
-    alignSelf: 'center'
-  }
+    alignSelf: "center",
+  },
+  dropdownBtnStyle: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#FFF',
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: '#444',
+  },
+  dropdownBtnTxtStyle: { color: '#313131', textAlign: 'left' },
+  dropdownStyle: { backgroundColor: '#EFEFEF' },
+  dropdownRowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' },
+  dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
+  selectedRowTextStyle: {color: '#53A7D7'}
 });
 export default TabButton;

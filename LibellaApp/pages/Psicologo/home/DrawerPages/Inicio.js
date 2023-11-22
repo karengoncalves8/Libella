@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
@@ -18,6 +19,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import TabContainer from "../../../../components/navigation/Psicologo/BottomTab/TabContainer";
 
 import AsyncStorage_ID from "@react-native-async-storage/async-storage";
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
 import "moment/locale/pt-br";
 
@@ -26,11 +28,29 @@ moment.locale("pt-br");
 const InicioPage = ({ navigation }) => {
   const [idPsicologo, setIdPsicologo] = useState(0);
   const [nome, setNome] = useState("");
+  const [resposta, setResposta] = useState('');
+
+  const [listaInfo, setListaInfo] = useState([]);
+
+  async function save(key, value) {
+    AsyncStorage_Paciente.setItem(key, value)
+  }
 
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
   const [msg, setMsg] = useState("");
+
+  let startDate = moment();
+  const [meetings, setMeetings] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(moment(startDate, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+
+  let currentMetting = [];
+  for (let i = 0; i < meetings.length; i++) {
+    if (meetings[i].date === selectedDay) {
+      currentMetting.push(meetings[i]);
+    }
+  }
 
   useEffect(() => {
     async function recuperarId() {
@@ -39,10 +59,13 @@ const InicioPage = ({ navigation }) => {
     }
     recuperarId();
     getInformacoesBD();
+    getConsultasBD();
+    getPacientesBD();
   }, [nome]);
 
   async function getInformacoesBD() {
-    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
@@ -77,7 +100,111 @@ const InicioPage = ({ navigation }) => {
     setLoading(false);
   }
 
-  let startDate = moment();
+  async function getConsultasBD() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/GetConsultas.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setMeetings([]);
+        for (var i = 0; i < responseJson.consultas.length; i++) {
+          setMeetings((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                // componentes da tabela
+                id: responseJson.consultas[i].IdConsulta,
+                date: responseJson.consultas[i].Data,
+                time: responseJson.consultas[i].Horario,
+                name: responseJson.consultas[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
+
+  async function getPacientesBD() {
+    setLoading(true)
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setResposta(responseJson.paciente[0].resposta);
+        setListaInfo([]);
+        for (var i = 0; i < responseJson.paciente.length; i++) {
+          setListaInfo((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                nome: responseJson.paciente[i].NomePaciente,
+                id: responseJson.paciente[i].IdPaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        //  alert('erro'+error)
+      });
+    setLoading(false)
+  }
+
+  function clickItemFlatList(item) {
+    save("PacienteSelected", item.id)
+    navigation.navigate('PerfilPaciente')
+  }
 
   return (
     <TabContainer>
@@ -115,26 +242,42 @@ const InicioPage = ({ navigation }) => {
                 highlightDateNameStyle={{ color: "white" }}
                 dayContainerStyle={{ gap: 3 }}
                 selectedDate={startDate}
-              />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  backgroundColor: "#EAEEEF",
-                  paddingHorizontal: 15,
-                  paddingVertical: 10,
-                  borderRadius: 5,
-                  width: 300,
+                onDateSelected={(day) => {
+                  setSelectedDay(moment(day, 'MM-DD-YYYY').format('YYYY-MM-DD'));
                 }}
-              >
-                <View style={{ flexDirection: "row", gap: 6 }}>
-                  <Image
-                    source={require("../../../../assets/icons/VectorAzul.png")}
-                  />
-                  <Text style={styles.text}>Rui Barbosa</Text>
-                </View>
-                <Text style={styles.text}>21h40 - 23h40</Text>
-              </View>
+              />
+
+              {currentMetting.length > 0 ? (
+                currentMetting.map((mettings, i) => {
+                  return (
+                    <View key={i} style={{ gap: 10 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          backgroundColor: "#EAEEEF",
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          borderRadius: 5,
+                          width: 300,
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", gap: 6 }}>
+                          <Image
+                            source={require("../../../../assets/icons/VectorAzul.png")}
+                          />
+                          <Text style={styles.text}>{mettings.name}</Text>
+                        </View>
+                        <Text style={styles.text}> {mettings.time}</Text>
+                      </View>
+                    </View>
+                  );
+                })
+              ) : (
+                <Text style={{ textAlign: "center" }}>
+                  Não há sessões agendadas hoje.
+                </Text>
+              )}
             </View>
           </View>
 
@@ -144,49 +287,38 @@ const InicioPage = ({ navigation }) => {
               <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
             </View>
             <View style={styles.card}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("PerfilPaciente")}
-                style={styles.paciente}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 15,
-                  }}
-                >
-                  <Image
-                    style={styles.imgIcon}
-                    source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
-                  />
-                  <Text style={styles.text}>Andreia Ramos</Text>
-                </View>
-                <EntypoIcon
-                  name="chevron-thin-right"
-                  size={22}
-                  color={"black"}
+              {resposta == 'informação recebida' ? (
+                <FlatList
+                  data={listaInfo}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() => clickItemFlatList(item)}
+                      style={styles.paciente}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 15,
+                        }}
+                      >
+                        <Image
+                          style={styles.imgIcon}
+                          source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
+                        />
+                        <Text style={styles.text}>{item.nome}</Text>
+                      </View>
+                      <EntypoIcon
+                        name="chevron-thin-right"
+                        size={22}
+                        color={"black"}
+                      />
+                    </TouchableOpacity>
+                  )}
                 />
-              </TouchableOpacity>
-              <View style={styles.paciente}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 15,
-                  }}
-                >
-                  <Image
-                    style={styles.imgIcon}
-                    source={require("../../../../assets/img/Pessoas/Rui.jpg")}
-                  />
-                  <Text style={styles.text}>Rui Barbosa</Text>
-                </View>
-                <EntypoIcon
-                  name="chevron-thin-right"
-                  size={22}
-                  color={"black"}
-                />
-              </View>
+              ) : (
+                <Text style={styles.text}>Sem Pacientes!</Text>
+              )}
             </View>
           </View>
         </View>

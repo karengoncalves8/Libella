@@ -1,41 +1,87 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
+  Alert,
 } from "react-native";
 
 import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
+
+import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // instalar
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
 import { format,  } from "date-fns";
 
-const meetings = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    date: "2023-10-24",
-    time: "13:00",
-  },
-  {
-    id: 3,
-    name: "Antoni",
-    date: "2023-08-05",
-    time: "13:00",
-  },
-  {
-    id: 2,
-    name: "Alo",
-    date: "2023-08-25",
-    time: "13:00",
-  },
-];
-
-
-
 const AgendaPage = () => {
+  const [id, setId] = useState('');
+
+  const [meetings, setMeetings] = useState([]);
+
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function recuperarId() {
+        const value = await AsyncStorage_ID.getItem('IdPsicologo')
+        setId(value)
+    }
+    recuperarId()
+    getInformacoesBD()
+}, [id]);
+
+async function getInformacoesBD() {
+  setLoading(true);
+  var url = 'https://libellatcc.000webhostapp.com/getInformacoes/GetConsultas.php';
+  var wasServerTimeout = false;
+  var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      alert('Tempo de espera para busca de informações excedido');
+  }, timeOut);
+
+  const resposta = fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: id }),
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+      .then((response) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+              return response.json();
+          }
+      })
+      .then((responseJson) => {
+        setMeetings([]);
+        for (var i = 0; i < responseJson.consultas.length; i++) { 
+          setMeetings((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                // componentes da tabela 
+                id: responseJson.consultas[i].IdConsulta,
+                date: responseJson.consultas[i].Data,
+                time: responseJson.consultas[i].Horario,
+                name: responseJson.consultas[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+              Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          }
+
+      });
+  setLoading(false);
+}
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   const [selected, setSelected] = useState(currentDate);

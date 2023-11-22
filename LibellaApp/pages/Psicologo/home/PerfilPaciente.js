@@ -30,6 +30,11 @@ function PerfilPacienteScreen({ navigation }) {
   const [idPaciente, setIdPaciente] = useState("");
   const [nome, setNome] = useState("");
 
+  const dataAtual = new Date();
+  const ano = dataAtual.getFullYear();
+  const mes = dataAtual.getMonth() + 1;
+  const [registros, setRegistros] = useState([]);
+
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
   const [acess, setAcess] = useState(false);
@@ -42,6 +47,8 @@ function PerfilPacienteScreen({ navigation }) {
     }
     recuperarId();
     getInformacoesBD();
+    getGraficoEmInfo();
+    getGraficoAtvInfo();
   }, [idPaciente]);
 
   async function getInformacoesBD() {
@@ -57,7 +64,9 @@ function PerfilPacienteScreen({ navigation }) {
 
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ IdPaciente: idPaciente }),
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -78,6 +87,91 @@ function PerfilPacienteScreen({ navigation }) {
           //Error logic here
         }
         //  alert('erro'+error)
+      });
+    setLoading(false);
+  }
+
+  async function getGraficoEmInfo() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/Funcionalidades/GraficoEm.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente,
+        Ano: ano,
+        Mes: mes
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        const registrosInt = responseJson.Registros.map(value => {
+          return value !== null ? parseInt(value, 10) : null;
+        });
+        setRegistros(registrosInt);
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        console.log(error)
+      });
+    setLoading(false);
+  }
+
+  async function getGraficoAtvInfo() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/Funcionalidades/GraficoAtv.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ 
+        IdPaciente: idPaciente,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setValue(responseJson.Porcentagem)
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        console.log(error)
       });
     setLoading(false);
   }
@@ -115,7 +209,7 @@ function PerfilPacienteScreen({ navigation }) {
               labels: [1, 5, 9, 13, 17, 21, 25, 29],
               datasets: [
                 {
-                  data: [2, 4, 3, 1, 5, 3, 1, 4],
+                  data: registros,
                 },
               ],
             }}
@@ -184,14 +278,13 @@ function PerfilPacienteScreen({ navigation }) {
           <Text style={styles.titulo}>Atividades Realizadas</Text>
           <CircularProgress
             radius={90}
-            value={90}
+            value={value}
             textColor="#222"
             valueSuffix={"%"}
             activeStrokeColor="#53A7D7"
             inActiveStrokeColor={"gray"}
             inActiveStrokeOpacity={0.2}
             duration={3000}
-            onAnimationComplete={() => setValue(50)}
           />
         </View>
         <View style={styles.card}>

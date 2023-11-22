@@ -18,6 +18,7 @@ function Perfil() {
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
     const [email, setEmail] = useState('');
+    const [imagem, setImagem] = useState('');
 
     const [timeOut, setTimeOut] = useState(10000);
     const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ function Perfil() {
     }, [id]);
     async function getInformacoesBD() {
         setLoading(true);
-        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBD.php';
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php';
         var wasServerTimeout = false;
         var timeout = setTimeout(() => {
             wasServerTimeout = true;
