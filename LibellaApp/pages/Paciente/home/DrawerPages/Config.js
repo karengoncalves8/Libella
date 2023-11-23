@@ -69,26 +69,6 @@ const ConfigScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.containerTitleBloco}>
-                    <FeatherIcon name='message-circle' size={23} color={'black'} style={styles.icon} />
-                    <Text style={styles.TitlePrincipal}>Chat</Text>
-                </View>
-
-                <View style={styles.containerConfigBloco}>
-                    <View style={styles.containerInfosBloco}>
-                        <Text style={styles.text}>Confirmação de leitura</Text>
-                        <View style={styles.containerSwitch}>
-                            <Switch
-                                trackColor={{ false: '#767577', true: '#acd5ec' }}
-                                thumbColor={isEnabled ? '#53a7d7' : '#cacaca'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
-                            />
-                        </View>
-                    </View>
-                </View>
-
-                <View style={styles.containerTitleBloco}>
                     <FeatherIcon name='users' size={23} color={'black'} style={styles.icon} />
                     <Text style={styles.TitlePrincipal}>Psicólogo(a)</Text>
                 </View>

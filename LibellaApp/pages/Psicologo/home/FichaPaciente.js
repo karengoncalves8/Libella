@@ -18,6 +18,7 @@ const FichaPacienteScreen = ({ navigation }) => {
     const [escolaridade, setEscolaridade] = useState('');
     const [ocupacao, setOcupacao] = useState('');
     const [sintomas, setSintomas] = useState('');
+    const [comando, setComando] = useState('Procurar por Id Paciente')
 
 
     const [timeOut, setTimeOut] = useState(10000);
@@ -36,7 +37,7 @@ const FichaPacienteScreen = ({ navigation }) => {
 
     async function getInformacoesBD() {
         setLoading(true)
-        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes2.php';
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php';
         var wasServerTimeout = false;
         var timeout = setTimeout(() => {
             wasServerTimeout = true;
@@ -46,7 +47,7 @@ const FichaPacienteScreen = ({ navigation }) => {
 
         const resposta = await fetch(url, {
             method: 'POST', //tipo de requisição
-            body: JSON.stringify({ IdPaciente: idPaciente }),
+            body: JSON.stringify({ IdPaciente: idPaciente, Comando: comando }),
             headers: {
                 'Content-Type': 'application/json',
             },

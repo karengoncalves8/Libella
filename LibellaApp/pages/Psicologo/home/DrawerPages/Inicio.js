@@ -29,6 +29,7 @@ const InicioPage = ({ navigation }) => {
   const [idPsicologo, setIdPsicologo] = useState(0);
   const [nome, setNome] = useState("");
   const [resposta, setResposta] = useState('');
+  const [comando, setComando] = useState('Procurar por Id Psicologo');
 
   const [listaInfo, setListaInfo] = useState([]);
 
@@ -65,7 +66,7 @@ const InicioPage = ({ navigation }) => {
 
   async function getInformacoesBD() {
     var url =
-      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php";
+      "https://libellatcc.000webhostapp.com/getInformacoes/getPsicologos.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
@@ -94,7 +95,7 @@ const InicioPage = ({ navigation }) => {
       .catch((error) => {
         timeout && clearTimeout(timeout);
         if (!wasServerTimeout) {
-          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
         }
       });
     setLoading(false);
@@ -107,7 +108,7 @@ const InicioPage = ({ navigation }) => {
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
-      alert("Tempo de espera para busca de informações excedido");
+      // alert("Tempo de espera para busca de informações excedido");
     }, timeOut);
 
     const resposta = fetch(url, {
@@ -145,7 +146,7 @@ const InicioPage = ({ navigation }) => {
       .catch((error) => {
         timeout && clearTimeout(timeout);
         if (!wasServerTimeout) {
-          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
         }
       });
     setLoading(false);
@@ -153,17 +154,17 @@ const InicioPage = ({ navigation }) => {
 
   async function getPacientesBD() {
     setLoading(true)
-    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php';
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
       setLoading(false);
-      alert('Tempo de espera para busca de informações excedido');
+      // alert('Tempo de espera para busca de informações excedido');
     }, timeOut);
 
     const resposta = await fetch(url, {
       method: 'POST', //tipo de requisição
-      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      body: JSON.stringify({ IdPsicologo: idPsicologo, Comando: comando }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -286,7 +287,7 @@ const InicioPage = ({ navigation }) => {
               <Text style={styles.subTitulo}>PACIENTES</Text>
               <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
             </View>
-            <View style={styles.card}>
+            <View style={styles.cardpacientes}>
               {resposta == 'informação recebida' ? (
                 <FlatList
                   data={listaInfo}
@@ -338,12 +339,25 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     justifyContent: "space-around",
   },
+
   card: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     padding: 25,
+    borderRadius: 10,
+    gap: 30,
+    shadowColor: "gray",
+    elevation: 5,
+  },
+
+  cardpacientes: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 5,
     borderRadius: 10,
     gap: 30,
     shadowColor: "gray",
@@ -357,8 +371,10 @@ const styles = StyleSheet.create({
   paciente: {
     flexDirection: "row",
     width: 280,
+    height: 70,
     justifyContent: "space-between",
     alignItems: "center",
+    gap: 10,
   },
   imgIcon: {
     width: 45,

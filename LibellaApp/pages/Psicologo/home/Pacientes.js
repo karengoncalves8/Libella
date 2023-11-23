@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -17,6 +16,7 @@ import {
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
+
 // async storage
 import AsyncStorage_ID from '@react-native-async-storage/async-storage';
 import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
@@ -25,6 +25,7 @@ function PacientesPage({ navigation }) {
   const [id, setId] = useState('');
   const [idPsicologo, setIdPsicologo] = useState(0);
   const [resposta, setResposta] = useState('');
+  const [comando, setComando] = useState('Procurar por Id Psicologo');
 
   const [listaInfo, setListaInfo] = useState([]);
 
@@ -35,6 +36,7 @@ function PacientesPage({ navigation }) {
   async function save(key, value) {
     AsyncStorage_Paciente.setItem(key, value)
   }
+  
   useEffect(() => {
     async function recuperarId() {
       const value = await AsyncStorage_ID.getItem('IdPsicologo')
@@ -42,20 +44,20 @@ function PacientesPage({ navigation }) {
     }
     recuperarId()
     getInformacoesBD()
-  }, [idPsicologo]);
+  }, [idPsicologo]); 
   async function getInformacoesBD() {
     setLoading(true)
-    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php';
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
       setLoading(false);
-      alert('Tempo de espera para busca de informações excedido');
+      // alert('Tempo de espera para busca de informações excedido');
     }, timeOut);
 
     const resposta = await fetch(url, {
       method: 'POST', //tipo de requisição
-      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      body: JSON.stringify({ IdPsicologo: idPsicologo, Comando: comando }),
       headers: {
         'Content-Type': 'application/json',
       },

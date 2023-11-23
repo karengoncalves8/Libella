@@ -122,6 +122,12 @@ function AtividadesScreen({ navigation }) {
         ) : (
           <View style={styles.containerMsg}>
             <Text style={styles.msg}>Nenhuma atividade atribuida a este paciente</Text>
+            <View style={styles.containerImg}>
+              <Image
+                style={styles.img}
+                source={require("../../../assets/img/Home/NoAtividade.png")}
+              />
+            </View>
             <TouchableOpacity onPress={() => getInformacoesBD()}>
               <Text style={styles.textButton}>Recarregar</Text>
             </TouchableOpacity>

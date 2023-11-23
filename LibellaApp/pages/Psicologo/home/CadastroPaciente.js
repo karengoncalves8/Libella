@@ -56,7 +56,6 @@ const CadastroPacScreen = ({ navigation }) => {
     setIdPsicologo(value)
   }
   resgatarId('IdPsicologo')
-
   async function cadastrar() {
     if (nome == "" || telefone == "" || cpf == "" || rg == "" || escolaridade == "" || ocupacao == "" || sintomas == "" || endereco == "" || email == "" || senha == "" || cidade == "" || estado == "") {
       alert("Erro: Preencha todos os campos!")

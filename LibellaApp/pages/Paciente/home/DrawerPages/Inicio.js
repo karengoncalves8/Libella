@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
@@ -16,11 +18,66 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import TabContainer from "../../../../components/navigation/Paciente/BottomTab/TabContainer";
 import { useAuth } from "../../../../components/navigation/Stack/AuthContext";
 import 'moment/locale/pt-br';
+import { id } from "date-fns/locale";
+
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
 moment.locale('pt-br');
 
-const InicioScreen = (navigation) => {
-  const { user } = useAuth();
+const InicioScreen = ({navigation}) => {
+  const [idPaciente, setIdPaciente] = useState(0);
+  const [nome, setNome] = useState("");
+
+  const [timeOut, setTimeOut] = useState(10000);
+  const [loading, setLoading] = useState(false);
+  const [acess, setAcess] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [comando, setComando] = useState('Procurar por Id Paciente');
+
+  useEffect(() => {
+    async function recuperarIdPaciente() {
+      const value = await AsyncStorage_Paciente.getItem("IdPaciente");
+      setIdPaciente(value);
+    }
+    recuperarIdPaciente();
+    getInformacoesBD();
+  }, [nome, idPaciente]);
+  async function getInformacoesBD() {
+    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      // alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPaciente: idPaciente, Comando: comando }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        // Recolhendo as informações do banco de dados e salvando nas váriaveis
+        setNome(responseJson.paciente[0].NomePaciente);
+        setLoading(false);
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
+
   let startDate = moment();
 
   return (
@@ -28,7 +85,7 @@ const InicioScreen = (navigation) => {
       <View style={styles.container}>
         <StatusBar backgroundColor={"white"} style="auto" />
 
-        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {user.email}</Text>
+        <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {nome}</Text>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>

@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, ScrollView, Alert, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, Alert, ActivityIndicator, Touchable, TouchableOpacity } from "react-native";
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import AntIcon from "react-native-vector-icons/AntDesign";
 
-import AsyncStorage_ID from '@react-native-async-storage/async-storage'; // instalar
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
 
-function Perfil() {
+function Perfil({ navigation }) {
     const [id, setId] = useState('');
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
     const [cpf, setCpf] = useState('');
-    const [rg, setRg] = useState('');       
+    const [rg, setRg] = useState('');
     const [crp, setCrp] = useState('');
     const [endereco, setEndereco] = useState('');
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
     const [email, setEmail] = useState('');
-    const [imagem, setImagem] = useState('');
+    const [comando, setComando] = useState('Procurar por Id Psicologo');
+
 
     const [timeOut, setTimeOut] = useState(10000);
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ function Perfil() {
     }, [id]);
     async function getInformacoesBD() {
         setLoading(true);
-        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPsicologos.php';
+        var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPsicologos.php';
         var wasServerTimeout = false;
         var timeout = setTimeout(() => {
             wasServerTimeout = true;
@@ -44,7 +45,7 @@ function Perfil() {
 
         const resposta = fetch(url, {
             method: 'POST', //tipo de requisição
-            body: JSON.stringify({ IdPsicologo: id }),
+            body: JSON.stringify({ IdPsicologo: id, Comando: comando }),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -104,12 +105,14 @@ function Perfil() {
                             </View>
                             <View style={styles.containerName}>
                                 <Text style={styles.name}>{nome}</Text>{/*Nome do Psicologo*/}
+                                <TouchableOpacity onPress={() => navigation.navigate('AlterarDados')}>
                                 <FeatherIcon
                                     name="edit"
                                     size={20}
                                     color={"black"}
                                     style={styles.icon}
                                 />
+                                </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.containerInfos}>

@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient'; /* instalar */
 import { useAuth } from "../../../components/navigation/Stack/AuthContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
 const LoginPCScreen = ({ navigation }) => {
   const { login } = useAuth();
@@ -14,6 +15,7 @@ const LoginPCScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [id, setId] = useState(0);
 
   const [timeOut, setTimeOut] = useState(10500);
   const [loading, setLoading] = useState(false);
@@ -22,19 +24,21 @@ const LoginPCScreen = ({ navigation }) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const SalvarIdPaciente = (key, value) => {
+    AsyncStorage_Paciente.setItem(key, value)
+  }
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   async function auth() {
-    
     if (email == "" || senha == "") {
       alert("Erro: Preencha todos os campos!")
     }
 
     else {
-      
-      var url = 'https://libellatcc.000webhostapp.com/Login/LoginPsicologo.php';
+      var url = 'https://libellatcc.000webhostapp.com/Login/LoginPaciente.php';
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
         wasServerTimeout = true;
@@ -43,12 +47,11 @@ const LoginPCScreen = ({ navigation }) => {
 
       const resposta = await fetch(url, {
         method: 'POST', //tipo de requisição
-        body: JSON.stringify({ EmailPsicologo: email, SenhaPsicologo: senha }),
+        body: JSON.stringify({ EmailPaciente: email, SenhaPaciente: senha }),
         headers: {
           'Content-Type': 'application/json',
         },
       })
-
         .then((response) => {
           timeout && clearTimeout(timeout);
           if (!wasServerTimeout) {
@@ -58,12 +61,16 @@ const LoginPCScreen = ({ navigation }) => {
         .then((responseJson) => {
           var mensagem = JSON.stringify(responseJson.informacoes[0].msg)
           if (mensagem == '"Login Realizado com sucesso"') {
+            // IMPORTANTE recolhendo o id do banco de dados
+            var PacienteInfos = (responseJson.informacoes[0].IdPaciente)
+            // Salvando o Id para outras páginas
+            SalvarIdPaciente('IdPaciente', PacienteInfos)
             login({ email, senha });
             logged()
           }
 
           else {
-            alert(mensagem);
+            Alert.alert('Erro de Login', 'Revise seu email e senha e tente novamente!');
           }
         })
         //se ocorrer erro na requisição ou conversãok
@@ -126,7 +133,7 @@ const LoginPCScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() =>  auth()}>
+      <TouchableOpacity onPress={() => auth()}>
         <LinearGradient
           colors={['#764DCC', '#4A2794']}
           style={styles.button}>

@@ -1,119 +1,234 @@
-import * as React from "react";
-
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
+  ActivityIndicator,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
   View,
   TouchableOpacity,
   Image,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 
+import EntypoIcon from "react-native-vector-icons/Entypo";
+
+import TabContainer from "../../../components/navigation/Psicologo/BottomTab/TabContainer";
+
+// async storage
+import AsyncStorage_ID from '@react-native-async-storage/async-storage';
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 const RemoverPacienteScreen = ({ navigation }) => {
+  const [idPaciente, setIdPaciente] = useState();
+  const [idPsicologo, setIdPsicologo] = useState(0);
+  const [resposta, setResposta] = useState('');
+  const [comando, setComando] = useState('Procurar por Id Psicologo');
+
+  const [listaInfo, setListaInfo] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [timeOut, setTimeOut] = useState(10000);
+  const [viewLista, setViewLista] = useState(true);
+
+  async function save(key, value) {
+    AsyncStorage_Paciente.setItem(key, value)
+  }
+  useEffect(() => {
+    async function recuperarId() {
+      const value = await AsyncStorage_ID.getItem('IdPsicologo')
+      setIdPsicologo(value)
+    }
+    recuperarId()
+    getInformacoesBD()
+  }, [idPsicologo]);
+  async function getInformacoesBD() {
+    setLoading(true)
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPsicologo: idPsicologo, Comando: comando }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setResposta(responseJson.paciente[0].resposta);
+        setListaInfo([]);
+        for (var i = 0; i < responseJson.paciente.length; i++) {
+          setListaInfo((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                nome: responseJson.paciente[i].NomePaciente,
+                id: responseJson.paciente[i].IdPaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        //  alert('erro'+error)
+      });
+    setLoading(false)
+  }
+
+  async function clickItemFlatList(item) {
+    // save("PacienteSelected", item.id)
+    // navigation.navigate('PerfilPaciente')
+    setLoading(true);
+    var url ="https://libellatcc.000webhostapp.com/Funcionalidades/removerPaciente.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPaciente: item.id}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        getInformacoesBD();
+        alert(responseJson.informacoes[0].msg)
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        //  alert('erro'+error)
+      });
+    setLoading(false);
+  }
+
   return (
-      <View style={styles.container}>
-        <View style={styles.mainContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PerfilPaciente")}
-            style={styles.pacienteContainer}
-          >
-            <View
-              style={styles.containerContent}>
-              <Image
-                style={styles.userImg}
-                source={require('../../../assets/img/Pessoas/Andreia.jpg')}
-              />
-              <View style={styles.containerText}>
-                <Text style={styles.text}>Andreia Ramos</Text>{/*Esse texto pode mudar de acordo com o Banco de dados*/}
-              </View>
-              <FeatherIcons name='user-minus' size={20} color={'red'} />
-            </View>
-          </TouchableOpacity>
-          {/*Pra adicionar mais pacientes basta copiar toda a touchableOpacity*/}
-        </View>
+    <View style={styles.container}>
+      <View style={styles.containerRecarregar}>
+        <TouchableOpacity onPress={() => getInformacoesBD()}>
+          <Text style={styles.textButton}>Recarregar</Text>
+        </TouchableOpacity>
       </View>
+      {resposta == 'informação recebida' ? (
+        <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '90%',
+        }}>
+          <FlatList
+            data={listaInfo}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => clickItemFlatList(item)}>
+                <View style={styles.pacienteContainer}>
+                  <Image
+                    style={styles.userImg}
+                    source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                  />
+                  <Text style={styles.text}> {item.nome} </Text>
+                  <FeatherIcons name='user-minus' size={20} color={'red'} />
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      ) : (
+        null
+      )}
+    </View>
   );
 };
 
 export default RemoverPacienteScreen;
 
 const styles = StyleSheet.create({
-
-  // Container
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingHorizontal: 20,
-    backgroundColor: "#F2F2F2",
     color: "white",
   },
 
-  mainContainer: {
-    width: "100%",
-    height: "90%",
-    top: 20,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    gap: 30,
-  },
-
   pacienteContainer: {
-    width: "100%",
     height: 80,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "white",
+    gap: 50,
+    alignItems: "center",
     borderRadius: 7,
     paddingVertical: 15,
-    paddingHorizontal: 20,
-    top: 40,
+    paddingHorizontal: 30,
+    merginBottom: 30,
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginBottom: 15,
   },
 
-  containerContent: {
-    width: '100%',
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: 'space-between',
-    paddingRight: 10,
+  containerRecarregar: {
+    width: "100%",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    paddingTop: 10,
+    paddingRight: 20,
   },
 
-  containerText: {
-    width: '65%',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+  text: {
+    fontSize: 15,
+    fontFamily: 'Poppins_500Medium',
+    marginTop: 5,
   },
 
+  textButton: {
+    fontSize: 17,
+    fontFamily: 'Comfortaa_500Medium',
+    color: '#4A2794',
+  },
 
+  textLoading: {
+    fontSize: 15,
+    fontFamily: 'Poppins_500Medium',
+    marginTop: 5,
+  },
 
-
-  // Imagens
   userImg: {
     width: 52,
     height: 52,
     borderRadius: 100,
   },
 
-  iconImg: {
-    width: 16,
-    height: 16,
-  },
-
-  icon: {
-    minWidth: 20,
-    minHeight: 20,
-  },
-
-
-
-  // Textos
-  text: {
-    fontFamily: 'Poppins_500Medium',
-    fontSize: 17,
-    marginTop: 5,
-  },
 });

@@ -38,7 +38,7 @@ async function getInformacoesBD() {
   var wasServerTimeout = false;
   var timeout = setTimeout(() => {
       wasServerTimeout = true;
-      alert('Tempo de espera para busca de informações excedido');
+      // alert('Tempo de espera para busca de informações excedido');
   }, timeOut);
 
   const resposta = fetch(url, {
@@ -76,7 +76,7 @@ async function getInformacoesBD() {
       .catch((error) => {
           timeout && clearTimeout(timeout);
           if (!wasServerTimeout) {
-              Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+              // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
           }
 
       });

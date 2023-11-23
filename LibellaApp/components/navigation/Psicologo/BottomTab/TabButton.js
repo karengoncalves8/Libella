@@ -44,11 +44,11 @@ const TabButton = ({ toggleOpened, opened }) => {
 
   async function getInformacoesBD() {
     setLoading(true);
-    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes.php';
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php';
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
-      alert('Tempo de espera para busca de informações excedido');
+      // alert('Tempo de espera para busca de informações excedido');
     }, timeOut);
 
     const resposta = fetch(url, {
@@ -82,7 +82,7 @@ const TabButton = ({ toggleOpened, opened }) => {
       .catch((error) => {
         timeout && clearTimeout(timeout);
         if (!wasServerTimeout) {
-          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
         }
 
       });
@@ -98,7 +98,7 @@ const TabButton = ({ toggleOpened, opened }) => {
       var wasServerTimeout = false;
       var timeout = setTimeout(() => {
         wasServerTimeout = true;
-        alert('Tempo de espera para busca de informações excedido');
+        // alert('Tempo de espera para busca de informações excedido');
       }, timeOut);
 
       const resposta = await fetch(url, {
@@ -134,7 +134,7 @@ const TabButton = ({ toggleOpened, opened }) => {
         .catch((error) => {
           timeout && clearTimeout(timeout);
           if (!wasServerTimeout) {
-            Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+            // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
           }
         });
     }

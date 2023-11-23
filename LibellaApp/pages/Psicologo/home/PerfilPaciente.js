@@ -29,6 +29,7 @@ function PerfilPacienteScreen({ navigation }) {
   const [value, setValue] = useState(0);
   const [idPaciente, setIdPaciente] = useState("");
   const [nome, setNome] = useState("");
+  const [comando, setComando] = useState('Procurar por Id Paciente');
 
   const dataAtual = new Date();
   const ano = dataAtual.getFullYear();
@@ -54,7 +55,7 @@ function PerfilPacienteScreen({ navigation }) {
   async function getInformacoesBD() {
     setLoading(true);
     var url =
-      "https://libellatcc.000webhostapp.com/getInformacoes/getInformacoesBDPacientes2.php";
+      "https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
@@ -65,7 +66,8 @@ function PerfilPacienteScreen({ navigation }) {
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
       body: JSON.stringify({ 
-        IdPaciente: idPaciente
+        IdPaciente: idPaciente,
+        Comando: comando
       }),
       headers: {
         "Content-Type": "application/json",
