@@ -9,11 +9,10 @@ import {
 } from "react-native";
 
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 const AtividadeEspScreen = ({ navigation }) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
@@ -24,11 +23,9 @@ const AtividadeEspScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={styles.card}>
-
         <View style={{ gap: 15 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
             <Text style={styles.titulo}> Roda da Vida </Text>
-            <MaterialCommunityIcon name="square-edit-outline" size={23} color={'#6D45C2'} />
           </View>
           <Text style={{ color: '#313131', opacity: 0.4 }}>Vence amanhã às 23:59</Text>
         </View>
@@ -58,9 +55,14 @@ const AtividadeEspScreen = ({ navigation }) => {
 
         <View style={{ gap: 8, width: '100%' }}>
           <Text style={styles.subTitulo}>Trabalho</Text>
-          <Text style={{ alignSelf: 'center', color: '#6C4CB0' }}>Ainda não enviado</Text>
+          <View style={{display: 'flex', flexDirection:'row', alignContent: 'center', gap: 5, justifyContent: 'flex-start'}}>
+            <FontAwesomeIcon name="paperclip" size={23} color={'#53A7D7'} style={{marginBottom:25}}/>
+            <Text style={[styles.texto, {color: '#53A7D7', fontWeight: 'bold'}]}>Anexar</Text>
+          </View>
+          <TouchableOpacity style={styles.button}>
+                <Text style={{color: 'white', fontSize: 14, fontFamily: 'Poppins_400Regular' }}> Entregar </Text>
+            </TouchableOpacity>
         </View>
-
       </View>
     </View>
   );
@@ -116,4 +118,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
+  button: {
+    paddingHorizontal: 30,
+    paddingVertical: 9, 
+    backgroundColor: '#6D45C2',
+    borderRadius: 10,
+    alignSelf: 'center'
+  }
 });
