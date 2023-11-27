@@ -276,7 +276,7 @@ const InicioPage = ({ navigation }) => {
                 })
               ) : (
                 <Text style={{ textAlign: "center" }}>
-                  Não há sessões agendadas hoje.
+                  Não há sessões agendadas.
                 </Text>
               )}
             </View>

@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     gap: 30,
     shadowColor: "gray",
     elevation: 5,
-    backgroundColor: 'red',
   },
 
   AddButton: {

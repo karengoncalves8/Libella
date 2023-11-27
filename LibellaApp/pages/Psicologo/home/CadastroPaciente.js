@@ -122,7 +122,6 @@ const CadastroPacScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>{}</Text>
         <Text style={styles.title}> Cadastrar Paciente </Text>
 
         {/* Input do nome */}
@@ -299,7 +298,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F2F2",
     paddingHorizontal: 30,
     paddingVertical: 30,
-    marginTop: 30,
   },
 
   icons: {

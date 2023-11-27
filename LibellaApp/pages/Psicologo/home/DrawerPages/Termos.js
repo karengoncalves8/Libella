@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { StatusBar } from "expo-status-bar";
+
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 
-import FeatherIcon from 'react-native-vector-icons/Feather'
-
-const PerfilPacientePage = ({ navigation }) => {
+const TermosScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -28,7 +26,7 @@ const PerfilPacientePage = ({ navigation }) => {
     );
 }
 
-export default PerfilPacientePage;
+export default TermosScreen;
 
 const styles = StyleSheet.create({
 
@@ -37,11 +35,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         padding: 20,
-        top: 0,
         backgroundColor: '#F2F2F2',
-        color: 'white',
     },
 
 
@@ -51,15 +47,17 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 10,
         marginTop: 5,
+        padding: 20,
     },
 
 
     // Textos
     text: {
         fontFamily: 'Poppins_500Medium',
-        fontSize: 20,
+        fontSize: 15,
         color: 'black',
         margin: 8,
+        textAlign: 'justify'
     },
 
 },

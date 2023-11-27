@@ -9,17 +9,11 @@ import {
   ScrollView,
   ActivityIndicator,
   Dimensions,
+  FlatList,
 } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { LineChart } from "react-native-chart-kit";
 import CircularProgress from "react-native-circular-progress-indicator";
 
 import AsyncStorage_ID from "@react-native-async-storage/async-storage";
@@ -29,17 +23,18 @@ function PerfilPacienteScreen({ navigation }) {
   const [value, setValue] = useState(0);
   const [idPaciente, setIdPaciente] = useState("");
   const [nome, setNome] = useState("");
-  const [comando, setComando] = useState('Procurar por Id Paciente');
+  const [comando, setComando] = useState("Procurar por Id Paciente");
 
   const dataAtual = new Date();
   const ano = dataAtual.getFullYear();
   const mes = dataAtual.getMonth() + 1;
   const [registros, setRegistros] = useState([]);
 
+  const [registrosEm, setRegistrosEm] = useState([]);
+
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
-  const [acess, setAcess] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [resposta, setResposta] = useState("");
 
   useEffect(() => {
     async function recuperarId() {
@@ -50,6 +45,7 @@ function PerfilPacienteScreen({ navigation }) {
     getInformacoesBD();
     getGraficoEmInfo();
     getGraficoAtvInfo();
+    getRegistros();
   }, [idPaciente]);
 
   async function getInformacoesBD() {
@@ -65,9 +61,9 @@ function PerfilPacienteScreen({ navigation }) {
 
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         IdPaciente: idPaciente,
-        Comando: comando
+        Comando: comando,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -106,10 +102,10 @@ function PerfilPacienteScreen({ navigation }) {
 
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         IdPaciente: idPaciente,
         Ano: ano,
-        Mes: mes
+        Mes: mes,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +118,7 @@ function PerfilPacienteScreen({ navigation }) {
         }
       })
       .then((responseJson) => {
-        const registrosInt = responseJson.Registros.map(value => {
+        const registrosInt = responseJson.Registros.map((value) => {
           return value !== null ? parseInt(value, 10) : null;
         });
         setRegistros(registrosInt);
@@ -133,7 +129,7 @@ function PerfilPacienteScreen({ navigation }) {
         if (!wasServerTimeout) {
           //Error logic here
         }
-        console.log(error)
+        console.log(error);
       });
     setLoading(false);
   }
@@ -151,7 +147,7 @@ function PerfilPacienteScreen({ navigation }) {
 
     const resposta = await fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         IdPaciente: idPaciente,
       }),
       headers: {
@@ -165,7 +161,7 @@ function PerfilPacienteScreen({ navigation }) {
         }
       })
       .then((responseJson) => {
-        setValue(responseJson.Porcentagem)
+        setValue(responseJson.Porcentagem);
       })
 
       .catch((error) => {
@@ -173,10 +169,75 @@ function PerfilPacienteScreen({ navigation }) {
         if (!wasServerTimeout) {
           //Error logic here
         }
-        console.log(error)
+        console.log(error);
       });
     setLoading(false);
   }
+
+  async function getRegistros() {
+    setLoading(true);
+    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getRegistros.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+  
+    try {
+      const response = await fetch(url, {
+        method: "POST", //tipo de requisição
+        body: JSON.stringify({
+          IdPaciente: idPaciente,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      timeout && clearTimeout(timeout);
+  
+      if (!wasServerTimeout) {
+        const responseJson = await response.json();
+  
+        if (responseJson.registros && responseJson.registros.length > 0) {
+          setResposta(responseJson.registros[0].resposta);
+          setRegistrosEm([]);
+          
+          // Use Math.min para garantir que o loop não ultrapasse o tamanho do array
+          for (var i = 0; i < Math.min(2, responseJson.registros.length); i++) {
+            setRegistrosEm((listaInfo) => {
+              const list = [
+                ...listaInfo,
+                {
+                  registro: responseJson.registros[i].Registro,
+                  data: responseJson.registros[i].Data,
+                  anotacoes: responseJson.registros[i].Anotacoes,
+                },
+              ];
+              return list;
+            });
+          }
+        } else {
+          console.error("Resposta do servidor não contém registros válidos.");
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao fazer a requisição:", error);
+    }
+    setLoading(false);
+  }
+
+  const formatDate = (rawDate) => {
+    let date = new Date(rawDate);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return `${day}/${month}`;
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -303,30 +364,48 @@ function PerfilPacienteScreen({ navigation }) {
             <FeatherIcon name="chevron-right" size={20} color={"#6D45C2"} />
           </TouchableOpacity>
 
-          <View style={styles.emotionCard}>
-            <Image
-              style={styles.emotionIcon}
-              source={require("../../../assets/icons/IconFeliz.png")}
+            
+          {resposta == "informação recebida" ? (
+            <FlatList
+              data={registrosEm}
+              renderItem={({ item }) => (
+                <View style={styles.emotionCard}>
+                  {item.registro == 1 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconHorrivel.png")}
+                    />
+                  ) : item.registro == 2 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconMal.png")}
+                    />
+                  ) : item.registro == 3 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconNeutro.png")}
+                    />
+                  ) : item.registro == 4 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconFeliz.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconAnimado.png")}
+                    />
+                  )}
+                  <View style={{ width: 160 }}>
+                    <Text style={styles.text}>{item.anotacoes}</Text>
+                  </View>
+                  <Text style={styles.textData}>{formatDate(item.data)}</Text>
+                </View>
+              )}
             />
-            <View>
-              <Text style={styles.text}>
-                Estou feliz com a vitória do Praia Clube
-              </Text>
-              <Text style={styles.textData}>Data</Text>
-            </View>
-          </View>
-          <View style={styles.emotionCard}>
-            <Image
-              style={styles.emotionIcon}
-              source={require("../../../assets/icons/IconFeliz.png")}
-            />
-            <View>
-              <Text style={styles.text}>
-                Estou feliz com a vitória do Praia Clube
-              </Text>
-              <Text style={styles.textData}>Data</Text>
-            </View>
-          </View>
+          ) : (
+            <Text style={styles.text}>Não há registros!</Text>
+          )}
         </View>
       </View>
     </ScrollView>
@@ -432,21 +511,23 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   emotionCard: {
+    width: "99%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "#E6E6E6",
     padding: 15,
     borderRadius: 10,
-    gap: 15,
   },
-  iconIcon: {
-    width: 35,
-    height: 35,
+  emotionIcon: {
+    width: 40,
+    height: 40,
     resizeMode: "contain",
   },
   text: {
+    color: "#313131",
     fontFamily: "Poppins_400Regular",
+    textAlign: "justify",
   },
   textData: {
     fontFamily: "Poppins_400Regular",

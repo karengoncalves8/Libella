@@ -53,7 +53,7 @@ const TabButton = ({ toggleOpened, opened }) => {
 
     const resposta = fetch(url, {
       method: 'POST', //tipo de requisição
-      body: JSON.stringify({ IdPsicologo: id }),
+      body: JSON.stringify({ IdPsicologo: id, Comando: 'Procurar por Id Psicologo'}),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -264,6 +264,7 @@ const TabButton = ({ toggleOpened, opened }) => {
                 data={pacientes}
                 onSelect={(selectedItem, index) => {
                   setPaciente(selectedItem.NomePaciente)
+                  console.log(paciente)
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem.NomePaciente;
@@ -284,7 +285,6 @@ const TabButton = ({ toggleOpened, opened }) => {
                 rowTextStyle={styles.dropdownRowTxtStyle}
                 selectedRowTextStyle={styles.selectedRowTextStyle}
                 defaultButtonText={'Selecione o Paciente'}
-
               />
             </View>
             <View
