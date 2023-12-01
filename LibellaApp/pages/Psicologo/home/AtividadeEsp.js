@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -8,13 +8,74 @@ import {
   TextInput,
 } from "react-native";
 
+
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import AsyncStorage_Atividade from '@react-native-async-storage/async-storage';
 
 const AtividadeEspPage = ({ navigation }) => {
+  const [idAtividade, setIdAtividade] = useState('');
+  const [tituloAtividade, setTituloAtividade] = useState('');
+  const [entregaAtividade, setEntregaAtividade] = useState('');
+  const [horarioAtividade, setHorarioAtividade] = useState('');
+  const [instrucoesAtividade, setInstrucoesAtividade] = useState('');
+
+  const [loading, setLoading] = useState(true);
+  const [timeOut, setTimeOut] = useState(50000);
+  useEffect(() => {
+    async function recuperarId() {
+      const value = await AsyncStorage_Atividade.getItem('AtividadeSelected')
+      setIdAtividade(value)
+    }
+    recuperarId()
+    getInformacoesBD()
+  }, [idAtividade]);
+
+  async function getInformacoesBD() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/getAtividadeEsp.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ 
+        IdAtividade: idAtividade,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setTituloAtividade(responseJson.atividade[0].TituloAtividade);
+        setEntregaAtividade(responseJson.atividade[0].EntregaAtividade);
+        setHorarioAtividade(responseJson.atividade[0].HorarioAtividade);
+        setInstrucoesAtividade(responseJson.atividade[0].InstrucoesAtividade);
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        //  alert('erro'+error)
+      });
+    setLoading(false);
+  }
   return (
     <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -25,14 +86,14 @@ const AtividadeEspPage = ({ navigation }) => {
 
         <View style={{gap: 15}}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
-                <Text style={styles.titulo}> Roda da Vida </Text>
+                <Text style={styles.titulo}>{tituloAtividade}</Text>
                 <MaterialCommunityIcon  name="square-edit-outline" size={23} color={'#6D45C2'}/>
             </View>
-            <Text style={{color:'#313131', opacity: 0.4}}>Vence amanhã às 23:59</Text>
+            <Text style={{color:'#313131', opacity: 0.4}}>Vence dia {entregaAtividade} às {horarioAtividade}</Text>
         </View>
             <View style={{gap: 8}}>
                 <Text style={styles.subTitulo}>Instruções</Text>
-                <Text style={styles.texto}>Escolha uma pontuação para cada um dos aspectos traçados de acordo com o grau de satisfação que sente em relação a ele. A pontuação varia entre o número 1 e 10, sendo 10 a pontuação máxima. Quanto mais baixa for a pontuação, mais se aproxima do centro e, quanto mais elevada, mais próxima da margem.</Text>
+                <Text style={styles.texto}>{instrucoesAtividade}</Text>
 
                 <View style={styles.imgViewer}>
                 <IonIcon  name="image-outline" size={23} color={'#313131'}/>

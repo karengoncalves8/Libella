@@ -9,8 +9,10 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 
 const ConfigScreen = ({ navigation }) => {
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [isEnabledAtv, setIsEnabledAtv] = useState(false);
+    const [isEnabledConsul, setIsEnabledConsul] = useState(false);
+    const toggleSwitchAtv = () => setIsEnabledAtv(previousState => !previousState);
+    const toggleSwitchConsul = () => setIsEnabledConsul(previousState => !previousState);
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -44,10 +46,10 @@ const ConfigScreen = ({ navigation }) => {
                         <View style={styles.containerSwitch}>
                             <Switch
                                 trackColor={{ false: '#767577', true: '#acd5ec' }}
-                                thumbColor={isEnabled ? '#53a7d7' : '#cacaca'}
+                                thumbColor={isEnabledConsul ? '#53a7d7' : '#cacaca'}
                                 ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
+                                onValueChange={toggleSwitchConsul}
+                                value={isEnabledConsul}
                             />
                         </View>
                     </View>
@@ -59,10 +61,10 @@ const ConfigScreen = ({ navigation }) => {
                         <View style={styles.containerSwitch}>
                             <Switch
                                 trackColor={{ false: '#767577', true: '#acd5ec' }}
-                                thumbColor={isEnabled ? '#53a7d7' : '#cacaca'}
+                                thumbColor={isEnabledAtv ? '#53a7d7' : '#cacaca'}
                                 ios_backgroundColor="#c9c9c9"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
+                                onValueChange={toggleSwitchAtv}
+                                value={isEnabledAtv}
                             />
                         </View>
                     </View>

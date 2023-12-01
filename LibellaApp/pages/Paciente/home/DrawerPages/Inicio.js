@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  FlatList,
+  LogBox,
 } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -22,15 +24,25 @@ import moment from "moment";
 
 import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
+import AsyncStorage_Atividade from '@react-native-async-storage/async-storage';
+
 moment.locale('pt-br');
 
-const InicioScreen = ({navigation}) => {
+LogBox.ignoreLogs(['Possible Unhandled Promise Rejection (id: 0)']);
+
+
+const InicioScreen = ({ navigation }) => {
   const [idPaciente, setIdPaciente] = useState(0);
   const [nome, setNome] = useState("");
+  const [resposta, setResposta] = useState("");
 
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
   const [comando, setComando] = useState('Procurar por Id Paciente');
+
+  async function save(key, value) {
+    AsyncStorage_Atividade.setItem(key, value)
+  }
 
   useEffect(() => {
     async function recuperarIdPaciente() {
@@ -40,6 +52,7 @@ const InicioScreen = ({navigation}) => {
     recuperarIdPaciente();
     getInformacoesBD();
     getConsultasBD();
+    getAtividadesBD();
   }, [nome, idPaciente]);
 
   async function getInformacoesBD() {
@@ -103,7 +116,7 @@ const InicioScreen = ({navigation}) => {
 
     const resposta = fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ IdPaciente: idPaciente, Comando: 'Consultas Paciente'}),
+      body: JSON.stringify({ IdPaciente: idPaciente, Comando: 'Consultas Paciente' }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -142,6 +155,69 @@ const InicioScreen = ({navigation}) => {
     setLoading(false);
   }
 
+  // Recolhendo atividades
+  const [idAtvidade, setIdAtividade] = useState('');
+  const [nomeAtividade, setNomeAtvidade] = useState('');
+  const [tituloAtividade, setTituloAtividade] = useState('');
+  const [entregaAtividade, setEntregaAtividade] = useState('');
+  const [listaInfo, setListaInfo] = useState([]);
+
+  async function getAtividadesBD() {
+    setLoading(true)
+    var url = 'https://libellatcc.000webhostapp.com/getInformacoes/getAtividades.php';
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      setLoading(false);
+      alert('Tempo de espera para busca de informações excedido');
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: 'POST', //tipo de requisição
+      body: JSON.stringify({ IdPaciente: idPaciente }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setResposta(responseJson.atividade[0].resposta);
+        setListaInfo([]);
+        for (var i = 0; i < responseJson.atividade.length; i++) {
+          setListaInfo((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                nomeAtividade: responseJson.atividade[i].TituloAtividade,
+                idAtividade: responseJson.atividade[i].IdAtividade,
+                dataAtividade: responseJson.atividade[i].EntregaAtividade,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          //Error logic here
+        }
+        //  alert('erro'+error)
+      });
+    setLoading(false)
+  }
+
+  function clickItemFlatList(item) {
+    save("AtividadeSelected", item.idAtividade)
+    navigation.navigate('AtividadeEsp')
+  }
+
   return (
     <TabContainer>
       <View style={styles.container}>
@@ -150,91 +226,85 @@ const InicioScreen = ({navigation}) => {
         <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {nome}</Text>
 
         <View style={{ gap: 8 }}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.subTitulo}>AGENDA</Text>
-              <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
-            </View>
-            <View style={styles.card}>
-              <CalendarStrip
-                style={{ width: 300 }}
-                calendarHeaderStyle={{ color: "#6D45C2" }}
-                dateNumberStyle={{ color: "#313131", fontSize: 15 }}
-                dateNameStyle={{ color: "#313131", opacity: 0.8, fontSize: 10 }}
-                innerStyle={[]}
-                showMonth={false}
-                highlightDateContainerStyle={{ backgroundColor: "#53A7D7" }}
-                highlightDateNumberStyle={{ color: "white" }}
-                highlightDateNameStyle={{ color: "white" }}
-                dayContainerStyle={{ gap: 3 }}
-                selectedDate={startDate}
-                onDateSelected={(day) => {
-                  setSelectedDay(moment(day, 'MM-DD-YYYY').format('YYYY-MM-DD'));
-                }}
-              />
-
-              {currentMetting.length > 0 ? (
-                currentMetting.map((mettings, i) => {
-                  return (
-                    <View key={i} style={{ gap: 10 }}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          backgroundColor: "#EAEEEF",
-                          paddingHorizontal: 15,
-                          paddingVertical: 10,
-                          borderRadius: 5,
-                          width: 300,
-                        }}
-                      >
-                        <View style={{ flexDirection: "row", gap: 6 }}>
-                          <Image
-                            source={require("../../../../assets/icons/VectorAzul.png")}
-                          />
-                          <Text style={styles.text}>{mettings.name}</Text>
-                        </View>
-                        <Text style={styles.text}> {mettings.time}</Text>
-                      </View>
-                    </View>
-                  );
-                })
-              ) : (
-                <Text style={{ textAlign: "center" }}>
-                  Não há sessões agendadas.
-                </Text>
-              )}
-            </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.subTitulo}>AGENDA</Text>
+            <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
+          <View style={styles.card}>
+            <CalendarStrip
+              style={{ width: 300 }}
+              calendarHeaderStyle={{ color: "#6D45C2" }}
+              dateNumberStyle={{ color: "#313131", fontSize: 15 }}
+              dateNameStyle={{ color: "#313131", opacity: 0.8, fontSize: 10 }}
+              innerStyle={[]}
+              showMonth={false}
+              highlightDateContainerStyle={{ backgroundColor: "#53A7D7" }}
+              highlightDateNumberStyle={{ color: "white" }}
+              highlightDateNameStyle={{ color: "white" }}
+              dayContainerStyle={{ gap: 3 }}
+              selectedDate={startDate}
+              onDateSelected={(day) => {
+                setSelectedDay(moment(day, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+              }}
+            />
+
+            {currentMetting.length > 0 ? (
+              currentMetting.map((mettings, i) => {
+                return (
+                  <View key={i} style={{ gap: 10 }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        backgroundColor: "#EAEEEF",
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        borderRadius: 5,
+                        width: 300,
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", gap: 6 }}>
+                        <Image
+                          source={require("../../../../assets/icons/VectorAzul.png")}
+                        />
+                        <Text style={styles.text}>{mettings.name}</Text>
+                      </View>
+                      <Text style={styles.text}> {mettings.time}</Text>
+                    </View>
+                  </View>
+                );
+              })
+            ) : (
+              <Text style={{ textAlign: "center" }}>
+                Não há sessões agendadas.
+              </Text>
+            )}
+          </View>
+        </View>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            
+
             <Text style={styles.subTitulo}>ATIVIDADES</Text>
             <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
           </View>
           <View style={styles.card}>
-
-           
-            <View style={styles.paciente}>
-              <View
-                style={{ flexDirection: "column", gap: 10 }}>
-
-                <Text style={styles.titulo}>Roda da Vida</Text>
-                <Text style={styles.texto}>Vence amanhã ás 23:59</Text>
-              </View>
-              <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-            </View>
-
-
-            <View style={styles.paciente}>
-              <View
-                style={{ flexDirection: "column", gap: 10 }}
-              >
-                <Text style={styles.titulo}>Auto Recompensa</Text>
-                <Text style={styles.texto}>Vence em 1 de abril as 13:59</Text>
-              </View>
-              <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
-            </View>
+            {resposta == 'informacao recebida' ? (
+              <FlatList
+                data={listaInfo}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => clickItemFlatList(item)} style={styles.atividadeContainer}>
+                    <View style={{ flexDirection: 'column', gap: 8, }}>
+                      <Text style={styles.titulo}>{item.nomeAtividade}</Text>
+                      <Text style={styles.texto}> Entrega no dia: {item.dataAtividade}</Text>
+                    </View>
+                    <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
+                  </TouchableOpacity>
+                )}
+              />
+            ) : (
+              <Text style={styles.text}>Sem Pacientes!</Text>
+            )}
           </View>
         </View>
       </View>
@@ -264,6 +334,14 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     elevation: 5,
   },
+  atividadeContainer: {
+    flexDirection: "row",
+    width: 280,
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+  },
   subTitulo: {
     fontSize: 14,
     color: "#6D45C2",
@@ -281,7 +359,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     fontFamily: 'Poppins_400Regular'
   },
-  titulo:{
+  titulo: {
     fontWeight: 'bold',
     fontSize: 16,
     color: '#313131',

@@ -28,6 +28,10 @@ const LoginPCScreen = ({ navigation }) => {
     AsyncStorage_Paciente.setItem(key, value)
   }
 
+  const SalvarIdPsicologo = (key, value) => {
+    AsyncStorage_Paciente.setItem(key, value)
+  }
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -63,8 +67,10 @@ const LoginPCScreen = ({ navigation }) => {
           if (mensagem == '"Login Realizado com sucesso"') {
             // IMPORTANTE recolhendo o id do banco de dados
             var PacienteInfos = (responseJson.informacoes[0].IdPaciente)
+            var PsicolgoInfos = (responseJson.informacoes[0].IdPsicologo)
             // Salvando o Id para outras páginas
             SalvarIdPaciente('IdPaciente', PacienteInfos)
+            SalvarIdPsicologo('IdPsicologo', PsicolgoInfos)
             login({ email, senha });
             logged()
           }

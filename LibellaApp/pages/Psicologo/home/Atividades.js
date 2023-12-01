@@ -110,7 +110,7 @@ function AtividadesScreen({ navigation }) {
           <FlatList
             data={listaInfo}
             renderItem={({ item }) => (
-                <TouchableOpacity style={styles.atividadeContainer}>
+                <TouchableOpacity onPress={() => clickItemFlatList(item)} style={styles.atividadeContainer}>
                   <View style={{ flexDirection: 'column', gap: 8, }}>
                     <Text style={styles.titulo}>{item.nome}</Text>
                     <Text style={styles.texto}> Entrega no dia: {item.data}</Text>
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     gap: 30,
     shadowColor: "gray",
     elevation: 5,
+    backgroundColor: 'red',
   },
 
   AddButton: {
