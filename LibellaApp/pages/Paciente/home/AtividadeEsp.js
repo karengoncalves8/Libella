@@ -72,7 +72,7 @@ const AtividadeEspScreen = ({ navigation }) => {
           />
         </View>
 
-        <View style={{ gap: 8, width: "100%" }}>
+        <View style={{ gap: 8 }}>
           <Text style={styles.subTitulo}>Trabalho</Text>
           <View
             style={{
@@ -87,7 +87,6 @@ const AtividadeEspScreen = ({ navigation }) => {
               name="paperclip"
               size={23}
               color={"#53A7D7"}
-              style={{ marginBottom: 25 }}
             />
             <Text
               style={[styles.texto, { color: "#53A7D7", fontWeight: "bold" }]}
@@ -95,7 +94,8 @@ const AtividadeEspScreen = ({ navigation }) => {
               Anexar
             </Text>
           </View>
-          <TouchableOpacity style={styles.button}>
+        </View>
+        <TouchableOpacity style={styles.button}>
             <Text
               style={{
                 color: "white",
@@ -103,11 +103,9 @@ const AtividadeEspScreen = ({ navigation }) => {
                 fontFamily: "Poppins_400Regular",
               }}
             >
-              {" "}
-              Entregar{" "}
+              Entregar
             </Text>
           </TouchableOpacity>
-        </View>
       </View>
     </View>
   );
@@ -161,5 +159,13 @@ const styles = StyleSheet.create({
     gap: 11,
     borderRadius: 10,
     marginTop: 10,
+  },
+  button: {
+    backgroundColor: "#6D45C2",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 15,
+    fontWeight: "bold",
+    alignSelf: 'center'
   },
 });

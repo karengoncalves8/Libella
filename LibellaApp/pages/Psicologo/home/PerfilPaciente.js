@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  LogBox
 } from "react-native";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -18,6 +19,9 @@ import CircularProgress from "react-native-circular-progress-indicator";
 
 import AsyncStorage_ID from "@react-native-async-storage/async-storage";
 import AsyncStorage_Paciente from "@react-native-async-storage/async-storage";
+
+
+LogBox.ignoreLogs(['VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.']);
 
 function PerfilPacienteScreen({ navigation }) {
   const [value, setValue] = useState(0);

@@ -113,7 +113,7 @@ const InicioPage = ({ navigation }) => {
 
     const resposta = fetch(url, {
       method: "POST", //tipo de requisição
-      body: JSON.stringify({ IdPsicologo: idPsicologo }),
+      body: JSON.stringify({ IdPsicologo: idPsicologo, Comando: 'Consultas Psicologo'}),
       headers: {
         "Content-Type": "application/json",
       },

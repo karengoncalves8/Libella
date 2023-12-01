@@ -10,15 +10,15 @@ import {
   Alert,
   ActivityIndicator
 } from "react-native";
-import CalendarStrip from "react-native-calendar-strip";
-import moment from "moment";
+
 import FeatherIcon from "react-native-vector-icons/Feather";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 import TabContainer from "../../../../components/navigation/Paciente/BottomTab/TabContainer";
-import { useAuth } from "../../../../components/navigation/Stack/AuthContext";
+
 import 'moment/locale/pt-br';
-import { id } from "date-fns/locale";
+import CalendarStrip from "react-native-calendar-strip";
+import moment from "moment";
 
 import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
 
@@ -30,8 +30,6 @@ const InicioScreen = ({navigation}) => {
 
   const [timeOut, setTimeOut] = useState(10000);
   const [loading, setLoading] = useState(false);
-  const [acess, setAcess] = useState(false);
-  const [msg, setMsg] = useState("");
   const [comando, setComando] = useState('Procurar por Id Paciente');
 
   useEffect(() => {
@@ -41,7 +39,9 @@ const InicioScreen = ({navigation}) => {
     }
     recuperarIdPaciente();
     getInformacoesBD();
+    getConsultasBD();
   }, [nome, idPaciente]);
+
   async function getInformacoesBD() {
     var url = "https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php";
     var wasServerTimeout = false;
@@ -78,7 +78,69 @@ const InicioScreen = ({navigation}) => {
     setLoading(false);
   }
 
+  // Agenda
   let startDate = moment();
+
+  const [meetings, setMeetings] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(moment(startDate, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+
+  let currentMetting = [];
+  for (let i = 0; i < meetings.length; i++) {
+    if (meetings[i].date === selectedDay) {
+      currentMetting.push(meetings[i]);
+    }
+  }
+
+  async function getConsultasBD() {
+    setLoading(true);
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/GetConsultas.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      // alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPaciente: idPaciente, Comando: 'Consultas Paciente'}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        setMeetings([]);
+        for (var i = 0; i < responseJson.consultas.length; i++) {
+          setMeetings((listaInfo) => {
+            const list = [
+              ...listaInfo,
+              {
+                // componentes da tabela
+                id: responseJson.consultas[i].IdConsulta,
+                date: responseJson.consultas[i].Data,
+                time: responseJson.consultas[i].Horario,
+                name: responseJson.consultas[i].NomePaciente,
+              },
+            ];
+            return list;
+          });
+        }
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
 
   return (
     <TabContainer>
@@ -88,45 +150,61 @@ const InicioScreen = ({navigation}) => {
         <Text style={{ fontSize: 30, color: "#4A2794", fontFamily: 'Comfortaa_500Medium' }}>Olá, {nome}</Text>
 
         <View style={{ gap: 8 }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.subTitulo}>AGENDA</Text>
-            <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
-          </View>
-          <View style={styles.card}>
-            <CalendarStrip
-              style={{ width: 300 }}
-              calendarHeaderStyle={{ color: "#6D45C2" }}
-              dateNumberStyle={{ color: "#313131", fontSize: 15 }}
-              dateNameStyle={{ color: "#313131", opacity: 0.8, fontSize: 10 }}
-              innerStyle={[]}
-              showMonth={false}
-              highlightDateContainerStyle={{ backgroundColor: "#53A7D7" }}
-              highlightDateNumberStyle={{ color: "white" }}
-              highlightDateNameStyle={{ color: "white" }}
-              dayContainerStyle={{ gap: 3 }}
-              selectedDate={startDate}
-            />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                backgroundColor: "#EAEEEF",
-                paddingHorizontal: 15,
-                paddingVertical: 10,
-                borderRadius: 5,
-                width: 300,
-              }}
-            >
-              <View style={{ flexDirection: "row", gap: 6 }}>
-                <Image
-                  source={require("../../../../assets/icons/VectorAzul.png")}
-                />
-                <Text>Consulta</Text>
-              </View>
-              <Text>21h40 - 23h40</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.subTitulo}>AGENDA</Text>
+              <FeatherIcon name="chevron-right" size={18} color={"#6D45C2"} />
+            </View>
+            <View style={styles.card}>
+              <CalendarStrip
+                style={{ width: 300 }}
+                calendarHeaderStyle={{ color: "#6D45C2" }}
+                dateNumberStyle={{ color: "#313131", fontSize: 15 }}
+                dateNameStyle={{ color: "#313131", opacity: 0.8, fontSize: 10 }}
+                innerStyle={[]}
+                showMonth={false}
+                highlightDateContainerStyle={{ backgroundColor: "#53A7D7" }}
+                highlightDateNumberStyle={{ color: "white" }}
+                highlightDateNameStyle={{ color: "white" }}
+                dayContainerStyle={{ gap: 3 }}
+                selectedDate={startDate}
+                onDateSelected={(day) => {
+                  setSelectedDay(moment(day, 'MM-DD-YYYY').format('YYYY-MM-DD'));
+                }}
+              />
+
+              {currentMetting.length > 0 ? (
+                currentMetting.map((mettings, i) => {
+                  return (
+                    <View key={i} style={{ gap: 10 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          backgroundColor: "#EAEEEF",
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          borderRadius: 5,
+                          width: 300,
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", gap: 6 }}>
+                          <Image
+                            source={require("../../../../assets/icons/VectorAzul.png")}
+                          />
+                          <Text style={styles.text}>{mettings.name}</Text>
+                        </View>
+                        <Text style={styles.text}> {mettings.time}</Text>
+                      </View>
+                    </View>
+                  );
+                })
+              ) : (
+                <Text style={{ textAlign: "center" }}>
+                  Não há sessões agendadas.
+                </Text>
+              )}
             </View>
           </View>
-        </View>
 
         <View style={{ gap: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>

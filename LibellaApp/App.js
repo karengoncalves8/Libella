@@ -1,12 +1,10 @@
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-  Text,
-  View,
   StyleSheet,
-  SafeAreaView,
+  LogBox
 } from "react-native";
 
 // Navigation
@@ -25,6 +23,8 @@ import {
   Comfortaa_700Bold,
 } from "@expo-google-fonts/comfortaa";
 import RootStack from "./components/navigation/Stack/RootStack";
+
+LogBox.ignoreLogs(['expo-app-loading is deprecated in favor of expo-splash-screen: use SplashScreen.preventAutoHideAsync() and SplashScreen.hideAsync() instead. https://docs.expo.dev/versions/latest/sdk/splash-screen/']);
 
 export default function App() {
 

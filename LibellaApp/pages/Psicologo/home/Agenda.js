@@ -43,7 +43,7 @@ async function getInformacoesBD() {
 
   const resposta = fetch(url, {
       method: 'POST', //tipo de requisição
-      body: JSON.stringify({ IdPsicologo: id }),
+      body: JSON.stringify({ IdPsicologo: id, Comando: 'Consultas Psicologo' }),
       headers: {
           'Content-Type': 'application/json',
       },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'Poppins_400Regular'
   },
   textDate: {

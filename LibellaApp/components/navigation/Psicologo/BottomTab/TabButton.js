@@ -136,6 +136,7 @@ const TabButton = ({ toggleOpened, opened }) => {
           if (!wasServerTimeout) {
             // Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
           }
+          alert(error)
         });
     }
   }

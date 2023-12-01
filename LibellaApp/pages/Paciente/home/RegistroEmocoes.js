@@ -1,35 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  FlatList,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
+
+import AsyncStorage_Paciente from "@react-native-async-storage/async-storage";
+
+import moment from "moment";
+import "moment/locale/pt-br";
+
+moment.locale("pt-br");
 
 const RegistroEmocoesScreen = ({ navigation }) => {
-    const [listaInfo, setListaInfo] = useState([]);
+  const [idPaciente, setIdPaciente] = useState("");
+
+  const [registros, setRegistros] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [timeOut, setTimeOut] = useState(50000);
   const [viewLista, setViewLista] = useState(true);
 
-  const clickItemFlatList = (item) => {
-  };
+  const clickItemFlatList = (item) => {};
 
   useEffect(() => {
-    getInformacoesBD();
-  }, []);
+    async function recuperarId() {
+      const value = await AsyncStorage_Paciente.getItem("PacienteSelected");
+      setIdPaciente(value);
+    }
+    recuperarId();
+    getRegistros();
+  }, [idPaciente]);
 
-  async function getInformacoesBD() {
+  async function getRegistros() {
     setLoading(true);
-    var url = 'https://aulapam23.000webhostapp.com/lista_usuarios.php';
-
+    var url =
+      "https://libellatcc.000webhostapp.com/getInformacoes/getRegistros.php";
     var wasServerTimeout = false;
     var timeout = setTimeout(() => {
       wasServerTimeout = true;
       setLoading(false);
-      alert('Tempo de espera para busca de informações excedido');
+      alert("Tempo de espera para busca de informações excedido");
     }, timeOut);
 
     const resposta = await fetch(url, {
-      method: 'GET',
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({
+        IdPaciente: idPaciente,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-
       .then((response) => {
         timeout && clearTimeout(timeout);
         if (!wasServerTimeout) {
@@ -37,16 +64,15 @@ const RegistroEmocoesScreen = ({ navigation }) => {
         }
       })
       .then((responseJson) => {
-
-        setListaInfo([]);
-        for (var i = 0; i < responseJson.usuarios.length; i++) {
-          setListaInfo((listaInfo) => {
+        setRegistros([]);
+        for (var i = 0; i < responseJson.registros.length; i++) {
+          setRegistros((listaInfo) => {
             const list = [
               ...listaInfo,
               {
-                id: responseJson.usuarios[i].id,
-                nomePac: responseJson.usuarios[i].nome,
-
+                registro: responseJson.registros[i].Registro,
+                data: responseJson.registros[i].Data,
+                anotacoes: responseJson.registros[i].Anotacoes,
               },
             ];
             return list;
@@ -59,139 +85,146 @@ const RegistroEmocoesScreen = ({ navigation }) => {
         if (!wasServerTimeout) {
           //Error logic here
         }
-
-        //  alert('erro'+error)
+        console.log(error);
       });
-
     setLoading(false);
   }
+
+  const formatDate = (rawDate) => {
+    let date = new Date(rawDate);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return `${day}/${month}`;
+  };
+
   return (
     <View style={{ padding: 11 }}>
       {loading ? (
         <View style={styles.container}>
-          <Text
-            style={styles.textLoading}>
+          <Text style={styles.textLoading}>
             Aguarde, obtendo informações...
           </Text>
           <ActivityIndicator size="small" color="#0000ff" />
         </View>
-
       ) : (
-        <View>
-          <FlatList
-            data={listaInfo}
-            renderItem={({ item }) => (
-              <View style={styles.container}>
-                <View style={styles.exibitionContainer}>
-                  <Text style={styles.textExibition}>Este mês</Text>
+        <View style={styles.container}>
+          <View style={styles.exibitionContainer}>
+            <Text style={styles.textExibition}>Registros</Text>
+          </View>
+
+          <View style={{ display: "flex" }}>
+            <FlatList
+              data={registros}
+              renderItem={({ item }) => (
+                <View style={styles.card}>
+                  {item.registro == 1 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconHorrivel.png")}
+                    />
+                  ) : item.registro == 2 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconMal.png")}
+                    />
+                  ) : item.registro == 3 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconNeutro.png")}
+                    />
+                  ) : item.registro == 4 ? (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconFeliz.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.emotionIcon}
+                      source={require("../../../assets/icons/IconAnimado.png")}
+                    />
+                  )}
+                  <View style={{ width: 180 }}>
+                    <Text style={styles.text}>{item.anotacoes}</Text>
+                  </View>
+                  <Text style={styles.textData}>{formatDate(item.data)}</Text>
                 </View>
-                <View style={styles.pacienteContainer}>
-                  <View style={styles.iconContainer}>
-
-                  </View>
-                  <View style={styles.containerText}>
-                    <Text style={styles.text}>Estou feliz com a vitória do Praia Clube</Text>
-                  </View>
-
-                  <View style={styles.containerData}>
-                    <Text style={styles.textData}>data</Text>
-                  </View>
-                </View>
-
-              </View>
-            )}
-          />
+              )}
+            />
+          </View>
         </View>
       )}
-
     </View>
-    );
-}
+  );
+};
 
 export default RegistroEmocoesScreen;
 
 const styles = StyleSheet.create({
+  //Containers
+  container: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#F2F2F2",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    gap: 20,
+  },
 
-    //Containers
-    container: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: 20,
-        backgroundColor: '#F2F2F2',
-        color: 'white',
-        top: 20,
-        gap: 20,
-    },
+  exibitionContainer: {
+    width: "100%",
+    height: 40,
+    top: 20,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
 
-    exibitionContainer: {
-        width: '100%',
-        height: 40,
-        top: 20,
-        marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
+  containerData: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+  },
 
-    iconContainer: {
-        flex: 1,
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+  card: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: "gray",
+    elevation: 5,
+    marginBottom: 20,
+  },
 
-    containerData: {
-        flex: 1,
-        height: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-end',
-    },
+  // Textos
+  textData: {
+    color: "#31313140",
+    fontFamily: "Poppins_500Medium",
+  },
 
-    containerText: {
-        flex: 4,
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+  text: {
+    color: "#313131",
+    fontFamily: "Poppins_400Regular",
+    textAlign: "justify",
+  },
 
-    pacienteContainer: {
-        width: '100%',
-        height: 80,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        gap: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        paddingLeft: 25,
-        paddingRight: 25,
-        padding: 10,
-    },
+  emotionIcon: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain'
+  },
 
-
-
-
-    // Textos
-    textData: {
-        color: '#31313140',
-        fontFamily: 'Poppins_400Regular',
-    },
-
-    text: {
-        color: '#313131',
-        fontFamily: 'Poppins_400Regular',
-    },
-
-    userImg: {
-        width: 35,
-        height: 35,
-    },
-
-    textExibition: {
-        color: '#6D45C2',
-        fontSize: 18,
-        fontFamily: 'Poppins_400Regular',
-    },
+  textExibition: {
+    color: "#6D45C2",
+    fontSize: 18,
+    fontFamily: "Poppins_400Regular",
+  },
 });

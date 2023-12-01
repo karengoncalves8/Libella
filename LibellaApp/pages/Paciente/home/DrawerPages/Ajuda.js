@@ -60,10 +60,9 @@ const AjudaScreen = () => {
           width: '100%',
           paddingVertical: 10,
           borderRadius: 0,
-          backgroundColor: 'red',
           backgroundColor: "white",
           borderRadius: 10,
-          padding: 5,
+          padding: 10,
         }}>
           <Text style={{
             color: "#313131",

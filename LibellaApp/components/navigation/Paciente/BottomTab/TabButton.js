@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,8 +8,7 @@ import {
   Animated,
   Modal,
   TextInput,
-  Pressable,
-  Platform,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 
@@ -17,13 +16,31 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
+import { format } from "date-fns";
+
+import AsyncStorage_Paciente from '@react-native-async-storage/async-storage';
+
 const TabButton = ({ toggleOpened, opened }) => {
   const animation = React.useRef(new Animated.Value(0)).current;
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [idPaciente, setIdPaciente] = useState(0);
+
+  useEffect(() => {
+    async function recuperarIdPaciente() {
+      const value = await AsyncStorage_Paciente.getItem("IdPaciente");
+      setIdPaciente(value);
+    }
+    recuperarIdPaciente();
+    getInformacoesBD();
+  }, [idPaciente]);
+
   // Text Input
   const [anotacoes, setAnotacoes] = useState();
+  const [registro, setRegistro] = useState();
+  const [IdPsicologo, setIdPsicologo] = useState();
+  const currentDate = format(new Date(), "yyyy-MM-dd");
 
   React.useEffect(() => {
     Animated.timing(animation, {
@@ -41,6 +58,103 @@ const TabButton = ({ toggleOpened, opened }) => {
     }),
   };
 
+  const [botaoSelecionado, setBotaoSelecionado] = useState(null);
+
+  const handlePress = (botao, reg) => {
+    setBotaoSelecionado(botao);
+    setRegistro(reg)
+  };
+
+  const isBotaoSelecionado = (botao) => botao === botaoSelecionado;
+
+  const [loading, setLoading] = useState(false);
+  const [timeOut, setTimeOut] = useState(10000);
+
+  async function getInformacoesBD() {
+    var url = "https://libellatcc.000webhostapp.com/getInformacoes/getPacientes.php";
+    var wasServerTimeout = false;
+    var timeout = setTimeout(() => {
+      wasServerTimeout = true;
+      // alert("Tempo de espera para busca de informações excedido");
+    }, timeOut);
+
+    const resposta = await fetch(url, {
+      method: "POST", //tipo de requisição
+      body: JSON.stringify({ IdPaciente: idPaciente, Comando: "Procurar por Id Paciente" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          return response.json();
+        }
+      })
+      .then((responseJson) => {
+        // Recolhendo as informações do banco de dados e salvando nas váriaveis
+        setIdPsicologo(responseJson.paciente[0].IdPsicologo);
+        setLoading(false);
+      })
+      //se ocorrer erro na requisição ou conversão
+      .catch((error) => {
+        timeout && clearTimeout(timeout);
+        if (!wasServerTimeout) {
+          Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+        }
+      });
+    setLoading(false);
+  }
+
+  async function registrar() {
+    if (registro == "" || anotacoes == "" ) {
+      Alert.alert("Erro", "Preencha todos os campos!");
+    } 
+    else {
+      var url ="https://libellatcc.000webhostapp.com/Funcionalidades/RegistrarEm.php";
+      var wasServerTimeout = false;
+      var timeout = setTimeout(() => {
+        wasServerTimeout = true;
+        alert("Tempo de espera para busca de informações excedido");
+      }, timeOut);
+
+      const resposta = await fetch(url, {
+        method: "POST", //tipo de requisição
+        body: JSON.stringify({
+          Registro: registro,
+          Anotacoes: anotacoes,
+          Data: currentDate,
+          IdPsicologo: IdPsicologo,
+          IdPaciente: idPaciente,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            return response.json();
+          }
+        })
+        .then((responseJson) => {
+          var mensagem = responseJson.informacoes[0].msg;
+          if (mensagem == "Informações inseridas com sucesso") {
+            Alert.alert("Pronto", "Sentimento Registrado com sucesso!");
+          } else {
+            // Aviso de Erro dados inseridos incorretos
+            Alert.alert("Erro!", "Revise os dados inseridos!");
+          }
+        })
+        //se ocorrer erro na requisição ou conversão
+        .catch((error) => {
+          timeout && clearTimeout(timeout);
+          if (!wasServerTimeout) {
+            Alert.alert("Alerta!", "Tempo de espera do servidor excedido!");
+          }
+        });
+    }
+  }
   return (
     <View style={styles.container}>
       <Modal
@@ -65,9 +179,11 @@ const TabButton = ({ toggleOpened, opened }) => {
               <Text style={{ fontFamily: "Poppins_500Medium", fontSize: 15 }}>
                 Como você está se sentindo hoje?
               </Text>
-              <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-              <AntIcon name="close" size={25} color={"black"} />
-            </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <AntIcon name="close" size={25} color={"black"} />
+              </TouchableWithoutFeedback>
             </View>
 
             <View
@@ -80,8 +196,13 @@ const TabButton = ({ toggleOpened, opened }) => {
                 borderRadius: 10,
               }}
             >
-              <TouchableOpacity>
-                <View style={styles.iconButton}>
+              <TouchableOpacity onPress={() => handlePress("Feliz", 5)}>
+                <View
+                  style={[
+                    styles.iconButton,
+                    isBotaoSelecionado("Feliz") && styles.botaoSelecionado,
+                  ]}
+                >
                   <Image
                     style={styles.icon}
                     source={require("../../../../assets/icons/IconAnimado.png")}
@@ -89,8 +210,11 @@ const TabButton = ({ toggleOpened, opened }) => {
                   <Text style={styles.iconText}>Feliz</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={styles.iconButton}>
+              <TouchableOpacity onPress={() => handlePress("Bem", 4)}>
+                <View style={[
+                    styles.iconButton,
+                    isBotaoSelecionado("Bem") && styles.botaoSelecionado,
+                  ]}>
                   <Image
                     style={styles.icon}
                     source={require("../../../../assets/icons/IconFeliz.png")}
@@ -98,8 +222,11 @@ const TabButton = ({ toggleOpened, opened }) => {
                   <Text style={styles.iconText}>Bem</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={styles.iconButton}>
+              <TouchableOpacity onPress={() => handlePress("Neutro", 3)}>
+                <View style={[
+                    styles.iconButton,
+                    isBotaoSelecionado("Neutro") && styles.botaoSelecionado,
+                  ]}>
                   <Image
                     style={styles.icon}
                     source={require("../../../../assets/icons/IconNeutro.png")}
@@ -107,8 +234,11 @@ const TabButton = ({ toggleOpened, opened }) => {
                   <Text style={styles.iconText}>Neutro</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={styles.iconButton}>
+              <TouchableOpacity onPress={() => handlePress("Mal", 2)}>
+                <View style={[
+                    styles.iconButton,
+                    isBotaoSelecionado("Mal") && styles.botaoSelecionado,
+                  ]}>
                   <Image
                     style={styles.icon}
                     source={require("../../../../assets/icons/IconMal.png")}
@@ -116,8 +246,11 @@ const TabButton = ({ toggleOpened, opened }) => {
                   <Text style={styles.iconText}>Mal</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={styles.iconButton}>
+              <TouchableOpacity onPress={() => handlePress("Horrivel", 1)}>
+                <View style={[
+                    styles.iconButton,
+                    isBotaoSelecionado("Horrivel") && styles.botaoSelecionado,
+                  ]}>
                   <Image
                     style={styles.icon}
                     source={require("../../../../assets/icons/IconHorrivel.png")}
@@ -137,8 +270,16 @@ const TabButton = ({ toggleOpened, opened }) => {
                 numberOfLines={4}
               />
             </View>
-            <TouchableOpacity style={styles.button}>
-                <Text style={{color: 'white', fontSize: 14, fontFamily: 'Poppins_400Regular'}}> Registrar </Text>
+            <TouchableOpacity style={styles.button} onPress={() => registrar()}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  fontFamily: "Poppins_400Regular",
+                }}
+              >
+                Registrar
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -287,11 +428,17 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingHorizontal: 30,
-    paddingVertical: 9, 
-    backgroundColor: '#6D45C2',
+    paddingVertical: 9,
+    backgroundColor: "#6D45C2",
     borderRadius: 10,
-    alignSelf: 'center'
-  }
+    alignSelf: "center",
+  },
+  botaoSelecionado: {
+    borderWidth: 2,
+    borderColor: '#53A7D7',
+    borderRadius: 5,
+    padding: 3,
+  },
 });
 
 export default TabButton;
