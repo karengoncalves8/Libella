@@ -27,6 +27,7 @@ function PerfilPacienteScreen({ navigation }) {
   const [value, setValue] = useState(0);
   const [idPaciente, setIdPaciente] = useState("");
   const [nome, setNome] = useState("");
+  const [imgPaciente, setImgPaciente] = useState('');
   const [comando, setComando] = useState("Procurar por Id Paciente");
 
   const dataAtual = new Date();
@@ -81,6 +82,7 @@ function PerfilPacienteScreen({ navigation }) {
       })
       .then((responseJson) => {
         setNome(responseJson.paciente[0].NomePaciente);
+        setImgPaciente(responseJson.paciente[0].imagemUserPaciente);
       })
 
       .catch((error) => {
@@ -248,7 +250,7 @@ function PerfilPacienteScreen({ navigation }) {
         <View style={styles.containerUser}>
           <Image
             style={styles.userImg}
-            source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+            source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + imgPaciente}}
           />
           <View style={styles.containerName}>
             <Text style={styles.textName}>{nome}</Text>
@@ -480,6 +482,8 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 100,
+    borderWidth: 1,
+    borderColor: '#6b6b6b',
   },
 
   card: {

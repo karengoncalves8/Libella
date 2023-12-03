@@ -18,6 +18,7 @@ function Perfil({ navigation }) {
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
     const [email, setEmail] = useState('');
+    const [imgPsicologo, setImgPsicologo] = useState('');
     const [comando, setComando] = useState('Procurar por Id Psicologo');
 
 
@@ -67,6 +68,7 @@ function Perfil({ navigation }) {
                 setCidade(responseJson.psicologo[0].CidadePsicologo)
                 setEndereco(responseJson.psicologo[0].EnderecoPsicologo)
                 setEmail(responseJson.psicologo[0].EmailPsicologo)
+                setImgPsicologo(responseJson.psicologo[0].imagemUserPsicologo)
             })
             //se ocorrer erro na requisição ou conversão
             .catch((error) => {
@@ -100,18 +102,18 @@ function Perfil({ navigation }) {
                             <View style={styles.containerUser}>
                                 <Image
                                     style={styles.userImg}
-                                    source={require('../../../../assets/img/Pessoas/Andreia.jpg')}
+                                    source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + imgPsicologo }}
                                 />
                             </View>
                             <View style={styles.containerName}>
                                 <Text style={styles.name}>{nome}</Text>{/*Nome do Psicologo*/}
                                 <TouchableOpacity onPress={() => navigation.navigate('AlterarDados')}>
-                                <FeatherIcon
-                                    name="edit"
-                                    size={20}
-                                    color={"black"}
-                                    style={styles.icon}
-                                />
+                                    <FeatherIcon
+                                        name="edit"
+                                        size={20}
+                                        color={"black"}
+                                        style={styles.icon}
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -295,6 +297,8 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         borderRadius: 100,
+        borderWidth: 1,
+        borderColor: '#6b6b6b',
     },
 
     icon: {

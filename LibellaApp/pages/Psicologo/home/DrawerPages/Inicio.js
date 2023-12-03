@@ -185,6 +185,7 @@ const InicioPage = ({ navigation }) => {
               {
                 nome: responseJson.paciente[i].NomePaciente,
                 id: responseJson.paciente[i].IdPaciente,
+                img: responseJson.paciente[i].imagemUserPaciente,
               },
             ];
             return list;
@@ -305,7 +306,7 @@ const InicioPage = ({ navigation }) => {
                       >
                         <Image
                           style={styles.imgIcon}
-                          source={require("../../../../assets/img/Pessoas/Andreia.jpg")}
+                          source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + item.img}}
                         />
                         <Text style={styles.text}>{item.nome}</Text>
                       </View>
@@ -380,6 +381,8 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 400 / 2,
+    borderWidth: 0.8,
+    borderColor: '#6b6b6b',
   },
   text: {
     fontFamily: "Poppins_400Regular",

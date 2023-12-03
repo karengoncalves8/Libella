@@ -27,6 +27,7 @@ const RemoverPacienteScreen = ({ navigation }) => {
   const [idPaciente, setIdPaciente] = useState();
   const [idPsicologo, setIdPsicologo] = useState(0);
   const [resposta, setResposta] = useState('');
+  const [imgPaciente, setImgPaciente] = useState('');
   const [comando, setComando] = useState('Procurar por Id Psicologo');
 
   const [listaInfo, setListaInfo] = useState([]);
@@ -79,6 +80,7 @@ const RemoverPacienteScreen = ({ navigation }) => {
               {
                 nome: responseJson.paciente[i].NomePaciente,
                 id: responseJson.paciente[i].IdPaciente,
+                img: responseJson.paciente[i].imagemUserPaciente,
               },
             ];
             return list;
@@ -157,7 +159,7 @@ const RemoverPacienteScreen = ({ navigation }) => {
                 <View style={styles.pacienteContainer}>
                   <Image
                     style={styles.userImg}
-                    source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                    source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + item.img}}
                   />
                   <Text style={styles.text}> {item.nome} </Text>
                   <FeatherIcons name='user-minus' size={20} color={'red'} />
@@ -229,6 +231,8 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 100,
+    borderWidth: 1,
+    borderColor: '#6b6b6b',
   },
 
 });

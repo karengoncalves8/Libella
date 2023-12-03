@@ -82,103 +82,103 @@ const NotificacoesScreen = () => {
   return (
     <TabContainer>
       <View style={{ padding: 11 }}>
-    
-    {loading ? (
-        <View style={styles.container}>
-          <Text
-            style={styles.textLoading}>
-            Aguarde, obtendo informações...
-          </Text>
-          <ActivityIndicator size="small" color="#0000ff" />
-        </View>
 
-      ) : (
-        <View>
-          <FlatList
-            data={listaInfo}
-            renderItem={({ item }) => (
-
+        {loading ? (
           <View style={styles.container}>
-            <View style={{ gap: 15, width: "100%" }}>
-              <Text style={{ opacity: 0.4, marginLeft: 15 }}>Hoje</Text>
+            <Text
+              style={styles.textLoading}>
+              Aguarde, obtendo informações...
+            </Text>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </View>
 
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-              <View style={styles.card}>
-                <MaterialCommunityIcon
-                  name="calendar-clock-outline"
-                  size={35}
-                  color={"black"}
-                />
-                <Text style={styles.texto}>
-                  Sessão com
-                  <Text style={{ color: "#6D45C2" }}> Nicolas Herdbots</Text> às
-                  14:30
-                </Text>
-              </View>
-              </TouchableOpacity>
+        ) : (
+          <View>
+            <FlatList
+              data={listaInfo}
+              renderItem={({ item }) => (
 
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-              <View style={styles.card}>
-                <MaterialCommunityIcon
-                  name="calendar-clock-outline"
-                  size={35}
-                  color={"black"}
-                />
-                <Text style={styles.texto}>
-                  Sessão com
-                  <Text style={{ color: "#6D45C2" }}> Rui Barbosa</Text> às
-                  14:30
-                </Text>
-              </View>
-              </TouchableOpacity>
+                <View style={styles.container}>
+                  <View style={{ gap: 15, width: "100%" }}>
+                    <Text style={{ opacity: 0.4, marginLeft: 15 }}>Hoje</Text>
 
-              <TouchableOpacity onPress={() => navigation.navigate("Atividades")}>
-              <View style={styles.card}>
-                <AntIcon name="checkcircleo" size={35} color={"black"} />
-                <Text style={{ color: "#6D45C2"}}>
-                Mariella Nakimura 
-                  <Text style={styles.texto}> entregou a atividade “Relatório diário”</Text>
-                </Text>
-              </View>
-              </TouchableOpacity>
-            </View>
+                    <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
+                      <View style={styles.card}>
+                        <MaterialCommunityIcon
+                          name="calendar-clock-outline"
+                          size={35}
+                          color={"black"}
+                        />
+                        <Text style={styles.texto}>
+                          Sessão com
+                          <Text style={{ color: "#6D45C2" }}> Arthur Cervero</Text> às
+                          14:30
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
 
-            <View style={{ gap: 15, width: "100%" }}>
-              <Text style={{ opacity: 0.4, marginLeft: 15 }}>12/03</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
+                      <View style={styles.card}>
+                        <MaterialCommunityIcon
+                          name="calendar-clock-outline"
+                          size={35}
+                          color={"black"}
+                        />
+                        <Text style={styles.texto}>
+                          Sessão com
+                          <Text style={{ color: "#6D45C2" }}> Amelie Florence</Text> às
+                          14:30
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-              <View style={styles.card}>
-                <MaterialCommunityIcon
-                  name="calendar-clock-outline"
-                  size={35}
-                  color={"black"}
-                />
-                <Text style={styles.texto}>
-                  Sessão com
-                  <Text style={{ color: "#6D45C2" }}> Aline Dias</Text> às 14:30
-                </Text>
-              </View>
-              </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Atividades")}>
+                      <View style={styles.card}>
+                        <AntIcon name="checkcircleo" size={35} color={"black"} />
+                        <Text style={{ color: "#6D45C2" }}>
+                          Arthur Cervero 
+                          <Text style={styles.texto}> entregou “Relatório diário”</Text>
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ gap: 15, width: "100%" }}>
+                    <Text style={{ opacity: 0.4, marginLeft: 15 }}>12/03</Text>
+
+                    <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
+                      <View style={styles.card}>
+                        <MaterialCommunityIcon
+                          name="calendar-clock-outline"
+                          size={35}
+                          color={"black"}
+                        />
+                        <Text style={styles.texto}>
+                          Sessão com
+                          <Text style={{ color: "#6D45C2" }}> Olivier Florence</Text> às 14:30
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
 
 
-              <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
-              <View style={styles.card}>
-              <AntIcon name="checkcircleo" size={35} color={"black"} />
-                <Text style={styles.texto}>
-                  <Text style={{ color: "#6D45C2" }}>Rui Barbosa </Text>
-                  entregou a atividade “Relatório diário”
-                </Text>
-              </View>
-              </TouchableOpacity>
-            </View>
-           </View>
+                    <TouchableOpacity onPress={() => navigation.navigate("PerfilPaciente")}>
+                      <View style={styles.card}>
+                        <AntIcon name="checkcircleo" size={35} color={"black"} />
+                        <Text style={styles.texto}>
+                          <Text style={{ color: "#6D45C2" }}>Amelie Florence </Text>
+                          entregou a atividade “Relatório diário”
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
 
-            )}
-          />
-        </View>
-      )}
+              )}
+            />
+          </View>
+        )}
 
-  </View>
+      </View>
     </TabContainer>
   );
 };

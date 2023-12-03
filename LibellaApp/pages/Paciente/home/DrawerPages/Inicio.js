@@ -28,7 +28,7 @@ import AsyncStorage_Atividade from '@react-native-async-storage/async-storage';
 
 moment.locale('pt-br');
 
-LogBox.ignoreLogs(['Possible Unhandled Promise Rejection (id: 0)']);
+LogBox.ignoreLogs(['Possible Unhandled Promise Rejection']);
 
 
 const InicioScreen = ({ navigation }) => {

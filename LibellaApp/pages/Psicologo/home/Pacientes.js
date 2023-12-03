@@ -78,6 +78,7 @@ function PacientesPage({ navigation }) {
               {
                 nome: responseJson.paciente[i].NomePaciente,
                 id: responseJson.paciente[i].IdPaciente,
+                img: responseJson.paciente[i].imagemUserPaciente,
               },
             ];
             return list;
@@ -121,7 +122,7 @@ function PacientesPage({ navigation }) {
                 <View style={styles.pacienteContainer}>
                   <Image
                     style={styles.userImg}
-                    source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                    source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + item.img}}
                   />
                   <Text style={styles.text}> {item.nome} </Text>
                   <EntypoIcon name="chevron-thin-right" size={22} color={"black"} />
@@ -193,6 +194,8 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 100,
+    borderWidth: 1,
+    borderColor: '#6b6b6b',
   },
 
 });

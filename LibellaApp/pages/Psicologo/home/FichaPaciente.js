@@ -18,6 +18,7 @@ const FichaPacienteScreen = ({ navigation }) => {
     const [escolaridade, setEscolaridade] = useState('');
     const [ocupacao, setOcupacao] = useState('');
     const [sintomas, setSintomas] = useState('');
+    const [imgPaciente, setImgPaciente] = useState('');
     const [comando, setComando] = useState('Procurar por Id Paciente')
 
 
@@ -68,6 +69,7 @@ const FichaPacienteScreen = ({ navigation }) => {
                 setEscolaridade(responseJson.paciente[0].EscolaridadePaciente)
                 setOcupacao(responseJson.paciente[0].OcupacaoPaciente)
                 setSintomas(responseJson.paciente[0].SintomasPaciente)
+                setImgPaciente(responseJson.paciente[0].imagemUserPaciente);
             })
 
             .catch((error) => {
@@ -86,7 +88,7 @@ const FichaPacienteScreen = ({ navigation }) => {
                     <View style={styles.containerUserImg}>
                         <Image
                             style={styles.userImg}
-                            source={require("../../../assets/img/Pessoas/Andreia.jpg")}
+                            source={{ uri: 'https://libellatcc.000webhostapp.com/imagens/' + imgPaciente }}
                         />
                     </View>
                     <View style={styles.containerName}>
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
 
     containerProfile: { //Container de cima do perfil: FOTO + NOME
         width: '90%',
-        height: '15%',
+        height: '10%',
         flexDirection: 'row',
         gap: 30,
     },
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Poppins_400Regular',
         fontSize: 13,
     },
 
@@ -259,6 +261,8 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 100,
+        borderWidth: 1,
+        borderColor: '#6b6b6b',
     },
 },
 );
