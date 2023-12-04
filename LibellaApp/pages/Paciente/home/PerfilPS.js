@@ -59,6 +59,8 @@ const PerfilPCScreen = ({ navigation }) => {
       })
       .then((responseJson) => {
         // Recolhendo as informações do banco de dados e salvando nas váriaveis
+        console.log(id)
+        console.log(responseJson)
         setNome(responseJson.psicologo[0].NomePsicologo)
         setTelefone(responseJson.psicologo[0].TelefonePsicologo)
         setCpf(responseJson.psicologo[0].CpfPsicologo)

@@ -257,11 +257,11 @@ const AtribuirAtividadePage = ({ navigation }) => {
                 />
                 <AntIcon
                   name="calendar"
-                  size={20}
+                  size={25}
                   color={"gray"}
                   style={{
                     position: "absolute",
-                    top: 9,
+                    top: 13,
                     left: 14,
                     opacity: 0.6,
                   }}
